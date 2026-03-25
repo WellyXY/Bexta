@@ -431,6 +431,33 @@
     /* ── Agent Feed Panel ── */
     .feed-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--brd)}
     .feed-status{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--ink2)}
+    /* Persona grid */
+    .persona-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:2px}
+    .pg-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;background:var(--cream);border-radius:12px;text-align:center;border:1px solid rgba(24,20,15,.06)}
+    .pg-av{width:36px;height:36px;border-radius:50%;object-fit:cover}
+    .pg-name{font-size:10px;font-weight:700;color:var(--ink)}
+    .pg-loc{font-size:9px;color:var(--ink3)}
+    .pg-tag{font-size:8px;font-weight:700;padding:2px 6px;border-radius:100px}
+    .pg-mobile{background:rgba(59,130,246,.1);color:#2563eb}
+    .pg-saas{background:rgba(239,104,32,.1);color:var(--or)}
+    .pg-ent{background:rgba(139,92,246,.1);color:#7c3aed}
+    .pg-smb{background:rgba(34,197,94,.1);color:#16a34a}
+    .pg-more{justify-content:center;background:rgba(239,104,32,.06);border:1.5px dashed rgba(239,104,32,.3)}
+    .pg-more-n{font-size:18px;font-weight:900;color:var(--or)}
+    .pg-more-l{font-size:9px;color:var(--ink3)}
+    .intent-table{border:1px solid rgba(24,20,15,.08);border-radius:14px;overflow:hidden;font-size:11px}
+    .it-head{display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 14px;background:rgba(24,20,15,.04);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+    .it-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 14px;border-top:1px solid rgba(24,20,15,.06);align-items:center}
+    .it-row:nth-child(even){background:rgba(239,104,32,.03)}
+    .it-name{font-size:11px;font-weight:600;color:var(--ink)}
+    .it-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:100px;display:inline-block}
+    .it-badge.skeptic{background:rgba(239,68,68,.1);color:#dc2626}
+    .it-badge.compare{background:rgba(59,130,246,.1);color:#2563eb}
+    .it-badge.buy{background:rgba(34,197,94,.1);color:#16a34a}
+    .it-badge.browse{background:var(--ol);color:var(--or)}
+    .it-src{font-size:10px;color:var(--ink3)}
+    .it-more{padding:8px 14px;font-size:10px;color:var(--ink3);font-style:italic;border-top:1px solid rgba(24,20,15,.06);background:rgba(239,104,32,.03)}
+    .fix-card{margin:6px 0 4px;padding:10px 12px;background:rgba(239,104,32,.06);border-radius:10px;font-size:11px;color:var(--ink2);line-height:1.5;border-left:3px solid var(--or)}
     .feed-pulse{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:fpulse 1.5s ease-in-out infinite}
     @keyframes fpulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.8;box-shadow:0 0 0 5px rgba(34,197,94,0)}}
     .feed-time{font-size:11px;font-weight:700;color:var(--or);background:var(--ol);padding:3px 10px;border-radius:100px}
@@ -678,26 +705,47 @@
         <div class="hstep" onclick="selectStep(1)">
           <div class="hstep-head">
             <div class="hstep-num">02</div>
-            <div class="hstep-label">5,000 personas test it for you</div>
+            <div class="hstep-label">AI selects 5,000 personas</div>
           </div>
           <div class="hstep-body">
-            <p class="hstep-desc">Each persona arrives with a different background, intent, and reason for visiting. They browse independently — scrolling, clicking, hitting dead ends, and deciding when to leave — exactly like real users do. No scripts, no bias.</p>
-            <span class="hstep-tag">🤖 Fully automated · 28 min</span>
+            <p class="hstep-desc">Racoonn matches personas to your product category — right age range, purchase behavior, tech comfort, and market. Not generic bots.</p>
+            <span class="hstep-tag">🎯 Product-matched diversity</span>
           </div>
         </div>
         <div class="hstep" onclick="selectStep(2)">
           <div class="hstep-head">
             <div class="hstep-num">03</div>
-            <div class="hstep-label">Read what broke and why</div>
+            <div class="hstep-label">Each assigned intent + scenario</div>
           </div>
           <div class="hstep-body">
-            <p class="hstep-desc">Every drop-off mapped to the exact moment and reason it happened. Issues ranked by how many personas they affected. Specific design fixes — not vague recommendations — your team can act on this week.</p>
+            <p class="hstep-desc">Every persona gets a unique intent (skeptic, ready-to-buy, comparing, just browsing) and a marketing message context. They arrive the way real traffic does — not uniformly.</p>
+            <span class="hstep-tag">🧠 Real intent distribution</span>
+          </div>
+        </div>
+        <div class="hstep" onclick="selectStep(3)">
+          <div class="hstep-head">
+            <div class="hstep-num">04</div>
+            <div class="hstep-label">Personas browse &amp; judge independently</div>
+          </div>
+          <div class="hstep-body">
+            <p class="hstep-desc">Each agent scrolls, clicks, and navigates your product flow on their own — no scripts, no hints. They decide when something confuses them and drop off exactly like a real visitor.</p>
+            <span class="hstep-tag">🤖 Fully automated · 28 min</span>
+          </div>
+        </div>
+        <div class="hstep" onclick="selectStep(4)">
+          <div class="hstep-head">
+            <div class="hstep-num">05</div>
+            <div class="hstep-label">Report + design fixes</div>
+          </div>
+          <div class="hstep-body">
+            <p class="hstep-desc">Every drop-off mapped to the exact moment and reason. Issues ranked by impact. Specific design fixes your team can act on this week — not vague advice.</p>
             <span class="hstep-tag">📋 Actionable within hours</span>
           </div>
         </div>
       </div>
       <!-- Right: visual panel -->
       <div class="how-panel">
+
         <!-- Panel 01: Paste URL -->
         <div class="hpanel active" id="hpanel-0">
           <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:20px">Step 01 — Input</div>
@@ -718,8 +766,44 @@
             <strong style="color:var(--ink)">Trained on 500+ top B2C products</strong> — every insight is grounded in what actually converts, not generic UX theory.
           </div>
         </div>
-        <!-- Panel 02: Agent activity feed -->
-        <div class="hpanel" id="hpanel-1" style="padding:20px 24px;display:none">
+
+        <!-- Panel 02: Persona selection grid -->
+        <div class="hpanel" id="hpanel-1">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:14px">Step 02 — Persona Matching</div>
+          <div class="persona-grid">
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=47" alt="Mei"/><div class="pg-name">Mei, 21</div><div class="pg-loc">Singapore</div><div class="pg-tag pg-mobile">Mobile-first</div></div>
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=11" alt="Tyler"/><div class="pg-name">Tyler, 29</div><div class="pg-loc">Texas</div><div class="pg-tag pg-saas">SaaS buyer</div></div>
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=57" alt="Klaus"/><div class="pg-name">Klaus, 54</div><div class="pg-loc">Berlin</div><div class="pg-tag pg-ent">Enterprise</div></div>
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=25" alt="Ana"/><div class="pg-name">Ana, 36</div><div class="pg-loc">São Paulo</div><div class="pg-tag pg-smb">SMB owner</div></div>
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=32" alt="James"/><div class="pg-name">James, 44</div><div class="pg-loc">London</div><div class="pg-tag pg-ent">Enterprise</div></div>
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=5" alt="Priya"/><div class="pg-name">Priya, 27</div><div class="pg-loc">Mumbai</div><div class="pg-tag pg-mobile">Mobile-first</div></div>
+            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=68" alt="Sofia"/><div class="pg-name">Sofia, 33</div><div class="pg-loc">Milan</div><div class="pg-tag pg-saas">SaaS buyer</div></div>
+            <div class="pg-card pg-more"><div class="pg-more-n">+4,993</div><div class="pg-more-l">more matched</div></div>
+          </div>
+          <div style="margin-top:14px;padding:12px 14px;background:rgba(239,104,32,.06);border-radius:12px;font-size:11px;color:var(--ink2);line-height:1.6">
+            <strong style="color:var(--or)">AI matching</strong> — Racoonn picks personas based on your product category, price point, and target market. Not random noise.
+          </div>
+        </div>
+
+        <!-- Panel 03: Intent assignment table -->
+        <div class="hpanel" id="hpanel-2" style="padding:24px 28px">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:14px">Step 03 — Intent &amp; Scenario</div>
+          <div class="intent-table">
+            <div class="it-head"><span>Persona</span><span>Intent</span><span>Arrives via</span></div>
+            <div class="it-row"><span class="it-name">Mei, 21 · SG</span><span class="it-badge skeptic">Skeptic</span><span class="it-src">Twitter ad</span></div>
+            <div class="it-row"><span class="it-name">Tyler, 29 · TX</span><span class="it-badge compare">Comparing</span><span class="it-src">G2 review</span></div>
+            <div class="it-row"><span class="it-name">Klaus, 54 · DE</span><span class="it-badge buy">Ready to buy</span><span class="it-src">Google search</span></div>
+            <div class="it-row"><span class="it-name">Ana, 36 · BR</span><span class="it-badge browse">Browsing</span><span class="it-src">LinkedIn post</span></div>
+            <div class="it-row"><span class="it-name">Priya, 27 · IN</span><span class="it-badge skeptic">Skeptic</span><span class="it-src">Product Hunt</span></div>
+            <div class="it-more">+ 4,995 more assigned unique intent &amp; entry context...</div>
+          </div>
+          <div style="margin-top:14px;padding:12px 14px;background:rgba(239,104,32,.06);border-radius:12px;font-size:11px;color:var(--ink2);line-height:1.6">
+            <strong style="color:var(--or)">Real traffic mix</strong> — 40% skeptics, 25% comparing, 20% ready-to-buy, 15% browsing. Mirrors actual conversion funnel distribution.
+          </div>
+        </div>
+
+        <!-- Panel 04: Live agent activity feed -->
+        <div class="hpanel" id="hpanel-3" style="padding:20px 24px">
           <div class="feed-header">
             <div class="feed-status"><span class="feed-pulse"></span>LIVE RUN · 5,000 AGENTS</div>
             <div class="feed-time">28 min</div>
@@ -729,11 +813,7 @@
               <img class="feed-av" src="https://i.pravatar.cc/40?img=47" alt="Mei"/>
               <div class="feed-info">
                 <div class="feed-name">Mei, 21 · Singapore <span class="feed-intent skeptic">Skeptic</span></div>
-                <div class="feed-path">
-                  <span class="fp ok">Hero</span><span class="fp-arr">→</span>
-                  <span class="fp ok">Features</span><span class="fp-arr">→</span>
-                  <span class="fp fail">Pricing ✗</span>
-                </div>
+                <div class="feed-path"><span class="fp ok">Hero</span><span class="fp-arr">&#8594;</span><span class="fp ok">Features</span><span class="fp-arr">&#8594;</span><span class="fp fail">Pricing &#10007;</span></div>
                 <div class="feed-quote">"No free trial visible. Too risky to commit."</div>
               </div>
             </div>
@@ -741,11 +821,7 @@
               <img class="feed-av" src="https://i.pravatar.cc/40?img=11" alt="Tyler"/>
               <div class="feed-info">
                 <div class="feed-name">Tyler, 29 · Texas <span class="feed-intent compare">Comparing</span></div>
-                <div class="feed-path">
-                  <span class="fp ok">Hero</span><span class="fp-arr">→</span>
-                  <span class="fp ok">Demo</span><span class="fp-arr">→</span>
-                  <span class="fp warn">Signup ⚠</span>
-                </div>
+                <div class="feed-path"><span class="fp ok">Hero</span><span class="fp-arr">&#8594;</span><span class="fp ok">Demo</span><span class="fp-arr">&#8594;</span><span class="fp warn">Signup &#9888;</span></div>
                 <div class="feed-quote">"Asked for credit card too early."</div>
               </div>
             </div>
@@ -753,22 +829,15 @@
               <img class="feed-av" src="https://i.pravatar.cc/40?img=57" alt="Klaus"/>
               <div class="feed-info">
                 <div class="feed-name">Klaus, 54 · Berlin <span class="feed-intent buy">Ready to buy</span></div>
-                <div class="feed-path">
-                  <span class="fp ok">Hero</span><span class="fp-arr">→</span>
-                  <span class="fp ok">Pricing</span><span class="fp-arr">→</span>
-                  <span class="fp ok">Signup</span><span class="fp-arr">→</span>
-                  <span class="fp conv">Converted ✓</span>
-                </div>
+                <div class="feed-path"><span class="fp ok">Hero</span><span class="fp-arr">&#8594;</span><span class="fp ok">Pricing</span><span class="fp-arr">&#8594;</span><span class="fp ok">Signup</span><span class="fp-arr">&#8594;</span><span class="fp conv">Converted &#10003;</span></div>
                 <div class="feed-quote">"Annual plan was clear. Signed up immediately."</div>
               </div>
             </div>
             <div class="feed-row">
               <img class="feed-av" src="https://i.pravatar.cc/40?img=25" alt="Ana"/>
               <div class="feed-info">
-                <div class="feed-name">Ana, 36 · São Paulo <span class="feed-intent browse">Browsing</span></div>
-                <div class="feed-path">
-                  <span class="fp fail">Hero ✗</span>
-                </div>
+                <div class="feed-name">Ana, 36 · S&#227;o Paulo <span class="feed-intent browse">Browsing</span></div>
+                <div class="feed-path"><span class="fp fail">Hero &#10007;</span></div>
                 <div class="feed-quote">"Didn't understand it in 5 seconds."</div>
               </div>
             </div>
@@ -781,34 +850,36 @@
           </div>
         </div>
 
-        <!-- Panel 03: Report preview -->
-        <div class="hpanel" id="hpanel-2">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:16px">Step 03 — Your report</div>
+        <!-- Panel 05: Report + design fixes -->
+        <div class="hpanel" id="hpanel-4">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:16px">Step 05 — Report &amp; Fixes</div>
           <div class="panel-issue">
             <div class="panel-issue-dot p1"></div>
             <div><div class="panel-issue-title">Missing pricing clarity</div><div class="panel-issue-count">Affected 9 of 25 sampled personas</div></div>
             <div style="margin-left:auto;font-size:10px;font-weight:800;background:rgba(248,113,113,.1);color:#e05555;padding:3px 8px;border-radius:5px">P1</div>
           </div>
-          <div class="panel-issue">
+          <div class="fix-card">&#128161; <strong>Fix:</strong> Add a "Start free, no credit card" line directly under the CTA button. Reduces Skeptic drop-off by ~34%.</div>
+          <div class="panel-issue" style="margin-top:10px">
             <div class="panel-issue-dot p1"></div>
             <div><div class="panel-issue-title">CLI hero alienates non-technical users</div><div class="panel-issue-count">Affected 6 of 25 sampled personas</div></div>
             <div style="margin-left:auto;font-size:10px;font-weight:800;background:rgba(248,113,113,.1);color:#e05555;padding:3px 8px;border-radius:5px">P1</div>
           </div>
-          <div class="panel-issue">
+          <div class="fix-card">&#128161; <strong>Fix:</strong> Lead with a URL input field instead of a code block. Add a "No code needed" badge. Retains 23% more non-dev personas.</div>
+          <div class="panel-issue" style="margin-top:10px">
             <div class="panel-issue-dot p2"></div>
             <div><div class="panel-issue-title">Demo only shows B2C SaaS use case</div><div class="panel-issue-count">Affected 7 of 25 sampled personas</div></div>
             <div style="margin-left:auto;font-size:10px;font-weight:800;background:rgba(251,191,36,.1);color:#c08020;padding:3px 8px;border-radius:5px">P2</div>
           </div>
-          <div class="panel-conv">
-            <div class="panel-conv-num">18<span style="font-size:18px;color:var(--ink3)">/100</span></div>
-            <div class="panel-conv-label"><strong style="color:var(--ink)">Conversion rate</strong><br/>2 critical blockers identified</div>
-          </div>
+          <div class="fix-card">&#128161; <strong>Fix:</strong> Add 3 industry tabs (SaaS / E-commerce / Agency) to the demo section. Increases relevance signal for 40% of traffic.</div>
         </div>
+
       </div>
-    </div>
     </div>
   </div>
 </section>
+
+
+
 
 
 <!-- ④ EXAMPLE REPORT -->
