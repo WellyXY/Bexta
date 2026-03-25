@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Pricing — Racoonn</title>
+  <meta name="description" content="Racoonn pricing — $49/month. First 50 teams free. No setup fee."/>
+  <link rel="canonical" href="https://racoonn.me/pricing"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F7F4EF;--ink:#18140F;--ink2:#5C5650;--ink3:#6E6760;--or:#EF6820;--brd:rgba(24,20,15,.08);--brd2:rgba(24,20,15,.05)}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.7}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 48px;background:rgba(247,244,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd2)}
+    .logo{font-weight:900;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:7px;text-decoration:none}
+    .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--or)}
+    .content{max-width:900px;margin:0 auto;padding:96px 24px 80px}
+    .page-header{text-align:center;margin-bottom:56px}
+    h1{font-size:44px;font-weight:900;line-height:1.1;margin-bottom:12px}
+    .sub{font-size:18px;color:var(--ink2);margin-bottom:0}
+    .plans{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:48px}
+    .plan{background:#fff;border-radius:20px;padding:32px;border:1px solid var(--brd);position:relative}
+    .plan.featured{border:2px solid var(--or);background:#fff}
+    .plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--or);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;white-space:nowrap}
+    .plan-name{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:16px}
+    .plan-price{font-size:48px;font-weight:900;color:var(--ink);line-height:1;margin-bottom:4px}
+    .plan-price span{font-size:16px;font-weight:500;color:var(--ink3)}
+    .plan-desc{font-size:14px;color:var(--ink2);margin-bottom:24px;min-height:40px}
+    .plan-cta{display:block;text-align:center;padding:12px 0;border-radius:100px;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .15s}
+    .plan-cta.primary{background:var(--or);color:#fff}
+    .plan-cta.secondary{background:var(--ink);color:#fff}
+    .plan-cta.outline{background:transparent;border:1.5px solid var(--brd);color:var(--ink)}
+    .plan-cta:hover{opacity:.85}
+    .features{margin-top:24px;border-top:1px solid var(--brd2);padding-top:20px}
+    .feat{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);margin-bottom:10px}
+    .feat-check{color:var(--or);font-weight:700;flex-shrink:0;margin-top:2px}
+    .feat-x{color:var(--ink3);flex-shrink:0;margin-top:2px}
+    .compare{background:#fff;border-radius:20px;border:1px solid var(--brd);overflow:hidden;margin-bottom:48px}
+    .compare table{width:100%;border-collapse:collapse}
+    .compare th{background:var(--ink);color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:14px 20px;text-align:left}
+    .compare th:not(:first-child){text-align:center}
+    .compare td{padding:14px 20px;font-size:14px;color:var(--ink2);border-bottom:1px solid var(--brd2)}
+    .compare td:not(:first-child){text-align:center;font-weight:600;color:var(--ink)}
+    .compare tr:last-child td{border-bottom:none}
+    .compare tr:nth-child(even) td{background:rgba(247,244,239,.5)}
+    .check{color:var(--or)}
+    .cross{color:#ccc}
+    .faq{margin-bottom:56px}
+    .faq h2{font-size:24px;font-weight:800;margin-bottom:24px}
+    .faq-item{border-bottom:1px solid var(--brd2);padding:20px 0}
+    .faq-q{font-size:16px;font-weight:700;margin-bottom:8px}
+    .faq-a{font-size:14px;color:var(--ink2);line-height:1.7}
+    .cta-strip{background:var(--ink);border-radius:20px;padding:48px 40px;text-align:center;color:#fff}
+    .cta-strip h2{font-size:28px;font-weight:900;margin-bottom:8px}
+    .cta-strip p{opacity:.7;margin-bottom:28px;font-size:16px}
+    .cta-strip a{display:inline-block;background:var(--or);color:#fff;font-weight:700;font-size:15px;padding:14px 32px;border-radius:100px;text-decoration:none}
+    footer{background:rgba(247,244,239,.6);border-top:1px solid var(--brd2);padding:24px 48px;display:flex;align-items:center;justify-content:space-between}
+    .f-links{display:flex;gap:20px}
+    .f-links a{font-size:12px;color:var(--ink2);text-decoration:none}
+    .f-copy{font-size:12px;color:var(--ink3)}
+    @media(max-width:700px){.plans{grid-template-columns:1fr}nav{padding:0 20px}.content{padding:80px 16px 60px}footer{flex-direction:column;gap:10px;padding:20px}.compare{overflow-x:auto}}
+  </style>
+</head>
+<body>
+<nav><a class="logo" href="/"><span class="logo-dot"></span>Racoonn</a></nav>
+
+<div class="content">
+  <div class="page-header">
+    <h1>Simple pricing.<br/>No surprises.</h1>
+    <p class="sub">One price. All features. Cancel anytime.</p>
+  </div>
+
+  <div class="plans">
+    <!-- Free -->
+    <div class="plan">
+      <div class="plan-name">Early Access</div>
+      <div class="plan-price">$0<span>/mo</span></div>
+      <div class="plan-desc">First 50 teams. While spots last.</div>
+      <a href="/" class="plan-cta outline">Join waitlist →</a>
+      <div class="features">
+        <div class="feat"><span class="feat-check">✓</span> 3 analyses / month</div>
+        <div class="feat"><span class="feat-check">✓</span> 500 personas per run</div>
+        <div class="feat"><span class="feat-check">✓</span> P1/P2/P3 issue ranking</div>
+        <div class="feat"><span class="feat-check">✓</span> Email report delivery</div>
+        <div class="feat"><span class="feat-x">–</span> Unlimited runs</div>
+        <div class="feat"><span class="feat-x">–</span> 5,000 personas per run</div>
+        <div class="feat"><span class="feat-x">–</span> API access</div>
+      </div>
+    </div>
+
+    <!-- Pro -->
+    <div class="plan featured">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">$49<span>/mo</span></div>
+      <div class="plan-desc">Everything you need to ship with confidence.</div>
+      <a href="/" class="plan-cta primary">Get early access →</a>
+      <div class="features">
+        <div class="feat"><span class="feat-check">✓</span> Unlimited analyses</div>
+        <div class="feat"><span class="feat-check">✓</span> 5,000 personas per run</div>
+        <div class="feat"><span class="feat-check">✓</span> P1/P2/P3 issue ranking</div>
+        <div class="feat"><span class="feat-check">✓</span> Design fix suggestions</div>
+        <div class="feat"><span class="feat-check">✓</span> Drop-off by persona type</div>
+        <div class="feat"><span class="feat-check">✓</span> 40+ country coverage</div>
+        <div class="feat"><span class="feat-check">✓</span> Priority support</div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <div class="plan">
+      <div class="plan-name">Team</div>
+      <div class="plan-price">$149<span>/mo</span></div>
+      <div class="plan-desc">For product teams running multiple products.</div>
+      <a href="mailto:hello@racoonn.me" class="plan-cta secondary">Contact us →</a>
+      <div class="features">
+        <div class="feat"><span class="feat-check">✓</span> Everything in Pro</div>
+        <div class="feat"><span class="feat-check">✓</span> Up to 5 team members</div>
+        <div class="feat"><span class="feat-check">✓</span> Shared report library</div>
+        <div class="feat"><span class="feat-check">✓</span> API access</div>
+        <div class="feat"><span class="feat-check">✓</span> DPA on request</div>
+        <div class="feat"><span class="feat-check">✓</span> Slack integration</div>
+        <div class="feat"><span class="feat-check">✓</span> Dedicated onboarding</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Early Access</th>
+          <th>Pro · $49</th>
+          <th>Team · $149</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Analyses per month</td><td>3</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><td>Personas per run</td><td>500</td><td>5,000</td><td>5,000</td></tr>
+        <tr><td>Countries covered</td><td>5</td><td>40+</td><td>40+</td></tr>
+        <tr><td>P1/P2/P3 issue ranking</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Design fix suggestions</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Persona type breakdown</td><td><span class="cross">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>API access</td><td><span class="cross">–</span></td><td><span class="cross">–</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Team members</td><td>1</td><td>1</td><td>5</td></tr>
+        <tr><td>DPA (GDPR)</td><td><span class="cross">–</span></td><td><span class="cross">–</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Priority support</td><td><span class="cross">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="faq">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <div class="faq-q">What counts as one analysis?</div>
+      <div class="faq-a">One analysis = one URL run through all 5,000 personas. You get the full report: ranked friction points, drop-off moments, and design fix suggestions. On Pro you can run as many as you need.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does an analysis take?</div>
+      <div class="faq-a">About 28 minutes from URL submission to full report. We run all 5,000 personas in parallel — you can submit and come back to results.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does it work for mobile apps or just websites?</div>
+      <div class="faq-a">Right now Racoonn works on any publicly accessible URL — landing pages, SaaS products, e-commerce stores, onboarding flows. Mobile app store pages work too. Native app analysis is on the roadmap.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I cancel anytime?</div>
+      <div class="faq-a">Yes. No contracts, no cancellation fees. Cancel before your next billing date and you won't be charged again.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you offer a DPA for GDPR compliance?</div>
+      <div class="faq-a">Yes, on the Team plan. We provide a standard Data Processing Agreement on request. Contact us at <a href="mailto:hello@racoonn.me">hello@racoonn.me</a>.</div>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h2>First 50 teams join free.</h2>
+    <p>No credit card. No setup. Just paste a URL.</p>
+    <a href="/">Get early access →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="f-copy">© 2026 Racoonn</div>
+  <nav class="f-links">
+    <a href="/about">About</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="/impressum">Impressum</a>
+  </nav>
+</footer>
+</body>
+</html>
