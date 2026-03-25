@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Betax — Agent Report</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:#0f0d0b;color:#e8e4df;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    /* layout */
+    .topbar{position:sticky;top:0;z-index:100;background:rgba(15,13,11,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between}
+    .topbar-left{display:flex;align-items:center;gap:16px}
+    .logo{font-size:15px;font-weight:800;color:#fff}
+    .logo em{color:#ef6820;font-style:normal}
+    .page-title{font-size:13px;color:#6b6560}
+    .back{font-size:12px;color:#6b6560;padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:6px;transition:all .15s}
+    .back:hover{color:#e8e4df;border-color:rgba(255,255,255,.2)}
+    .content{max-width:1200px;margin:0 auto;padding:32px}
+    /* header */
+    .report-header{margin-bottom:32px}
+    .report-url{font-size:12px;color:#6b6560;font-family:monospace;margin-bottom:8px}
+    .report-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:4px}
+    .report-meta{font-size:12px;color:#4a4540}
+    /* stat cards */
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px}
+    .stat{background:#1a1714;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px 20px}
+    .stat-num{font-size:28px;font-weight:800;line-height:1}
+    .stat-num.green{color:#4ade80}
+    .stat-num.red{color:#f87171}
+    .stat-num.yellow{color:#fbbf24}
+    .stat-num.orange{color:#ef6820}
+    .stat-num.white{color:#fff}
+    .stat-lbl{font-size:11px;color:#6b6560;margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    /* funnel */
+    .funnel-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .funnel-label{width:90px;font-size:12px;color:#c8c4bf;text-align:right}
+    .funnel-bar-wrap{flex:1;height:28px;background:rgba(255,255,255,.04);border-radius:6px;overflow:hidden}
+    .funnel-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;transition:width .6s ease;width:0}
+    .funnel-bar.green{background:rgba(74,222,128,.25);color:#4ade80}
+    .funnel-bar.red{background:rgba(248,113,113,.2);color:#f87171}
+    .funnel-bar.yellow{background:rgba(251,191,36,.15);color:#fbbf24}
+    .funnel-count{width:36px;font-size:12px;color:#6b6560;text-align:right}
+    /* sections */
+    .section{margin-bottom:40px}
+    .section-title{font-size:11px;font-weight:700;color:#6b6560;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .section-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+    /* issues */
+    .issues{display:flex;flex-direction:column;gap:10px}
+    .issue{background:#1a1714;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+    .issue-pri{font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;flex-shrink:0;margin-top:2px}
+    .issue-pri.p1{background:rgba(248,113,113,.15);color:#f87171}
+    .issue-pri.p2{background:rgba(251,191,36,.12);color:#fbbf24}
+    .issue-pri.p3{background:rgba(74,222,128,.1);color:#4ade80}
+    .issue-body{flex:1}
+    .issue-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+    .issue-desc{font-size:12px;color:#6b6560;line-height:1.5}
+    .issue-right{text-align:right;flex-shrink:0}
+    .issue-affected{font-size:20px;font-weight:800;color:#ef6820}
+    .issue-affected-lbl{font-size:10px;color:#4a4540;margin-top:2px}
+    .issue-segs{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+    .seg-tag{font-size:10px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.05);color:#6b6560}
+    /* filter bar */
+    .filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .filter-btn{font-size:12px;padding:6px 14px;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#6b6560;cursor:pointer;font-family:inherit;transition:all .15s}
+    .filter-btn:hover{border-color:rgba(255,255,255,.2);color:#c8c4bf}
+    .filter-btn.active{background:rgba(239,104,32,.15);border-color:rgba(239,104,32,.4);color:#ef6820}
+    /* persona grid */
+    .persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+    .pcard{background:#1a1714;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px;cursor:pointer;transition:all .15s}
+    .pcard:hover{border-color:rgba(255,255,255,.15);background:#201d19}
+    .pcard-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+    .pcard-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+    .pcard-meta{flex:1}
+    .pcard-name{font-size:14px;font-weight:700;color:#fff}
+    .pcard-sub{font-size:11px;color:#6b6560;margin-top:2px}
+    .pcard-outcome{font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;flex-shrink:0}
+    .pcard-outcome.converted{background:rgba(74,222,128,.12);color:#4ade80}
+    .pcard-outcome.dropped{background:rgba(248,113,113,.12);color:#f87171}
+    .pcard-outcome.undecided{background:rgba(251,191,36,.1);color:#fbbf24}
+    .pcard-score{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+    .score-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px}
+    .score-bar{height:4px;border-radius:2px;background:#ef6820}
+    .score-val{font-size:12px;font-weight:700;color:#ef6820;width:32px;text-align:right}
+    .pcard-moment{font-size:12px;color:#9a9490;line-height:1.4;margin-bottom:10px;font-style:italic}
+    .pcard-thoughts{display:flex;flex-direction:column;gap:5px}
+    .thought{font-size:11px;line-height:1.4;padding:6px 8px;border-radius:6px;color:#c8c4bf}
+    .thought.norm{background:rgba(255,255,255,.03)}
+    .thought.warn{background:rgba(251,191,36,.06);color:#c8a84b}
+    .thought.fail{background:rgba(248,113,113,.07);color:#b87070}
+    .thought::before{font-weight:800;margin-right:4px}
+    .thought.warn::before{content:'⚠'}
+    .thought.fail::before{content:'✗'}
+    .thought.norm::before{content:'→'}
+    .pcard-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
+    .ptag{font-size:10px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.05);color:#6b6560}
+    /* responsive */
+    @media(max-width:768px){.stats{grid-template-columns:repeat(2,1fr)}.content{padding:16px}}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo">Bet<em>ax</em></div>
+    <div class="page-title">Agent Report</div>
+  </div>
+  <a class="back" href="javascript:history.back()">← Admin</a>
+</div>
+
+<div class="content">
+
+  <div class="report-header">
+    <div class="report-url" id="report-url">Loading…</div>
+    <div class="report-title">Betax Landing Page — Agent Evaluation</div>
+    <div class="report-meta" id="report-meta"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num white" id="s-total">—</div><div class="stat-lbl">Personas run</div></div>
+    <div class="stat"><div class="stat-num orange" id="s-conversion">—</div><div class="stat-lbl">Conversion rate</div></div>
+    <div class="stat"><div class="stat-num orange" id="s-score">—</div><div class="stat-lbl">Avg score</div></div>
+    <div class="stat"><div class="stat-num green" id="s-converted">—</div><div class="stat-lbl">Converted</div></div>
+    <div class="stat"><div class="stat-num red" id="s-dropped">—</div><div class="stat-lbl">Dropped</div></div>
+  </div>
+
+  <!-- Funnel -->
+  <div class="section">
+    <div class="section-title">Outcome breakdown</div>
+    <div id="funnel"></div>
+  </div>
+
+  <!-- Issues -->
+  <div class="section">
+    <div class="section-title">Top issues found</div>
+    <div class="issues" id="issues"></div>
+  </div>
+
+  <!-- Persona cards -->
+  <div class="section">
+    <div class="section-title">All personas</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All <span id="cnt-all"></span></button>
+      <button class="filter-btn" data-filter="converted">Converted <span id="cnt-converted"></span></button>
+      <button class="filter-btn" data-filter="dropped">Dropped <span id="cnt-dropped"></span></button>
+      <button class="filter-btn" data-filter="undecided">Undecided <span id="cnt-undecided"></span></button>
+    </div>
+    <div class="persona-grid" id="persona-grid"></div>
+  </div>
+
+</div>
+
+<script>
+const token = new URLSearchParams(location.search).get('token') || '';
+
+const AVATAR_COLORS = ['#3b82f6','#8b5cf6','#ec4899','#f59e0b','#10b981','#ef4444','#6366f1','#14b8a6'];
+function avatarColor(name) { return AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length]; }
+function initials(name) { return name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase(); }
+
+async function load() {
+  const res = await fetch(`/api/admin/report-data?token=${token}`);
+  if (!res.ok) { document.body.innerHTML = '<div style="padding:60px;text-align:center;color:#6b6560">Unauthorized</div>'; return; }
+  const data = await res.json();
+  render(data);
+}
+
+function render(data) {
+  const { meta, summary, top_issues, personas } = data;
+
+  document.getElementById('report-url').textContent = meta.url;
+  document.getElementById('report-meta').textContent = `${meta.run_date} · ${meta.total_personas} personas · ${meta.model}`;
+  document.getElementById('s-total').textContent = summary.total_personas;
+  document.getElementById('s-conversion').textContent = summary.conversion_rate + '%';
+  document.getElementById('s-score').textContent = summary.avg_score + '/10';
+  document.getElementById('s-converted').textContent = summary.converted;
+  document.getElementById('s-dropped').textContent = summary.dropped;
+
+  // Funnel
+  const funnelData = [
+    { label:'Converted', count:summary.converted, pct:Math.round(summary.converted/summary.total_personas*100), cls:'green' },
+    { label:'Undecided', count:summary.undecided, pct:Math.round(summary.undecided/summary.total_personas*100), cls:'yellow' },
+    { label:'Dropped', count:summary.dropped, pct:Math.round(summary.dropped/summary.total_personas*100), cls:'red' },
+  ];
+  document.getElementById('funnel').innerHTML = funnelData.map(f => `
+    <div class="funnel-row">
+      <div class="funnel-label">${f.label}</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar ${f.cls}" style="width:${f.pct}%">${f.pct}%</div></div>
+      <div class="funnel-count">${f.count}</div>
+    </div>
+  `).join('');
+
+  // Issues
+  document.getElementById('issues').innerHTML = top_issues.map(issue => `
+    <div class="issue">
+      <div class="issue-pri ${issue.priority.toLowerCase()}">${issue.priority}</div>
+      <div class="issue-body">
+        <div class="issue-title">${esc(issue.title)}</div>
+        <div class="issue-desc">${esc(issue.description)}</div>
+        <div class="issue-segs">${issue.segments.map(s => `<span class="seg-tag">${esc(s)}</span>`).join('')}</div>
+      </div>
+      <div class="issue-right">
+        <div class="issue-affected">${issue.affected}</div>
+        <div class="issue-affected-lbl">personas</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Persona counts
+  document.getElementById('cnt-all').textContent = personas.length;
+  document.getElementById('cnt-converted').textContent = personas.filter(p=>p.outcome==='converted').length;
+  document.getElementById('cnt-dropped').textContent = personas.filter(p=>p.outcome==='dropped').length;
+  document.getElementById('cnt-undecided').textContent = personas.filter(p=>p.outcome==='undecided').length;
+
+  renderPersonas(personas, 'all');
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPersonas(personas, btn.dataset.filter);
+    });
+  });
+}
+
+function renderPersonas(all, filter) {
+  const list = filter === 'all' ? all : all.filter(p=>p.outcome===filter);
+  document.getElementById('persona-grid').innerHTML = list.map(p => `
+    <div class="pcard">
+      <div class="pcard-top">
+        <div class="pcard-avatar" style="background:${avatarColor(p.name)}22;color:${avatarColor(p.name)}">${initials(p.name)}</div>
+        <div class="pcard-meta">
+          <div class="pcard-name">${esc(p.name)}</div>
+          <div class="pcard-sub">${p.age} · ${esc(p.location)} · ${esc(p.role)}</div>
+        </div>
+        <div class="pcard-outcome ${p.outcome}">${outcomeLabel(p.outcome)}</div>
+      </div>
+      <div class="pcard-score">
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${p.score*10}%"></div></div>
+        <div class="score-val">${p.score}/10</div>
+      </div>
+      <div class="pcard-moment">"${esc(p.key_moment)}"</div>
+      <div class="pcard-thoughts">
+        ${(p.thoughts||[]).map(t=>`<div class="thought ${t.type}">${esc(t.quote)}</div>`).join('')}
+      </div>
+      <div class="pcard-tags">
+        <span class="ptag">tech ${p.tech_comfort}/10</span>
+        <span class="ptag">${esc(p.channel)}</span>
+        <span class="ptag">${esc(p.use_case)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function outcomeLabel(o) { return o==='converted'?'✓ Converted':o==='dropped'?'✗ Dropped':'~ Undecided'; }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+load();
+</script>
+</body>
+</html>
