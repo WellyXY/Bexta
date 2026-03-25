@@ -6,122 +6,604 @@
   <title>Betax Admin</title>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:#0f0d0b;color:#e8e4df;min-height:100vh;padding:32px}
-    h1{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
-    .sub{font-size:13px;color:#6b6560;margin-bottom:32px}
-    .stat-row{display:flex;gap:16px;margin-bottom:32px}
-    .stat{background:#1a1714;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;min-width:140px}
-    .stat-num{font-size:32px;font-weight:800;color:#ef6820}
-    .stat-lbl{font-size:12px;color:#6b6560;margin-top:4px}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    thead th{text-align:left;padding:10px 14px;color:#6b6560;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.07)}
-    tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .1s}
-    tbody tr:hover{background:rgba(255,255,255,.03)}
-    td{padding:12px 14px;color:#c8c4bf;vertical-align:top}
-    td.url{color:#fff;font-weight:500;max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    td.time{color:#6b6560;white-space:nowrap;font-size:12px}
-    td.ip{color:#6b6560;font-size:12px;font-family:monospace}
-    td.ua{color:#4a4540;font-size:11px;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .empty{text-align:center;padding:60px;color:#4a4540;font-size:14px}
-    .badge{display:inline-block;background:rgba(239,104,32,.15);color:#ef6820;font-size:11px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px}
-    .refresh{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#c8c4bf;font-size:12px;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit}
-    .refresh:hover{background:rgba(255,255,255,.1)}
-    .header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-    .export{background:rgba(239,104,32,.15);border:1px solid rgba(239,104,32,.3);color:#ef6820;font-size:12px;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit}
-    .export:hover{background:rgba(239,104,32,.25)}
+    :root{
+      --bg:#0f0d0b;--s1:#1a1714;--s2:#201e1b;--s3:#262320;
+      --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+      --text:#e8e4df;--muted:#6b6560;--dim:#3a3640;
+      --orange:#ef6820;--or-dim:rgba(239,104,32,.12);--or-bdr:rgba(239,104,32,.3);
+      --green:#4ade80;--gn-dim:rgba(74,222,128,.1);
+      --red:#f87171;--rd-dim:rgba(248,113,113,.1);
+      --yellow:#fbbf24;--yw-dim:rgba(251,191,36,.1);
+    }
+    html,body{height:100%;overflow:hidden}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:13px;display:flex}
+
+    /* ── Sidebar ── */
+    .sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;background:#0d0b09}
+    .sb-logo{padding:20px 20px 0;margin-bottom:28px}
+    .sb-logo-txt{font-size:17px;font-weight:900;letter-spacing:-.5px;color:#fff}
+    .sb-logo-txt em{color:var(--orange);font-style:normal}
+    .sb-logo-sub{font-size:10px;color:var(--dim);margin-top:2px;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+    .sb-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);padding:0 20px 8px}
+    .sb-nav{flex:1;padding:0 10px}
+    .sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:all .12s;color:var(--muted);margin-bottom:2px;border:1px solid transparent}
+    .sb-item:hover{background:var(--s1);color:var(--text)}
+    .sb-item.active{background:var(--or-dim);border-color:var(--or-bdr);color:var(--orange)}
+    .sb-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+    .sb-label{font-size:13px;font-weight:500;flex:1}
+    .sb-badge{font-size:10px;font-weight:700;background:rgba(255,255,255,.07);color:var(--muted);padding:1px 7px;border-radius:100px}
+    .sb-item.active .sb-badge{background:rgba(239,104,32,.2);color:var(--orange)}
+    .sb-footer{padding:16px 20px;border-top:1px solid var(--border)}
+    .sb-footer-txt{font-size:10px;color:var(--dim)}
+
+    /* ── Main area ── */
+    .main{flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+    .topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 28px;border-bottom:1px solid var(--border);background:rgba(15,13,11,.8);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;gap:12px}
+    .tb-title{font-size:14px;font-weight:700;color:#fff}
+    .tb-sub{font-size:11px;color:var(--muted)}
+    .tb-actions{margin-left:auto;display:flex;gap:8px}
+    .btn{font-size:11px;padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .12s;white-space:nowrap}
+    .btn:hover{border-color:var(--border2);color:var(--text)}
+    .btn-primary{background:var(--or-dim);border-color:var(--or-bdr);color:var(--orange)}
+    .btn-primary:hover{background:rgba(239,104,32,.2)}
+    .content{flex:1;padding:28px}
+
+    /* ── Stats row ── */
+    .stats{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+    .stat{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:16px 20px;min-width:120px}
+    .stat-num{font-size:26px;font-weight:900;line-height:1;letter-spacing:-.5px}
+    .stat-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:5px}
+    .c-orange{color:var(--orange)}.c-green{color:var(--green)}.c-red{color:var(--red)}.c-yellow{color:var(--yellow)}.c-white{color:#fff}
+
+    /* ── Table ── */
+    .table-wrap{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+    table{width:100%;border-collapse:collapse}
+    thead th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)}
+    tbody tr{border-bottom:1px solid rgba(255,255,255,.03);transition:background .1s}
+    tbody tr:hover{background:rgba(255,255,255,.02)}
+    tbody tr:last-child{border-bottom:none}
+    td{padding:11px 14px;color:#c0bcb8;vertical-align:top;font-size:12px}
+    td.td-url{color:#fff;font-weight:500;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    td.td-mono{font-family:monospace;font-size:11px;color:var(--muted)}
+    td.td-dim{color:var(--muted);font-size:11px}
+    .empty{text-align:center;padding:48px;color:var(--dim);font-size:13px}
+
+    /* ── Section header ── */
+    .sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .sh-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+    .sh-line{flex:1;height:1px;background:var(--border)}
+
+    /* ── Report list ── */
+    .report-list{display:flex;flex-direction:column;gap:8px}
+    .rcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:16px 18px;cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:16px}
+    .rcard:hover{border-color:var(--border2);background:var(--s2)}
+    .rcard-icon{font-size:18px;width:40px;height:40px;background:var(--or-dim);border:1px solid var(--or-bdr);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .rcard-info{flex:1;min-width:0}
+    .rcard-url{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+    .rcard-meta{font-size:11px;color:var(--muted)}
+    .rcard-stats{display:flex;gap:16px;flex-shrink:0}
+    .rcs{text-align:center}
+    .rcs-num{font-size:18px;font-weight:800;line-height:1}
+    .rcs-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+    .rcard-arrow{color:var(--dim);font-size:16px;flex-shrink:0}
+
+    /* ── Report detail ── */
+    .rd-header{margin-bottom:24px}
+    .rd-back{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);cursor:pointer;padding:5px 0;margin-bottom:12px;transition:color .12s}
+    .rd-back:hover{color:var(--text)}
+    .rd-url-tag{display:inline-block;font-size:11px;font-family:monospace;background:var(--or-dim);border:1px solid var(--or-bdr);color:var(--orange);padding:3px 10px;border-radius:100px;margin-bottom:8px}
+    .rd-title{font-size:20px;font-weight:800;letter-spacing:-.4px;color:#fff;margin-bottom:4px}
+    .rd-meta{font-size:11px;color:var(--muted)}
+
+    /* ── Funnel ── */
+    .funnel-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px}
+    .fc-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+    .fc-sub{font-size:11px;color:var(--muted);margin-bottom:18px}
+    .f-row{display:grid;grid-template-columns:100px 1fr 40px 44px;align-items:center;gap:10px;margin-bottom:4px}
+    .f-stage-lbl{font-size:11px;font-weight:600;color:var(--text);text-align:right}
+    .f-bar-wrap{height:30px;background:rgba(255,255,255,.03);border-radius:6px;overflow:hidden;position:relative}
+    .f-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;transition:width .9s cubic-bezier(.16,1,.3,1);width:0}
+    .fb-ok{background:linear-gradient(90deg,rgba(74,222,128,.22),rgba(74,222,128,.08));color:var(--green)}
+    .fb-warn{background:linear-gradient(90deg,rgba(251,191,36,.2),rgba(251,191,36,.06));color:var(--yellow)}
+    .fb-danger{background:linear-gradient(90deg,rgba(248,113,113,.22),rgba(248,113,113,.07));color:var(--red)}
+    .fb-end{background:linear-gradient(90deg,rgba(239,104,32,.28),rgba(239,104,32,.08));color:var(--orange)}
+    .f-drop{font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;text-align:center;white-space:nowrap;background:var(--rd-dim);border:1px solid rgba(248,113,113,.18);color:var(--red)}
+    .f-drop.none{background:transparent;border-color:transparent;color:var(--dim)}
+    .f-pct-lbl{font-size:11px;font-weight:700;color:var(--muted);text-align:right}
+    .f-reason{grid-column:2/-1;font-size:11px;color:var(--muted);line-height:1.5;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.04);margin-bottom:4px}
+    .f-outcomes{display:flex;gap:20px;padding-top:14px;border-top:1px solid var(--border);margin-top:8px;flex-wrap:wrap}
+    .f-oc{display:flex;align-items:center;gap:6px;font-size:12px}
+    .f-oc-dot{width:7px;height:7px;border-radius:50%}
+    .f-oc-val{font-weight:800}
+    .f-oc-rate{margin-left:auto;font-size:12px;color:var(--muted)}
+
+    /* ── Two col ── */
+    .two-col{display:grid;grid-template-columns:1fr 300px;gap:14px;margin-bottom:20px;align-items:start}
+
+    /* ── Issues ── */
+    .issue-list{display:flex;flex-direction:column;gap:8px}
+    .issue{background:var(--s1);border:1px solid var(--border);border-radius:9px;padding:13px 15px;display:flex;gap:10px}
+    .issue-pri{font-size:9px;font-weight:800;padding:3px 7px;border-radius:5px;flex-shrink:0;letter-spacing:.04em;margin-top:2px}
+    .p1{background:rgba(248,113,113,.14);color:var(--red)}
+    .p2{background:rgba(251,191,36,.12);color:var(--yellow)}
+    .p3{background:rgba(74,222,128,.1);color:var(--green)}
+    .issue-body{flex:1;min-width:0}
+    .issue-title{font-size:12px;font-weight:600;color:#fff;margin-bottom:3px}
+    .issue-desc{font-size:11px;color:var(--muted);line-height:1.5}
+    .issue-segs{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
+    .iseg{font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.04);color:var(--muted)}
+    .issue-count{flex-shrink:0;text-align:right}
+    .issue-count .n{font-size:20px;font-weight:800;color:var(--orange);line-height:1}
+    .issue-count .l{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+
+    /* ── Outcome panel ── */
+    .oc-panel{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:18px}
+    .oc-panel-title{font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+    .oc-row{margin-bottom:12px}
+    .oc-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+    .oc-label{font-size:12px;font-weight:600}
+    .oc-val{font-size:12px;font-weight:700}
+    .oc-track{height:7px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden}
+    .oc-fill{height:100%;border-radius:4px;transition:width .9s cubic-bezier(.16,1,.3,1)}
+    .gf{background:linear-gradient(90deg,#4ade80,#22c55e)}
+    .yf{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+    .rf{background:linear-gradient(90deg,#f87171,#ef4444)}
+    .divh{height:1px;background:var(--border);margin:14px 0}
+    .score-big{text-align:center;padding:6px 0}
+    .score-num{font-size:38px;font-weight:900;color:var(--orange);letter-spacing:-1px;line-height:1}
+    .score-sub{font-size:11px;color:var(--muted);margin-top:3px}
+    .channel-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .ch-name{font-size:11px;color:var(--muted);width:80px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .ch-track{flex:1;height:5px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden}
+    .ch-fill{height:100%;border-radius:3px;background:var(--orange)}
+    .ch-pct{font-size:11px;font-weight:700;color:var(--text);width:28px;text-align:right}
+
+    /* ── Filter tabs ── */
+    .ftabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+    .ftab{font-size:11px;padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .12s;display:flex;align-items:center;gap:4px}
+    .ftab:hover{border-color:var(--border2);color:var(--text)}
+    .ftab.active{background:var(--or-dim);border-color:var(--or-bdr);color:var(--orange)}
+    .ftab .fbadge{font-size:9px;background:rgba(255,255,255,.06);color:var(--muted);padding:1px 5px;border-radius:100px}
+    .ftab.active .fbadge{background:rgba(239,104,32,.2);color:var(--orange)}
+
+    /* ── Persona grid ── */
+    .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+    .pcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px;transition:border-color .12s}
+    .pcard:hover{border-color:var(--border2)}
+    .pc-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+    .pc-avatar{width:36px;height:36px;border-radius:8px;flex-shrink:0;overflow:hidden;background:var(--s3)}
+    .pc-avatar img{width:100%;height:100%;object-fit:cover}
+    .pc-info{flex:1;min-width:0}
+    .pc-name{font-size:13px;font-weight:700;color:#fff}
+    .pc-sub{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pc-outcome{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;flex-shrink:0;letter-spacing:.02em}
+    .oc-converted{background:var(--gn-dim);color:var(--green)}
+    .oc-dropped{background:var(--rd-dim);color:var(--red)}
+    .oc-undecided{background:var(--yw-dim);color:var(--yellow)}
+    .pc-score{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+    .pc-score-track{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px}
+    .pc-score-fill{height:3px;border-radius:2px}
+    .pc-score-val{font-size:11px;font-weight:700;width:28px;text-align:right}
+    .pc-expect{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:8px;padding:7px 9px;background:var(--s2);border-radius:6px;font-style:italic;border-left:2px solid rgba(239,104,32,.3)}
+    .pc-thoughts{display:flex;flex-direction:column;gap:3px;margin-bottom:9px}
+    .thought{font-size:10px;line-height:1.4;padding:5px 8px;border-radius:5px;display:flex;gap:5px;align-items:flex-start}
+    .ti{flex-shrink:0;width:11px;margin-top:1px;font-size:9px}
+    .t-norm{background:rgba(255,255,255,.025);color:#b0aca8}
+    .t-warn{background:rgba(251,191,36,.07);color:#c09038}
+    .t-fail{background:rgba(248,113,113,.07);color:#b06868}
+    .pc-tags{display:flex;gap:3px;flex-wrap:wrap}
+    .ptag{font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.04);color:var(--muted)}
+
+    /* ── Loading / Error ── */
+    .loading{display:flex;align-items:center;justify-content:center;height:200px;color:var(--muted);font-size:13px}
   </style>
 </head>
 <body>
 
-<h1>Betax Waitlist <span class="badge" id="badge">—</span></h1>
-<p class="sub">Admin dashboard · <span id="updated">loading…</span></p>
-
-<div class="stat-row">
-  <div class="stat"><div class="stat-num" id="s-total">—</div><div class="stat-lbl">Total signups</div></div>
-  <div class="stat"><div class="stat-num" id="s-today">—</div><div class="stat-lbl">Today</div></div>
-  <div class="stat"><div class="stat-num" id="s-week">—</div><div class="stat-lbl">This week</div></div>
-</div>
-
-<div class="header-row">
-  <div style="font-size:14px;font-weight:600;color:#fff">All entries</div>
-  <div style="display:flex;gap:8px">
-    <button class="export" onclick="exportCSV()">Export CSV</button>
-    <button class="refresh" onclick="load()">↻ Refresh</button>
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-txt">Bet<em>ax</em></div>
+    <div class="sb-logo-sub">Admin Dashboard</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-section">Navigation</div>
+    <div class="sb-item active" id="nav-waitlist" onclick="showTab('waitlist')">
+      <div class="sb-icon">📋</div>
+      <div class="sb-label">Waitlist</div>
+      <div class="sb-badge" id="sb-wl-count">—</div>
+    </div>
+    <div class="sb-item" id="nav-reports" onclick="showTab('reports')">
+      <div class="sb-icon">📊</div>
+      <div class="sb-label">Reports</div>
+      <div class="sb-badge" id="sb-rp-count">—</div>
+    </div>
+  </div>
+  <div class="sb-footer">
+    <div class="sb-footer-txt">© 2026 Betax</div>
   </div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>URL</th>
-      <th>Submitted</th>
-      <th>IP</th>
-      <th>Referrer</th>
-      <th>User Agent</th>
-    </tr>
-  </thead>
-  <tbody id="tbody"></tbody>
-</table>
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title" id="tb-title">Waitlist</div>
+    <div class="tb-sub" id="tb-sub">—</div>
+    <div class="tb-actions" id="tb-actions"></div>
+  </div>
+  <div class="content" id="main-content">
+    <div class="loading">Loading…</div>
+  </div>
+</div>
 
 <script>
 const token = new URLSearchParams(location.search).get('token') || '';
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmt = ts => {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+};
+const api = path => fetch(`${path}?token=${token}`).then(r => r.ok ? r.json() : Promise.reject(r.status));
+const avatarUrl = name => `https://api.dicebear.com/9.x/open-peeps/svg?seed=${encodeURIComponent(name)}&backgroundColor=0f0d0b,1a1714`;
 
-async function load() {
-  document.getElementById('updated').textContent = 'loading…';
-  const res = await fetch(`/api/admin/waitlist?token=${token}`);
-  if (!res.ok) { document.getElementById('tbody').innerHTML = '<tr><td colspan=6 class="empty">Unauthorized</td></tr>'; return; }
-  const { entries, count } = await res.json();
+let currentTab = 'waitlist';
+let waitlistData = null;
+let reportsData = null;
 
-  document.getElementById('badge').textContent = count;
-  document.getElementById('s-total').textContent = count;
-  document.getElementById('updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+// ── Init ──────────────────────────────────────────────────
+async function init() {
+  try {
+    const [wl, rp] = await Promise.all([
+      api('/api/admin/waitlist'),
+      api('/api/admin/reports'),
+    ]);
+    waitlistData = wl;
+    reportsData = rp;
+    document.getElementById('sb-wl-count').textContent = wl.count;
+    document.getElementById('sb-rp-count').textContent = rp.length;
+    showTab('waitlist');
+  } catch(e) {
+    document.getElementById('main-content').innerHTML = `<div class="loading">Unauthorized — check your token.</div>`;
+  }
+}
 
+// ── Tab switching ─────────────────────────────────────────
+function showTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('nav-' + tab).classList.add('active');
+  if (tab === 'waitlist') renderWaitlist();
+  else if (tab === 'reports') renderReportList();
+}
+
+// ── Waitlist ──────────────────────────────────────────────
+function renderWaitlist() {
+  document.getElementById('tb-title').textContent = 'Waitlist';
   const now = new Date();
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const weekStart  = new Date(todayStart); weekStart.setDate(weekStart.getDate() - 7);
-  document.getElementById('s-today').textContent = entries.filter(e => new Date(e.created_at) >= todayStart).length;
-  document.getElementById('s-week').textContent  = entries.filter(e => new Date(e.created_at) >= weekStart).length;
+  const entries = (waitlistData && waitlistData.entries) || [];
+  const today = entries.filter(e => new Date(e.created_at) >= todayStart).length;
+  const week  = entries.filter(e => new Date(e.created_at) >= weekStart).length;
+
+  document.getElementById('tb-sub').textContent = `Updated ${new Date().toLocaleTimeString()}`;
+  document.getElementById('tb-actions').innerHTML = `
+    <button class="btn btn-primary" onclick="exportCSV()">↓ Export CSV</button>
+    <button class="btn" onclick="refreshWaitlist()">↻ Refresh</button>
+  `;
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="stats">
+      <div class="stat"><div class="stat-num c-white">${entries.length}</div><div class="stat-lbl">Total signups</div></div>
+      <div class="stat"><div class="stat-num c-orange">${today}</div><div class="stat-lbl">Today</div></div>
+      <div class="stat"><div class="stat-num c-orange">${week}</div><div class="stat-lbl">This week</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>URL</th><th>Submitted</th><th>IP</th><th>Referrer</th><th>User Agent</th>
+        </tr></thead>
+        <tbody id="wl-tbody"></tbody>
+      </table>
+    </div>
+  `;
 
   if (!entries.length) {
-    document.getElementById('tbody').innerHTML = '<tr><td colspan=6 class="empty">No entries yet</td></tr>';
+    document.getElementById('wl-tbody').innerHTML = `<tr><td colspan=6 class="empty">No entries yet</td></tr>`;
     return;
   }
-
-  document.getElementById('tbody').innerHTML = entries.map((e, i) => `
+  document.getElementById('wl-tbody').innerHTML = entries.map((e, i) => `
     <tr>
-      <td style="color:#4a4540">${count - i}</td>
-      <td class="url" title="${esc(e.url)}">${esc(e.url)}</td>
-      <td class="time">${fmt(e.created_at)}</td>
-      <td class="ip">${esc(e.ip || '—')}</td>
-      <td class="ua" title="${esc(e.referrer || '')}">${esc(e.referrer || '—')}</td>
-      <td class="ua" title="${esc(e.user_agent || '')}">${esc(e.user_agent || '—')}</td>
+      <td class="td-dim">${entries.length - i}</td>
+      <td class="td-url" title="${esc(e.url)}">${esc(e.url)}</td>
+      <td class="td-dim">${fmt(e.created_at)}</td>
+      <td class="td-mono">${esc(e.ip||'—')}</td>
+      <td class="td-dim" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e.referrer||'')}">
+        ${esc(e.referrer||'—')}
+      </td>
+      <td class="td-mono" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e.user_agent||'')}">
+        ${esc(e.user_agent||'—')}
+      </td>
     </tr>
   `).join('');
 }
 
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmt(ts) {
-  if (!ts) return '—';
-  const d = new Date(ts);
-  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+async function refreshWaitlist() {
+  try {
+    waitlistData = await api('/api/admin/waitlist');
+    document.getElementById('sb-wl-count').textContent = waitlistData.count;
+    renderWaitlist();
+  } catch {}
 }
 
 function exportCSV() {
-  fetch(`/api/admin/waitlist?token=${token}`)
-    .then(r => r.json())
-    .then(({ entries }) => {
-      const rows = [['id','url','created_at','ip','referrer','user_agent']];
-      entries.forEach(e => rows.push([e.id, e.url, e.created_at, e.ip||'', e.referrer||'', e.user_agent||'']));
-      const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-      const a = document.createElement('a');
-      a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-      a.download = 'betax-waitlist.csv';
-      a.click();
-    });
+  const entries = (waitlistData && waitlistData.entries) || [];
+  const rows = [['id','url','created_at','ip','referrer','user_agent']];
+  entries.forEach(e => rows.push([e.id, e.url, e.created_at, e.ip||'', e.referrer||'', e.user_agent||'']));
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'betax-waitlist.csv';
+  a.click();
 }
 
-load();
+// ── Reports list ──────────────────────────────────────────
+function renderReportList() {
+  document.getElementById('tb-title').textContent = 'Reports';
+  document.getElementById('tb-sub').textContent = `${(reportsData||[]).length} report${(reportsData||[]).length!==1?'s':''}`;
+  document.getElementById('tb-actions').innerHTML = '';
+
+  if (!reportsData || !reportsData.length) {
+    document.getElementById('main-content').innerHTML = `<div class="loading">No reports yet.</div>`;
+    return;
+  }
+
+  const html = reportsData.map(r => {
+    const s = r.summary || {};
+    const total = s.total_personas || 0;
+    const convRate = s.conversion_rate != null ? s.conversion_rate + '%' : '—';
+    return `
+      <div class="rcard" onclick="openReport(${r.id})">
+        <div class="rcard-icon">📄</div>
+        <div class="rcard-info">
+          <div class="rcard-url">${esc(r.url)}</div>
+          <div class="rcard-meta">${r.run_date ? new Date(r.run_date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'} &nbsp;·&nbsp; ${esc(r.model||'—')} &nbsp;·&nbsp; ${total} personas</div>
+        </div>
+        <div class="rcard-stats">
+          <div class="rcs"><div class="rcs-num c-orange">${convRate}</div><div class="rcs-lbl">Conv.</div></div>
+          <div class="rcs"><div class="rcs-num c-green">${s.converted||0}</div><div class="rcs-lbl">Conv'd</div></div>
+          <div class="rcs"><div class="rcs-num c-red">${s.dropped||0}</div><div class="rcs-lbl">Dropped</div></div>
+        </div>
+        <div class="rcard-arrow">›</div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="sh"><div class="sh-label">All runs</div><div class="sh-line"></div></div>
+    <div class="report-list">${html}</div>
+  `;
+}
+
+// ── Report detail ─────────────────────────────────────────
+async function openReport(id) {
+  document.getElementById('tb-title').textContent = 'Report Detail';
+  document.getElementById('tb-sub').textContent = 'Loading…';
+  document.getElementById('tb-actions').innerHTML = '';
+  document.getElementById('main-content').innerHTML = `<div class="loading">Loading report…</div>`;
+
+  try {
+    const data = await api(`/api/admin/reports/${id}`);
+    renderReportDetail(data);
+  } catch(e) {
+    document.getElementById('main-content').innerHTML = `<div class="loading">Failed to load report.</div>`;
+  }
+}
+
+function renderReportDetail(data) {
+  const s = data.summary || {};
+  const total = s.total_personas || (data.personas || []).length;
+  const stages = data.stage_dropoff || [];
+  const issues = data.top_issues || [];
+  const personas = data.personas || [];
+
+  document.getElementById('tb-sub').textContent = `${total} personas · ${s.conversion_rate||0}% conversion`;
+  document.getElementById('tb-actions').innerHTML = `<button class="btn" onclick="renderReportList()">← Back to Reports</button>`;
+
+  // Build funnel HTML
+  const maxEntered = stages.length ? stages[0].entered : 1;
+  const funnelHTML = stages.map((st, i) => {
+    const pct = Math.round(st.entered / maxEntered * 100);
+    const isLast = i === stages.length - 1;
+    const barClass = isLast ? 'fb-end' : (st.drop_pct >= 15 ? 'fb-danger' : st.drop_pct >= 8 ? 'fb-warn' : 'fb-ok');
+    const badge = st.dropped > 0
+      ? `<div class="f-drop">−${st.dropped}</div>`
+      : `<div class="f-drop none">—</div>`;
+    return `
+      <div class="f-row">
+        <div class="f-stage-lbl">${esc(st.stage)}</div>
+        <div class="f-bar-wrap"><div class="f-bar ${barClass}" data-w="${pct}">${st.entered} users</div></div>
+        ${badge}
+        <div class="f-pct-lbl">${pct}%</div>
+      </div>
+      <div class="f-row" style="margin-top:-2px;margin-bottom:4px">
+        <div></div>
+        <div class="f-reason">${esc(st.main_reason)}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Issues HTML
+  const issuesHTML = issues.map(issue => `
+    <div class="issue">
+      <div class="issue-pri ${issue.priority.toLowerCase()}">${issue.priority}</div>
+      <div class="issue-body">
+        <div class="issue-title">${esc(issue.title)}</div>
+        <div class="issue-desc">${esc(issue.description)}</div>
+        <div class="issue-segs">${(issue.segments||[]).map(sg=>`<span class="iseg">${esc(sg)}</span>`).join('')}</div>
+      </div>
+      <div class="issue-count"><div class="n">${issue.affected}</div><div class="l">affected</div></div>
+    </div>
+  `).join('');
+
+  // Channel breakdown
+  const chMap = {};
+  personas.forEach(p => {
+    const ch = p.channel || '?';
+    if (!chMap[ch]) chMap[ch] = { t:0, c:0 };
+    chMap[ch].t++;
+    if (p.outcome === 'converted') chMap[ch].c++;
+  });
+  const topCh = Object.entries(chMap).sort((a,b)=>b[1].t-a[1].t).slice(0,5);
+  const chHTML = topCh.map(([ch, d]) => {
+    const p = Math.round(d.c/d.t*100);
+    return `
+      <div class="channel-row">
+        <div class="ch-name" title="${esc(ch)}">${esc(ch)}</div>
+        <div class="ch-track"><div class="ch-fill" style="width:${p}%"></div></div>
+        <div class="ch-pct">${p}%</div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="rd-header">
+      <div class="rd-url-tag">${esc(data.url||'')}</div>
+      <div class="rd-title">Persona Agent Evaluation</div>
+      <div class="rd-meta">${data.run_date ? new Date(data.run_date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '—'} &nbsp;·&nbsp; ${total} personas &nbsp;·&nbsp; ${esc(data.model||'—')}</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num c-white">${total}</div><div class="stat-lbl">Personas run</div></div>
+      <div class="stat"><div class="stat-num c-orange">${s.conversion_rate||0}%</div><div class="stat-lbl">Conversion rate</div></div>
+      <div class="stat"><div class="stat-num c-orange">${s.avg_score||0}/10</div><div class="stat-lbl">Avg score</div></div>
+      <div class="stat"><div class="stat-num c-green">${s.converted||0}</div><div class="stat-lbl">Converted</div></div>
+      <div class="stat"><div class="stat-num c-red">${s.dropped||0}</div><div class="stat-lbl">Dropped</div></div>
+      <div class="stat"><div class="stat-num c-yellow">${s.undecided||0}</div><div class="stat-lbl">Undecided</div></div>
+    </div>
+
+    <div class="sh"><div class="sh-label">Dropoff by stage</div><div class="sh-line"></div></div>
+    <div class="funnel-card">
+      <div class="fc-title">User journey — where they leave and why</div>
+      <div class="fc-sub">${stages.length} stages · ${s.dropped||0} total dropped</div>
+      ${funnelHTML}
+      <div class="f-outcomes">
+        <div class="f-oc"><div class="f-oc-dot" style="background:var(--green)"></div><span class="f-oc-val c-green">${s.converted||0}</span>&nbsp;<span style="color:var(--muted);font-size:11px">converted</span></div>
+        <div class="f-oc"><div class="f-oc-dot" style="background:var(--yellow)"></div><span class="f-oc-val c-yellow">${s.undecided||0}</span>&nbsp;<span style="color:var(--muted);font-size:11px">undecided</span></div>
+        <div class="f-oc"><div class="f-oc-dot" style="background:var(--red)"></div><span class="f-oc-val c-red">${s.dropped||0}</span>&nbsp;<span style="color:var(--muted);font-size:11px">dropped</span></div>
+        <div class="f-oc-rate"><strong style="color:var(--orange)">${s.conversion_rate||0}%</strong> conversion rate</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="sh"><div class="sh-label">Top issues</div><div class="sh-line"></div></div>
+        <div class="issue-list">${issuesHTML}</div>
+      </div>
+      <div>
+        <div class="sh"><div class="sh-label">Outcome breakdown</div><div class="sh-line"></div></div>
+        <div class="oc-panel">
+          <div class="oc-row">
+            <div class="oc-row-top"><span class="oc-label c-green">Converted</span><span class="oc-val c-green">${s.converted||0}</span></div>
+            <div class="oc-track"><div class="oc-fill gf" id="ocf-conv" style="width:0"></div></div>
+          </div>
+          <div class="oc-row">
+            <div class="oc-row-top"><span class="oc-label c-yellow">Undecided</span><span class="oc-val c-yellow">${s.undecided||0}</span></div>
+            <div class="oc-track"><div class="oc-fill yf" id="ocf-und" style="width:0"></div></div>
+          </div>
+          <div class="oc-row">
+            <div class="oc-row-top"><span class="oc-label c-red">Dropped</span><span class="oc-val c-red">${s.dropped||0}</span></div>
+            <div class="oc-track"><div class="oc-fill rf" id="ocf-drop" style="width:0"></div></div>
+          </div>
+          <div class="divh"></div>
+          <div class="score-big"><div class="score-num">${s.avg_score||0}</div><div class="score-sub">average score / 10</div></div>
+          <div class="divh"></div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px">Conversion by channel</div>
+          ${chHTML}
+        </div>
+      </div>
+    </div>
+
+    <div class="sh"><div class="sh-label">All personas</div><div class="sh-line"></div></div>
+    <div class="ftabs" id="ftabs"></div>
+    <div class="pgrid" id="pgrid"></div>
+  `;
+
+  // Animate bars
+  const t = s.total_personas || total || 1;
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.f-bar[data-w]').forEach(el => el.style.width = el.dataset.w + '%');
+    setTimeout(() => {
+      const setW = (id, val) => { const el = document.getElementById(id); if(el) el.style.width = (val/t*100)+'%'; };
+      setW('ocf-conv', s.converted||0);
+      setW('ocf-und',  s.undecided||0);
+      setW('ocf-drop', s.dropped||0);
+    }, 100);
+  });
+
+  // Filter tabs
+  const counts = { all: personas.length, converted: 0, dropped: 0, undecided: 0 };
+  personas.forEach(p => { if(counts[p.outcome] !== undefined) counts[p.outcome]++; });
+  document.getElementById('ftabs').innerHTML = ['all','converted','dropped','undecided'].map(o => `
+    <button class="ftab${o==='all'?' active':''}" data-f="${o}">${o.charAt(0).toUpperCase()+o.slice(1)} <span class="fbadge">${counts[o]}</span></button>
+  `).join('');
+  document.querySelectorAll('.ftab').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.ftab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    renderPersonas(personas, b.dataset.f);
+  }));
+
+  renderPersonas(personas, 'all');
+}
+
+function renderPersonas(all, filter) {
+  const list = filter === 'all' ? all : all.filter(p => p.outcome === filter);
+  if (!list.length) {
+    document.getElementById('pgrid').innerHTML = `<div class="loading">No personas.</div>`;
+    return;
+  }
+  const scoreColor = s => s>=7?'var(--green)':s>=5?'var(--yellow)':'var(--red)';
+  const outcomeLabel = { converted:'✓ Converted', dropped:'✗ Dropped', undecided:'~ Undecided' };
+  document.getElementById('pgrid').innerHTML = list.map(p => {
+    const sc = scoreColor(p.score);
+    const tech = p.tech_comfort || p.tech || 0;
+    return `
+      <div class="pcard">
+        <div class="pc-top">
+          <div class="pc-avatar">
+            <img src="${avatarUrl(p.name)}" alt="${esc(p.name)}" loading="lazy" onerror="this.parentElement.style.background='var(--s3)'"/>
+          </div>
+          <div class="pc-info">
+            <div class="pc-name">${esc(p.name)}</div>
+            <div class="pc-sub">${p.age||''} · ${esc(p.location||'')} · ${esc(p.role||'')}</div>
+          </div>
+          <div class="pc-outcome oc-${p.outcome}">${outcomeLabel[p.outcome]||p.outcome}</div>
+        </div>
+        <div class="pc-score">
+          <div class="pc-score-track"><div class="pc-score-fill" style="width:${(p.score||0)*10}%;background:${sc}"></div></div>
+          <div class="pc-score-val" style="color:${sc}">${p.score||0}/10</div>
+        </div>
+        <div class="pc-expect">${esc(p.pre_expectation||p.key_moment||'')}</div>
+        <div class="pc-thoughts">
+          ${(p.thoughts||[]).map(t=>`
+            <div class="thought t-${t.type}">
+              <div class="ti">${t.type==='fail'?'✗':t.type==='warn'?'⚠':'→'}</div>
+              <div>${esc(t.quote)}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="pc-tags">
+          <span class="ptag">tech ${tech}/10</span>
+          <span class="ptag">${esc(p.channel||'')}</span>
+          <span class="ptag">${esc(p.use_case||'')}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+init();
 </script>
 </body>
 </html>
