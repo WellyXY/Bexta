@@ -928,6 +928,9 @@ app.get('/api/waitlist/count', async (req, res) => {
   res.json({ count: memoryList.length });
 });
 
+app.get('/privacy', (req, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
+app.get('/terms', (req, res) => res.sendFile(path.join(__dirname, 'terms.html')));
+
 app.use(express.static(__dirname, {
   maxAge: '7d',
   setHeaders: (res, filePath) => {
