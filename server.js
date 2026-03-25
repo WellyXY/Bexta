@@ -251,6 +251,16 @@ app.get('/api/waitlist/count', async (req, res) => {
   res.json({ count: memoryList.length });
 });
 
+app.use(express.static(__dirname, {
+  maxAge: '7d',
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.png') || filePath.endsWith('.jpg'))
+      res.setHeader('Cache-Control', 'public, max-age=604800');
+    if (filePath.endsWith('.xml') || filePath.endsWith('.txt'))
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+  },
+}));
+
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 initDB()
