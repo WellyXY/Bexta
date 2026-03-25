@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Racoonn — Know Why Users Leave</title>
-  <meta name="description" content="Run 5,000 AI persona agents on your product. Get real drop-off data, inner monologues, and prioritized issues — in 28 minutes. No recruiters. No waiting weeks."/>
-  <meta name="keywords" content="user testing, AI personas, conversion rate, drop-off analysis, landing page optimization, UX research"/>
+  <title>Racoonn — AI User Testing | Know Why Users Leave</title>
+  <meta name="description" content="Run 5,000 AI persona agents on your product. Get drop-off data, inner monologues, and prioritized UX issues in 28 minutes. Starts at $49."/>
+  <meta name="keywords" content="AI user testing, persona agents, conversion rate optimization, drop-off analysis, landing page optimization, UX research, AI UX tool"/>
   <meta name="author" content="Racoonn"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://racoonn.me/"/>
-  <meta property="og:title" content="Racoonn — Know Why Users Leave"/>
-  <meta property="og:description" content="Run 5,000 AI persona agents on your product. Real drop-off data and inner monologues in 28 minutes."/>
+  <meta property="og:title" content="Racoonn — AI User Testing | Know Why Users Leave"/>
+  <meta property="og:description" content="5,000 AI persona agents test your product and tell you where users drop off and why — in 28 minutes."/>
+  <meta property="og:image" content="https://racoonn.me/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
   <meta property="og:site_name" content="Racoonn"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Racoonn — Know Why Users Leave"/>
+  <meta name="twitter:title" content="Racoonn — AI User Testing | Know Why Users Leave"/>
   <meta name="twitter:description" content="5,000 AI persona agents test your product and tell you exactly why users leave."/>
+  <meta name="twitter:image" content="https://racoonn.me/og-image.png"/>
   <link rel="canonical" href="https://racoonn.me/"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="theme-color" content="#18140F"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/></noscript>
+  <link rel="apple-touch-icon" href="https://racoonn.me/og-image.png"/>
   <style>
     /* ─── Design tokens (8px grid, warm palette, Linear-inspired) ─── */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -37,6 +44,7 @@
     }
     html{scroll-behavior:smooth}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-size:16px;line-height:1.5}
+    @font-face{font-family:'Inter';font-display:swap;src:local('Inter')}
 
     /* ── Utility ── */
     .mx{max-width:1160px;margin:0 auto;padding:0 48px}
@@ -374,6 +382,9 @@
 
     footer{background:var(--bg2);border-top:1px solid var(--brd2);padding:24px 48px;display:flex;align-items:center;justify-content:space-between}
     .f-logo{font-weight:900;font-size:14px;color:var(--ink);display:flex;align-items:center;gap:6px}
+    .f-links{display:flex;gap:20px}
+    .f-links a{font-size:12px;color:var(--ink2);text-decoration:none;transition:color .15s}
+    .f-links a:hover{color:var(--ink)}
     .f-copy{font-size:12px;color:var(--ink3)}
 
     /* ── Responsive ── */
@@ -416,6 +427,38 @@
     .ea-success-icon{font-size:48px;margin-bottom:16px}
     .ea-success-title{font-size:20px;font-weight:900;margin-bottom:8px}
     .ea-success-sub{font-size:14px;color:var(--ink2);line-height:1.6}
+
+    /* ── Agent Feed Panel ── */
+    .feed-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--brd)}
+    .feed-status{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--ink2)}
+    .feed-pulse{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:fpulse 1.5s ease-in-out infinite}
+    @keyframes fpulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.8;box-shadow:0 0 0 5px rgba(34,197,94,0)}}
+    .feed-time{font-size:11px;font-weight:700;color:var(--or);background:var(--ol);padding:3px 10px;border-radius:100px}
+    .feed-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+    .feed-row{display:flex;gap:10px;padding:10px 12px;background:var(--cream);border-radius:12px;border:1px solid transparent;transition:border-color .2s}
+    .feed-row.converted{border-color:rgba(34,197,94,.2);background:rgba(34,197,94,.04)}
+    .feed-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-top:2px}
+    .feed-info{flex:1;min-width:0}
+    .feed-name{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .feed-intent{font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;letter-spacing:.03em}
+    .feed-intent.skeptic{background:rgba(239,68,68,.1);color:#dc2626}
+    .feed-intent.compare{background:rgba(59,130,246,.1);color:#2563eb}
+    .feed-intent.buy{background:rgba(34,197,94,.1);color:#16a34a}
+    .feed-intent.browse{background:var(--ol);color:var(--or)}
+    .feed-path{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-bottom:4px}
+    .fp{font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;background:rgba(24,20,15,.06);color:var(--ink2)}
+    .fp.ok{background:rgba(34,197,94,.1);color:#15803d}
+    .fp.warn{background:rgba(251,191,36,.12);color:#b45309}
+    .fp.fail{background:rgba(239,68,68,.1);color:#dc2626}
+    .fp.conv{background:rgba(34,197,94,.15);color:#15803d;font-weight:800}
+    .fp-arr{font-size:10px;color:var(--ink3)}
+    .feed-quote{font-size:10px;color:var(--ink3);font-style:italic;line-height:1.4}
+    .feed-more{font-size:11px;color:var(--ink3);text-align:center;padding:6px 0;font-style:italic}
+    .feed-summary{display:flex;gap:0;border-top:1px solid var(--brd);padding-top:12px}
+    .feed-stat{flex:1;text-align:center;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--brd)}
+    .feed-stat:last-child{border-right:none}
+    .feed-stat-n{font-size:20px;font-weight:900;letter-spacing:-.5px;line-height:1}
+    .feed-stat-l{font-size:10px;color:var(--ink3);font-weight:600}
   </style>
 
   <!-- JSON-LD Structured Data -->
@@ -432,7 +475,8 @@
       "@type": "Offer",
       "price": "49",
       "priceCurrency": "USD",
-      "description": "Per analysis run"
+      "description": "Per analysis run",
+      "availability": "https://schema.org/PreOrder"
     },
     "featureList": [
       "5,000 AI persona agents",
@@ -445,7 +489,19 @@
       "@type": "Organization",
       "name": "Racoonn",
       "url": "https://racoonn.me"
-    }
+    },
+    "datePublished": "2026-03-24"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Racoonn",
+    "url": "https://racoonn.me",
+    "logo": "https://racoonn.me/og-image.png",
+    "description": "AI-powered user testing platform — 5,000 persona agents test your product and report why users leave.",
+    "sameAs": []
   }
   </script>
   <script type="application/ld+json">
@@ -501,10 +557,11 @@
   </ul>
   <button class="btn-nav" onclick="showModal()">Get Early Access</button>
 </nav>
-<main id="main-content">
+<noscript><div style="padding:20px;text-align:center;font-family:sans-serif">Racoonn requires JavaScript for the full interactive experience. <a href="mailto:hello@racoonn.me">Contact us</a> for more info.</div></noscript>
+<main id="main-content" role="main">
 
 <!-- ① HERO -->
-<div class="hero">
+<section class="hero" aria-label="Hero">
   <div class="hero-left">
     <div class="hero-label"><span class="hero-dot"></span>Now in early access</div>
     <h1>You think users<br/>get your product.<br/><em>They left at second 30.</em></h1>
@@ -567,7 +624,7 @@
       <div class="dp-products">Notion · Stripe · Figma · Airbnb · Linear · Vercel · Loom · Miro · Framer · Raycast · Superhuman · Cron · Clerk · Resend · PlanetScale · Neon · +484 more</div>
     </div>
   </div>
-</div><!-- end .hero -->
+</section><!-- end .hero -->
 
 <!-- ② PROBLEM -->
 <section class="problem" id="problem">
@@ -661,53 +718,69 @@
             <strong style="color:var(--ink)">Trained on 500+ top B2C products</strong> — every insight is grounded in what actually converts, not generic UX theory.
           </div>
         </div>
-        <!-- Panel 02: Agent process SVG diagram -->
-        <div class="hpanel" id="hpanel-1" style="padding:0;overflow:hidden">
-          <div class="ar-diagram-header" style="font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--or);background:rgba(239,104,32,.1);padding:9px 20px;border-bottom:1px solid rgba(239,104,32,.12);text-align:center">HOW 5,000 AGENTS RUN YOUR PRODUCT</div>
-          <svg class="ar-svg" viewBox="0 0 400 310" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width:100%;display:block;padding:12px 8px">
-            <!-- Cross lines (X pattern) -->
-            <line x1="88" y1="55" x2="312" y2="255" stroke="rgba(239,104,32,.15)" stroke-width="1.5" stroke-dasharray="5,4"/>
-            <line x1="312" y1="55" x2="88" y2="255" stroke="rgba(239,104,32,.15)" stroke-width="1.5" stroke-dasharray="5,4"/>
-            <!-- Main lines -->
-            <line x1="88" y1="55" x2="312" y2="55" stroke="rgba(239,104,32,.3)" stroke-width="1.5"/>
-            <line x1="88" y1="55" x2="200" y2="155" stroke="rgba(239,104,32,.3)" stroke-width="1.5"/>
-            <line x1="312" y1="55" x2="200" y2="155" stroke="rgba(239,104,32,.3)" stroke-width="1.5"/>
-            <line x1="200" y1="155" x2="88" y2="255" stroke="rgba(239,104,32,.3)" stroke-width="1.5"/>
-            <line x1="200" y1="155" x2="312" y2="255" stroke="rgba(239,104,32,.3)" stroke-width="1.5"/>
-            <line x1="88" y1="255" x2="312" y2="255" stroke="rgba(239,104,32,.3)" stroke-width="1.5"/>
-            <!-- N1 Agent Selection -->
-            <circle cx="88" cy="55" r="21" fill="#18140F"/>
-            <text x="88" y="61" text-anchor="middle" fill="white" font-size="12" font-weight="900" font-family="Inter,sans-serif">01</text>
-            <rect x="6" y="82" width="110" height="32" rx="7" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
-            <text x="61" y="96" text-anchor="middle" fill="#18140F" font-size="9" font-weight="700" font-family="Inter,sans-serif">AGENT SELECTION</text>
-            <text x="61" y="107" text-anchor="middle" fill="#A09890" font-size="8" font-family="Inter,sans-serif">matched to your market</text>
-            <!-- N2 Intent + Message -->
-            <circle cx="312" cy="55" r="21" fill="#18140F"/>
-            <text x="312" y="61" text-anchor="middle" fill="white" font-size="12" font-weight="900" font-family="Inter,sans-serif">02</text>
-            <rect x="284" y="82" width="110" height="32" rx="7" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
-            <text x="339" y="96" text-anchor="middle" fill="#18140F" font-size="9" font-weight="700" font-family="Inter,sans-serif">INTENT + MESSAGE</text>
-            <text x="339" y="107" text-anchor="middle" fill="#A09890" font-size="8" font-family="Inter,sans-serif">unique entry context</text>
-            <!-- N3 Live Browsing (center, orange) -->
-            <circle cx="200" cy="155" r="21" fill="#EF6820"/>
-            <text x="200" y="161" text-anchor="middle" fill="white" font-size="12" font-weight="900" font-family="Inter,sans-serif">03</text>
-            <rect x="144" y="182" width="112" height="32" rx="7" fill="white" stroke="rgba(239,104,32,.2)" stroke-width="1"/>
-            <text x="200" y="196" text-anchor="middle" fill="#18140F" font-size="9" font-weight="700" font-family="Inter,sans-serif">LIVE BROWSING</text>
-            <text x="200" y="207" text-anchor="middle" fill="#A09890" font-size="8" font-family="Inter,sans-serif">scroll · click · navigate</text>
-            <!-- N4 Drop-off -->
-            <circle cx="88" cy="255" r="21" fill="#18140F"/>
-            <text x="88" y="261" text-anchor="middle" fill="white" font-size="12" font-weight="900" font-family="Inter,sans-serif">04</text>
-            <rect x="6" y="222" width="110" height="27" rx="7" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
-            <text x="61" y="234" text-anchor="middle" fill="#18140F" font-size="9" font-weight="700" font-family="Inter,sans-serif">DROP-OFF DETECTED</text>
-            <text x="61" y="244" text-anchor="middle" fill="#A09890" font-size="8" font-family="Inter,sans-serif">where &amp; why they left</text>
-            <!-- N5 Report + Fixes -->
-            <circle cx="312" cy="255" r="21" fill="#18140F"/>
-            <text x="312" y="261" text-anchor="middle" fill="white" font-size="12" font-weight="900" font-family="Inter,sans-serif">05</text>
-            <rect x="284" y="222" width="110" height="27" rx="7" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
-            <text x="339" y="234" text-anchor="middle" fill="#18140F" font-size="9" font-weight="700" font-family="Inter,sans-serif">REPORT + FIXES</text>
-            <text x="339" y="244" text-anchor="middle" fill="#A09890" font-size="8" font-family="Inter,sans-serif">ranked issues &amp; actions</text>
-          </svg>
-          <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);background:rgba(24,20,15,.04);padding:7px 20px;border-top:1px solid rgba(24,20,15,.05);display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block"></span>AUTO-SYNTHESIZED · 28 MIN</div>
+        <!-- Panel 02: Agent activity feed -->
+        <div class="hpanel" id="hpanel-1" style="padding:20px 24px;display:none">
+          <div class="feed-header">
+            <div class="feed-status"><span class="feed-pulse"></span>LIVE RUN · 5,000 AGENTS</div>
+            <div class="feed-time">28 min</div>
+          </div>
+          <div class="feed-list">
+            <div class="feed-row">
+              <img class="feed-av" src="https://i.pravatar.cc/40?img=47" alt="Mei"/>
+              <div class="feed-info">
+                <div class="feed-name">Mei, 21 · Singapore <span class="feed-intent skeptic">Skeptic</span></div>
+                <div class="feed-path">
+                  <span class="fp ok">Hero</span><span class="fp-arr">→</span>
+                  <span class="fp ok">Features</span><span class="fp-arr">→</span>
+                  <span class="fp fail">Pricing ✗</span>
+                </div>
+                <div class="feed-quote">"No free trial visible. Too risky to commit."</div>
+              </div>
+            </div>
+            <div class="feed-row">
+              <img class="feed-av" src="https://i.pravatar.cc/40?img=11" alt="Tyler"/>
+              <div class="feed-info">
+                <div class="feed-name">Tyler, 29 · Texas <span class="feed-intent compare">Comparing</span></div>
+                <div class="feed-path">
+                  <span class="fp ok">Hero</span><span class="fp-arr">→</span>
+                  <span class="fp ok">Demo</span><span class="fp-arr">→</span>
+                  <span class="fp warn">Signup ⚠</span>
+                </div>
+                <div class="feed-quote">"Asked for credit card too early."</div>
+              </div>
+            </div>
+            <div class="feed-row converted">
+              <img class="feed-av" src="https://i.pravatar.cc/40?img=57" alt="Klaus"/>
+              <div class="feed-info">
+                <div class="feed-name">Klaus, 54 · Berlin <span class="feed-intent buy">Ready to buy</span></div>
+                <div class="feed-path">
+                  <span class="fp ok">Hero</span><span class="fp-arr">→</span>
+                  <span class="fp ok">Pricing</span><span class="fp-arr">→</span>
+                  <span class="fp ok">Signup</span><span class="fp-arr">→</span>
+                  <span class="fp conv">Converted ✓</span>
+                </div>
+                <div class="feed-quote">"Annual plan was clear. Signed up immediately."</div>
+              </div>
+            </div>
+            <div class="feed-row">
+              <img class="feed-av" src="https://i.pravatar.cc/40?img=25" alt="Ana"/>
+              <div class="feed-info">
+                <div class="feed-name">Ana, 36 · São Paulo <span class="feed-intent browse">Browsing</span></div>
+                <div class="feed-path">
+                  <span class="fp fail">Hero ✗</span>
+                </div>
+                <div class="feed-quote">"Didn't understand it in 5 seconds."</div>
+              </div>
+            </div>
+            <div class="feed-more">+ 4,996 more agents running in parallel...</div>
+          </div>
+          <div class="feed-summary">
+            <div class="feed-stat"><span class="feed-stat-n" style="color:#22c55e">18%</span><span class="feed-stat-l">converted</span></div>
+            <div class="feed-stat"><span class="feed-stat-n" style="color:#ef4444">3</span><span class="feed-stat-l">critical issues</span></div>
+            <div class="feed-stat"><span class="feed-stat-n" style="color:var(--or)">28m</span><span class="feed-stat-l">total time</span></div>
+          </div>
         </div>
+
         <!-- Panel 03: Report preview -->
         <div class="hpanel" id="hpanel-2">
           <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:16px">Step 03 — Your report</div>
@@ -940,7 +1013,12 @@
 </main>
 <footer>
   <div class="f-logo"><span class="logo-dot"></span>Racoonn</div>
-  <div class="f-copy">© 2026 Racoonn · Know why users leave.</div>
+  <nav class="f-links" aria-label="Footer navigation">
+    <a href="mailto:hello@racoonn.me">Contact</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+  </nav>
+  <div class="f-copy">© 2026 Racoonn · AI-powered user testing · Know why users leave.</div>
 </footer>
 
 <script>
