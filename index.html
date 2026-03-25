@@ -245,6 +245,94 @@
     .panel-conv-num{font-size:36px;font-weight:900;color:var(--or);letter-spacing:-1px;line-height:1}
     .panel-conv-label{font-size:13px;color:var(--ink2);line-height:1.5}
 
+
+    /* ─────────────────────────────────
+       ③b AGENT RUN — detail section
+    ───────────────────────────────── */
+    .ar-section{padding:96px 48px;background:var(--bg)}
+    .ar-inner{max-width:1160px;margin:0 auto}
+    .ar-top{margin-bottom:52px;max-width:640px}
+    .ar-eyebrow{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--or);display:block;margin-bottom:12px}
+    .ar-h{font-size:clamp(28px,3.5vw,46px);font-weight:900;letter-spacing:-1.4px;line-height:1.1;margin-bottom:14px}
+    .ar-h em{font-style:normal;color:var(--or)}
+    .ar-sub{font-size:16px;color:var(--ink2);line-height:1.7}
+    .ar-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+    /* Accordion */
+    .asteps{display:flex;flex-direction:column;gap:6px}
+    .astep{border-radius:18px;padding:20px 22px;cursor:pointer;border:2px solid transparent;background:transparent;transition:all .3s cubic-bezier(.4,0,.2,1);user-select:none}
+    .astep:hover:not(.active){background:rgba(24,20,15,.03)}
+    .astep.active{background:#fff;border-color:var(--brd);box-shadow:0 2px 20px rgba(24,20,15,.06)}
+    .astep-head{display:flex;align-items:center;gap:18px}
+    .astep-num{font-size:44px;font-weight:900;letter-spacing:-2px;line-height:1;flex-shrink:0;color:rgba(239,104,32,.25);transition:all .3s}
+    .astep.active .astep-num{font-size:64px;color:var(--or)}
+    .astep-label{font-size:14px;font-weight:700;color:var(--ink2);transition:all .3s;line-height:1.3}
+    .astep.active .astep-label{font-size:16px;color:var(--ink)}
+    .astep-body{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s ease,margin .3s ease;margin-top:0}
+    .astep.active .astep-body{max-height:160px;opacity:1;margin-top:12px}
+    .astep-desc{font-size:13px;color:var(--ink2);line-height:1.7;margin-left:82px}
+    /* Right panels */
+    .ar-panel{position:sticky;top:100px}
+    .apanel{display:none;background:#fff;border-radius:20px;padding:28px;border:1px solid var(--brd);min-height:380px;box-shadow:0 4px 32px rgba(24,20,15,.06)}
+    .apanel.active{display:block}
+    .apanel-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:18px}
+    /* Panel 1: Agent grid */
+    .ag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .ag-card{background:var(--cream);border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1.5px solid transparent;transition:border-color .2s}
+    .ag-card.sel{border-color:var(--or);background:rgba(239,104,32,.04)}
+    .ag-av{width:40px;height:40px;border-radius:50%;object-fit:cover}
+    .ag-name{font-size:11px;font-weight:700;color:var(--ink);text-align:center;line-height:1.2}
+    .ag-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;background:var(--ol);color:var(--or)}
+    .ag-note{font-size:12px;color:var(--ink2);padding:10px 12px;background:var(--cream);border-radius:10px;line-height:1.5}
+    /* Panel 2: Intent calibration */
+    .int-rows{display:flex;flex-direction:column;gap:8px}
+    .int-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--cream);border-radius:12px}
+    .int-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .int-label{flex:1;min-width:0}
+    .int-name{font-size:12px;font-weight:700;color:var(--ink)}
+    .int-intent{font-size:11px;color:var(--ink2);margin-top:1px}
+    .int-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+    .int-badge.buy{background:rgba(34,197,94,.12);color:#16a34a}
+    .int-badge.compare{background:rgba(59,130,246,.12);color:#2563eb}
+    .int-badge.browse{background:var(--ol);color:var(--or)}
+    .int-badge.skeptic{background:rgba(239,68,68,.1);color:#dc2626}
+    /* Panel 3: Browsing flow */
+    .browse-frame{background:var(--dark);border-radius:14px;padding:12px;margin-bottom:14px}
+    .browse-bar{background:rgba(255,255,255,.08);border-radius:8px;padding:6px 12px;font-size:11px;color:rgba(255,255,255,.4);font-family:monospace;margin-bottom:10px}
+    .browse-steps{display:flex;flex-direction:column;gap:6px}
+    .browse-step{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.7)}
+    .browse-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+    .browse-dot.ok{background:rgba(34,197,94,.2);color:#4ade80}
+    .browse-dot.warn{background:rgba(251,191,36,.2);color:#fbbf24}
+    .browse-dot.fail{background:rgba(239,68,68,.2);color:#f87171}
+    .browse-time{font-size:10px;color:rgba(255,255,255,.3);margin-left:auto}
+    /* Panel 4: Drop-off */
+    .drop-rows{display:flex;flex-direction:column;gap:8px}
+    .drop-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--cream)}
+    .drop-av{width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .drop-bar-wrap{flex:1;min-width:0}
+    .drop-bar-name{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:4px}
+    .drop-bar-track{height:5px;background:var(--brd);border-radius:100px;overflow:hidden;position:relative}
+    .drop-bar-fill{height:100%;border-radius:100px;transition:width 1s ease}
+    .drop-x{font-size:12px;margin-left:4px}
+    .drop-reason{font-size:10px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    /* Panel 5: Report */
+    .rp-issues{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+    .rp-issue{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--cream);border-radius:12px}
+    .rp-pri{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;flex-shrink:0}
+    .rp-pri.p1{background:rgba(239,68,68,.12);color:#dc2626}
+    .rp-pri.p2{background:rgba(251,191,36,.12);color:#b45309}
+    .rp-issue-text{font-size:12px;color:var(--ink);flex:1;line-height:1.4}
+    .rp-issue-n{font-size:11px;color:var(--ink3);white-space:nowrap}
+    .rp-fix{background:rgba(239,104,32,.06);border:1px solid rgba(239,104,32,.15);border-radius:12px;padding:12px 14px}
+    .rp-fix-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--or);margin-bottom:8px}
+    .rp-fix-item{font-size:12px;color:var(--ink2);display:flex;gap:6px;margin-bottom:4px;line-height:1.4}
+    .rp-fix-item::before{content:'→';color:var(--or);flex-shrink:0;font-weight:700}
+    @media(max-width:960px){
+      .ar-section{padding:64px 20px}
+      .ar-grid{grid-template-columns:1fr}
+      .ar-panel{display:none}
+    }
+
     /* ─────────────────────────────────
        ④ EXAMPLE REPORT — Star section
     ───────────────────────────────── */
@@ -715,6 +803,230 @@
   </div>
 </section>
 
+<!-- ③b AGENT RUN — detail -->
+<section class="ar-section" id="agent-run">
+  <div class="ar-inner">
+    <div class="ar-top">
+      <span class="ar-eyebrow">Under the Hood</span>
+      <h2 class="ar-h">5,000 agents.<br/><em>One 28-minute run.</em></h2>
+      <p class="ar-sub">Every agent is handpicked, calibrated with a unique intent, and browses your product just like a real user — independently making decisions, hitting dead ends, and recording exactly why they left.</p>
+    </div>
+    <div class="ar-grid">
+      <!-- Left: accordion -->
+      <div class="asteps">
+        <div class="astep active" onclick="selectAStep(0)">
+          <div class="astep-head">
+            <div class="astep-num">01</div>
+            <div class="astep-label">Agent Selection</div>
+          </div>
+          <div class="astep-body">
+            <p class="astep-desc">We pull from a pool of 5,000 diverse profiles — matched to your market by age, country, role, and tech fluency. No random sampling: each agent is weighted to reflect your real target audience.</p>
+          </div>
+        </div>
+        <div class="astep" onclick="selectAStep(1)">
+          <div class="astep-head">
+            <div class="astep-num">02</div>
+            <div class="astep-label">Intent &amp; Message Calibration</div>
+          </div>
+          <div class="astep-body">
+            <p class="astep-desc">Each agent arrives with a unique intent — comparing tools, ready to buy, casually browsing, or skeptical. They also "see" your real marketing copy, so their reaction is grounded in your actual message.</p>
+          </div>
+        </div>
+        <div class="astep" onclick="selectAStep(2)">
+          <div class="astep-head">
+            <div class="astep-num">03</div>
+            <div class="astep-label">Live Product Browsing</div>
+          </div>
+          <div class="astep-body">
+            <p class="astep-desc">Agents autonomously scroll, click, read, and navigate your product. They follow no script — each session is unique, driven by the agent's persona and intent, simulating genuine first-time user behavior.</p>
+          </div>
+        </div>
+        <div class="astep" onclick="selectAStep(3)">
+          <div class="astep-head">
+            <div class="astep-num">04</div>
+            <div class="astep-label">Independent Drop-off Detection</div>
+          </div>
+          <div class="astep-body">
+            <p class="astep-desc">When an agent hits confusion, frustration, or a dead end, they decide to leave — and log exactly where and why. No guessing: each drop-off includes the agent's inner monologue at the moment they quit.</p>
+          </div>
+        </div>
+        <div class="astep" onclick="selectAStep(4)">
+          <div class="astep-head">
+            <div class="astep-num">05</div>
+            <div class="astep-label">Report &amp; Design Fixes</div>
+          </div>
+          <div class="astep-body">
+            <p class="astep-desc">All sessions are synthesized into a prioritized report — ranked issues, affected persona segments, conversion funnel data, and specific, actionable design recommendations your team can ship this week.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Right: visual panels -->
+      <div class="ar-panel">
+        <!-- Panel 01: Agent Selection -->
+        <div class="apanel active" id="apanel-0">
+          <div class="apanel-label">Step 01 — Agent Pool</div>
+          <div class="ag-grid">
+            <div class="ag-card sel">
+              <img class="ag-av" src="https://i.pravatar.cc/80?img=47" alt="Mei"/>
+              <div class="ag-name">Mei, 21<br/>Singapore</div>
+              <div class="ag-tag">SaaS Founder</div>
+            </div>
+            <div class="ag-card sel">
+              <img class="ag-av" src="https://i.pravatar.cc/80?img=11" alt="Tyler"/>
+              <div class="ag-name">Tyler, 29<br/>Texas, US</div>
+              <div class="ag-tag">Marketer</div>
+            </div>
+            <div class="ag-card">
+              <img class="ag-av" src="https://i.pravatar.cc/80?img=25" alt="Ana"/>
+              <div class="ag-name">Ana, 36<br/>São Paulo</div>
+              <div class="ag-tag">Designer</div>
+            </div>
+            <div class="ag-card sel">
+              <img class="ag-av" src="https://i.pravatar.cc/80?img=57" alt="Klaus"/>
+              <div class="ag-name">Klaus, 54<br/>Berlin</div>
+              <div class="ag-tag">CTO</div>
+            </div>
+            <div class="ag-card">
+              <img class="ag-av" src="https://i.pravatar.cc/80?img=9" alt="Priya"/>
+              <div class="ag-name">Priya, 27<br/>Bangalore</div>
+              <div class="ag-tag">PM</div>
+            </div>
+            <div class="ag-card sel">
+              <img class="ag-av" src="https://i.pravatar.cc/80?img=16" alt="Léa"/>
+              <div class="ag-name">Léa, 24<br/>Paris</div>
+              <div class="ag-tag">Freelancer</div>
+            </div>
+          </div>
+          <div class="ag-note">Highlighted agents match your product's target market. Weights are applied so the distribution mirrors real traffic — not a random sample.</div>
+        </div>
+        <!-- Panel 02: Intent Calibration -->
+        <div class="apanel" id="apanel-1">
+          <div class="apanel-label">Step 02 — Intent Assignment</div>
+          <div class="int-rows">
+            <div class="int-row">
+              <img class="int-av" src="https://i.pravatar.cc/80?img=47" alt="Mei"/>
+              <div class="int-label">
+                <div class="int-name">Mei, 21 · Singapore</div>
+                <div class="int-intent">Saw your tweet. Curious but skeptical about AI tools.</div>
+              </div>
+              <div class="int-badge skeptic">Skeptic</div>
+            </div>
+            <div class="int-row">
+              <img class="int-av" src="https://i.pravatar.cc/80?img=11" alt="Tyler"/>
+              <div class="int-label">
+                <div class="int-name">Tyler, 29 · Texas</div>
+                <div class="int-intent">Googled "user testing alternative". Comparing 3 tools.</div>
+              </div>
+              <div class="int-badge compare">Comparing</div>
+            </div>
+            <div class="int-row">
+              <img class="int-av" src="https://i.pravatar.cc/80?img=57" alt="Klaus"/>
+              <div class="int-label">
+                <div class="int-name">Klaus, 54 · Berlin</div>
+                <div class="int-intent">Budget approved. Ready to buy if pricing is clear.</div>
+              </div>
+              <div class="int-badge buy">Ready to buy</div>
+            </div>
+            <div class="int-row">
+              <img class="int-av" src="https://i.pravatar.cc/80?img=16" alt="Léa"/>
+              <div class="int-label">
+                <div class="int-name">Léa, 24 · Paris</div>
+                <div class="int-intent">Friend recommended it. Just browsing for now.</div>
+              </div>
+              <div class="int-badge browse">Browsing</div>
+            </div>
+          </div>
+        </div>
+        <!-- Panel 03: Live Browsing -->
+        <div class="apanel" id="apanel-2">
+          <div class="apanel-label">Step 03 — Agent Session · Mei, 21 · Singapore</div>
+          <div class="browse-frame">
+            <div class="browse-bar">https://yourproduct.com</div>
+            <div class="browse-steps">
+              <div class="browse-step"><div class="browse-dot ok">✓</div><span>Landed on homepage. Read hero headline.</span><span class="browse-time">0:04</span></div>
+              <div class="browse-step"><div class="browse-dot ok">✓</div><span>Scrolled to "How it works" section.</span><span class="browse-time">0:22</span></div>
+              <div class="browse-step"><div class="browse-dot warn">?</div><span>Clicked pricing — saw "Contact us" only.</span><span class="browse-time">0:41</span></div>
+              <div class="browse-step"><div class="browse-dot warn">?</div><span>Searched for a free trial button. Not found.</span><span class="browse-time">0:58</span></div>
+              <div class="browse-step"><div class="browse-dot fail">✗</div><span>Left tab open. Never returned.</span><span class="browse-time">1:12</span></div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.6;font-style:italic;padding:0 4px">"If there's no trial, I'll just use the free tool I already know. Not worth the risk."</div>
+        </div>
+        <!-- Panel 04: Drop-off Detection -->
+        <div class="apanel" id="apanel-3">
+          <div class="apanel-label">Step 04 — Drop-off Map</div>
+          <div class="drop-rows">
+            <div class="drop-row">
+              <img class="drop-av" src="https://i.pravatar.cc/80?img=47" alt="Mei"/>
+              <div class="drop-bar-wrap">
+                <div class="drop-bar-name">Mei — Dropped at Pricing</div>
+                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:52%;background:#ef4444"></div></div>
+                <div class="drop-reason">"No trial option visible. Too risky to commit."</div>
+              </div>
+              <span class="drop-x">✗</span>
+            </div>
+            <div class="drop-row">
+              <img class="drop-av" src="https://i.pravatar.cc/80?img=11" alt="Tyler"/>
+              <div class="drop-bar-wrap">
+                <div class="drop-bar-name">Tyler — Dropped at Signup Step 3</div>
+                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:78%;background:#f59e0b"></div></div>
+                <div class="drop-reason">"Asked for credit card too early. I barely know the product."</div>
+              </div>
+              <span class="drop-x">✗</span>
+            </div>
+            <div class="drop-row">
+              <img class="drop-av" src="https://i.pravatar.cc/80?img=57" alt="Klaus"/>
+              <div class="drop-bar-wrap">
+                <div class="drop-bar-name">Klaus — Converted ✓</div>
+                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:100%;background:#22c55e"></div></div>
+                <div class="drop-reason">"Annual plan pricing was clear. Signed up."</div>
+              </div>
+              <span class="drop-x" style="color:#22c55e">✓</span>
+            </div>
+            <div class="drop-row">
+              <img class="drop-av" src="https://i.pravatar.cc/80?img=16" alt="Léa"/>
+              <div class="drop-bar-wrap">
+                <div class="drop-bar-name">Léa — Dropped at Hero</div>
+                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:18%;background:#ef4444"></div></div>
+                <div class="drop-reason">"Didn't understand what it does in 5 seconds."</div>
+              </div>
+              <span class="drop-x">✗</span>
+            </div>
+          </div>
+        </div>
+        <!-- Panel 05: Report & Fixes -->
+        <div class="apanel" id="apanel-4">
+          <div class="apanel-label">Step 05 — Prioritized Report</div>
+          <div class="rp-issues">
+            <div class="rp-issue">
+              <div class="rp-pri p1">P1</div>
+              <div class="rp-issue-text">No free trial or low-risk entry point visible</div>
+              <div class="rp-issue-n">3,100 agents</div>
+            </div>
+            <div class="rp-issue">
+              <div class="rp-pri p1">P1</div>
+              <div class="rp-issue-text">Hero copy unclear for non-technical visitors</div>
+              <div class="rp-issue-n">2,400 agents</div>
+            </div>
+            <div class="rp-issue">
+              <div class="rp-pri p2">P2</div>
+              <div class="rp-issue-text">Credit card required too early in signup flow</div>
+              <div class="rp-issue-n">1,800 agents</div>
+            </div>
+          </div>
+          <div class="rp-fix">
+            <div class="rp-fix-label">Design fixes this week</div>
+            <div class="rp-fix-item">Add "Start free — no card" CTA above the fold</div>
+            <div class="rp-fix-item">Rewrite hero to lead with the outcome, not the process</div>
+            <div class="rp-fix-item">Move credit card to step 5, after first value moment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ④ EXAMPLE REPORT -->
 <div class="report-wrap" id="report">
   <div class="report-header">
@@ -1127,6 +1439,11 @@ function clearAuto() {
 
 
 // How section accordion
+
+function selectAStep(idx) {
+  document.querySelectorAll('.astep').forEach((el, i) => el.classList.toggle('active', i === idx));
+  document.querySelectorAll('.apanel').forEach((el, i) => el.classList.toggle('active', i === idx));
+}
 function selectStep(idx) {
   document.querySelectorAll('.hstep').forEach((el, i) => {
     el.classList.toggle('active', i === idx);
