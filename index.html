@@ -885,14 +885,30 @@ function clearAuto() {
 }
 
 // Handle form
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
-  const val = document.getElementById('url-input').value;
-  const s = JSON.parse(localStorage.getItem('bx')||'[]');
-  s.push({url: val, ts: new Date().toISOString()});
-  localStorage.setItem('bx', JSON.stringify(s));
-  e.target.innerHTML = `<span style="padding:12px 20px;font-size:14px;font-weight:700;color:var(--ink)">✓ You're on the list — we'll be in touch!</span>`;
-  document.getElementById('cta-note').textContent = s.length + ' teams on the waitlist.';
+  const val = document.getElementById('url-input').value.trim();
+  if (!val) return;
+
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: val }),
+    });
+    const data = await res.json();
+    e.target.innerHTML = `<span style="padding:12px 20px;font-size:14px;font-weight:700;color:var(--ink)">✓ You're on the list — we'll be in touch!</span>`;
+    const count = data.count || '';
+    document.getElementById('cta-note').textContent = count ? `${count} teams on the waitlist.` : "You're on the list.";
+  } catch {
+    btn.textContent = 'Get Early Access →';
+    btn.disabled = false;
+    document.getElementById('cta-note').textContent = 'Something went wrong — try again.';
+  }
 }
 
 // Scroll fade-in (WCAG: no motion if prefers-reduced-motion)

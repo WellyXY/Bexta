@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Betax Admin</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:#0f0d0b;color:#e8e4df;min-height:100vh;padding:32px}
+    h1{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+    .sub{font-size:13px;color:#6b6560;margin-bottom:32px}
+    .stat-row{display:flex;gap:16px;margin-bottom:32px}
+    .stat{background:#1a1714;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;min-width:140px}
+    .stat-num{font-size:32px;font-weight:800;color:#ef6820}
+    .stat-lbl{font-size:12px;color:#6b6560;margin-top:4px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{text-align:left;padding:10px 14px;color:#6b6560;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.07)}
+    tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .1s}
+    tbody tr:hover{background:rgba(255,255,255,.03)}
+    td{padding:12px 14px;color:#c8c4bf;vertical-align:top}
+    td.url{color:#fff;font-weight:500;max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    td.time{color:#6b6560;white-space:nowrap;font-size:12px}
+    td.ip{color:#6b6560;font-size:12px;font-family:monospace}
+    td.ua{color:#4a4540;font-size:11px;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .empty{text-align:center;padding:60px;color:#4a4540;font-size:14px}
+    .badge{display:inline-block;background:rgba(239,104,32,.15);color:#ef6820;font-size:11px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px}
+    .refresh{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#c8c4bf;font-size:12px;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit}
+    .refresh:hover{background:rgba(255,255,255,.1)}
+    .header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .export{background:rgba(239,104,32,.15);border:1px solid rgba(239,104,32,.3);color:#ef6820;font-size:12px;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit}
+    .export:hover{background:rgba(239,104,32,.25)}
+  </style>
+</head>
+<body>
+
+<h1>Betax Waitlist <span class="badge" id="badge">—</span></h1>
+<p class="sub">Admin dashboard · <span id="updated">loading…</span></p>
+
+<div class="stat-row">
+  <div class="stat"><div class="stat-num" id="s-total">—</div><div class="stat-lbl">Total signups</div></div>
+  <div class="stat"><div class="stat-num" id="s-today">—</div><div class="stat-lbl">Today</div></div>
+  <div class="stat"><div class="stat-num" id="s-week">—</div><div class="stat-lbl">This week</div></div>
+</div>
+
+<div class="header-row">
+  <div style="font-size:14px;font-weight:600;color:#fff">All entries</div>
+  <div style="display:flex;gap:8px">
+    <button class="export" onclick="exportCSV()">Export CSV</button>
+    <button class="refresh" onclick="load()">↻ Refresh</button>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>URL</th>
+      <th>Submitted</th>
+      <th>IP</th>
+      <th>Referrer</th>
+      <th>User Agent</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+
+<script>
+const token = new URLSearchParams(location.search).get('token') || '';
+
+async function load() {
+  document.getElementById('updated').textContent = 'loading…';
+  const res = await fetch(`/api/admin/waitlist?token=${token}`);
+  if (!res.ok) { document.getElementById('tbody').innerHTML = '<tr><td colspan=6 class="empty">Unauthorized</td></tr>'; return; }
+  const { entries, count } = await res.json();
+
+  document.getElementById('badge').textContent = count;
+  document.getElementById('s-total').textContent = count;
+  document.getElementById('updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const weekStart  = new Date(todayStart); weekStart.setDate(weekStart.getDate() - 7);
+  document.getElementById('s-today').textContent = entries.filter(e => new Date(e.created_at) >= todayStart).length;
+  document.getElementById('s-week').textContent  = entries.filter(e => new Date(e.created_at) >= weekStart).length;
+
+  if (!entries.length) {
+    document.getElementById('tbody').innerHTML = '<tr><td colspan=6 class="empty">No entries yet</td></tr>';
+    return;
+  }
+
+  document.getElementById('tbody').innerHTML = entries.map((e, i) => `
+    <tr>
+      <td style="color:#4a4540">${count - i}</td>
+      <td class="url" title="${esc(e.url)}">${esc(e.url)}</td>
+      <td class="time">${fmt(e.created_at)}</td>
+      <td class="ip">${esc(e.ip || '—')}</td>
+      <td class="ua" title="${esc(e.referrer || '')}">${esc(e.referrer || '—')}</td>
+      <td class="ua" title="${esc(e.user_agent || '')}">${esc(e.user_agent || '—')}</td>
+    </tr>
+  `).join('');
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+}
+
+function exportCSV() {
+  fetch(`/api/admin/waitlist?token=${token}`)
+    .then(r => r.json())
+    .then(({ entries }) => {
+      const rows = [['id','url','created_at','ip','referrer','user_agent']];
+      entries.forEach(e => rows.push([e.id, e.url, e.created_at, e.ip||'', e.referrer||'', e.user_agent||'']));
+      const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+      a.download = 'betax-waitlist.csv';
+      a.click();
+    });
+}
+
+load();
+</script>
+</body>
+</html>
