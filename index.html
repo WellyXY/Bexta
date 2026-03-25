@@ -891,3 +891,106 @@
         </div>
 
       </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Early Access Modal -->
+<div class="ea-overlay" id="ea-overlay" onclick="closeModal(event)">
+  <div class="ea-modal">
+    <button class="ea-close" onclick="hideModal()">✕</button>
+    <div id="ea-form-wrap">
+      <div class="ea-title">Get early access 🦝</div>
+      <div class="ea-sub">Paste your URL. We'll run 5,000 personas and send the report.</div>
+      <form class="ea-form" onsubmit="handleModalSubmit(event)">
+        <div class="ea-input-row"><span>🔗</span><input type="url" id="ea-url" placeholder="https://yourproduct.com" required/></div>
+        <div class="ea-input-row"><span>✉️</span><input type="email" id="ea-email" placeholder="you@email.com" required/></div>
+        <button id="ea-btn" type="submit">Join Waitlist →</button>
+      </form>
+    </div>
+    <div class="ea-success" id="ea-success" style="display:none">
+      <div style="font-size:48px;margin-bottom:16px">🦝</div>
+      <div style="font-size:22px;font-weight:900;margin-bottom:8px">You're on the list.</div>
+      <div style="font-size:14px;color:var(--ink3)">We'll email you when your report is ready.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="font-size:13px;color:var(--ink3)">© 2026 Racoonn · <strong style="color:var(--ink2)">$49 / month</strong> · First 50 teams free</div>
+  <div style="display:flex;gap:24px;font-size:12px">
+    <a href="mailto:hello@racoonn.me" style="color:var(--ink3);text-decoration:none">Contact</a>
+    <a href="/privacy" style="color:var(--ink3);text-decoration:none">Privacy Policy</a>
+    <a href="/terms" style="color:var(--ink3);text-decoration:none">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+// ── IntersectionObserver for fade-up ─────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+// ── How It Works accordion ────────────────────────────────────────────────
+function selectStep(idx) {
+  document.querySelectorAll('.hstep').forEach((el, i) => el.classList.toggle('active', i === idx));
+  document.querySelectorAll('.hpanel').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+    el.style.display = i === idx ? 'block' : 'none';
+  });
+}
+// Init panels display
+document.querySelectorAll('.hpanel').forEach((el, i) => { el.style.display = i === 0 ? 'block' : 'none'; });
+
+// ── Auto-rotate How steps ─────────────────────────────────────────────────
+let autoTimer;
+function startAuto() {
+  let cur = 0;
+  autoTimer = setInterval(() => {
+    cur = (cur + 1) % document.querySelectorAll('.hstep').length;
+    selectStep(cur);
+  }, 3500);
+}
+document.querySelectorAll('.hstep').forEach(el => {
+  el.addEventListener('click', () => { clearInterval(autoTimer); });
+});
+startAuto();
+
+// ── Early Access Modal ────────────────────────────────────────────────────
+function showModal() {
+  document.getElementById('ea-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function hideModal() {
+  document.getElementById('ea-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('ea-overlay')) hideModal();
+}
+async function handleModalSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('ea-btn');
+  const url = document.getElementById('ea-url').value;
+  const email = document.getElementById('ea-email').value;
+  btn.textContent = 'Joining…'; btn.disabled = true;
+  try {
+    const r = await fetch('/api/waitlist', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({url, email}) });
+    if (r.ok) {
+      document.getElementById('ea-form-wrap').style.display = 'none';
+      document.getElementById('ea-success').style.display = 'block';
+    } else { throw new Error('fail'); }
+  } catch {
+    btn.textContent = 'Try again'; btn.disabled = false;
+  }
+}
+
+// ── Waitlist count ────────────────────────────────────────────────────────
+fetch('/api/waitlist/count').then(r=>r.json()).then(d=>{
+  document.querySelectorAll('.wl-count').forEach(el => el.textContent = d.count);
+}).catch(()=>{});
+</script>
+</body>
+</html>
