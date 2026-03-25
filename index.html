@@ -431,35 +431,6 @@
     /* ── Agent Feed Panel ── */
     .feed-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--brd)}
     .feed-status{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--ink2)}
-    /* Persona grid */
-    .persona-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:2px}
-    .pg-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;background:var(--cream);border-radius:12px;text-align:center;border:1px solid rgba(24,20,15,.06)}
-    .pg-av{width:36px;height:36px;border-radius:50%;object-fit:cover}
-    .pg-name{font-size:10px;font-weight:700;color:var(--ink)}
-    .pg-loc{font-size:9px;color:var(--ink3)}
-    .pg-tag{font-size:8px;font-weight:700;padding:2px 6px;border-radius:100px}
-    .pg-mobile{background:rgba(59,130,246,.1);color:#2563eb}
-    .pg-saas{background:rgba(239,104,32,.1);color:var(--or)}
-    .pg-ent{background:rgba(139,92,246,.1);color:#7c3aed}
-    .pg-smb{background:rgba(34,197,94,.1);color:#16a34a}
-    .pg-more{justify-content:center;background:rgba(239,104,32,.06);border:1.5px dashed rgba(239,104,32,.3)}
-    .pg-more-n{font-size:18px;font-weight:900;color:var(--or)}
-    .pg-more-l{font-size:9px;color:var(--ink3)}
-    /* Intent table */
-    .intent-table{border:1px solid rgba(24,20,15,.08);border-radius:14px;overflow:hidden;font-size:11px}
-    .it-head{display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 14px;background:rgba(24,20,15,.04);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
-    .it-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 14px;border-top:1px solid rgba(24,20,15,.06);align-items:center}
-    .it-row:nth-child(even){background:rgba(239,104,32,.03)}
-    .it-name{font-size:11px;font-weight:600;color:var(--ink)}
-    .it-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:100px;display:inline-block}
-    .it-badge.skeptic{background:rgba(239,68,68,.1);color:#dc2626}
-    .it-badge.compare{background:rgba(59,130,246,.1);color:#2563eb}
-    .it-badge.buy{background:rgba(34,197,94,.1);color:#16a34a}
-    .it-badge.browse{background:var(--ol);color:var(--or)}
-    .it-src{font-size:10px;color:var(--ink3)}
-    .it-more{padding:8px 14px;font-size:10px;color:var(--ink3);font-style:italic;border-top:1px solid rgba(24,20,15,.06);background:rgba(239,104,32,.03)}
-    /* Fix cards */
-    .fix-card{margin:6px 0 4px;padding:10px 12px;background:rgba(239,104,32,.06);border-radius:10px;font-size:11px;color:var(--ink2);line-height:1.5;border-left:3px solid var(--or)}
     .feed-pulse{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:fpulse 1.5s ease-in-out infinite}
     @keyframes fpulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.8;box-shadow:0 0 0 5px rgba(34,197,94,0)}}
     .feed-time{font-size:11px;font-weight:700;color:var(--or);background:var(--ol);padding:3px 10px;border-radius:100px}
@@ -707,47 +678,26 @@
         <div class="hstep" onclick="selectStep(1)">
           <div class="hstep-head">
             <div class="hstep-num">02</div>
-            <div class="hstep-label">AI selects 5,000 personas</div>
+            <div class="hstep-label">5,000 personas test it for you</div>
           </div>
           <div class="hstep-body">
-            <p class="hstep-desc">Racoonn matches personas to your product category — right age range, purchase behavior, tech comfort, and market. Not generic bots.</p>
-            <span class="hstep-tag">🎯 Product-matched diversity</span>
+            <p class="hstep-desc">Each persona arrives with a different background, intent, and reason for visiting. They browse independently — scrolling, clicking, hitting dead ends, and deciding when to leave — exactly like real users do. No scripts, no bias.</p>
+            <span class="hstep-tag">🤖 Fully automated · 28 min</span>
           </div>
         </div>
         <div class="hstep" onclick="selectStep(2)">
           <div class="hstep-head">
             <div class="hstep-num">03</div>
-            <div class="hstep-label">Each assigned intent + scenario</div>
+            <div class="hstep-label">Read what broke and why</div>
           </div>
           <div class="hstep-body">
-            <p class="hstep-desc">Every persona gets a unique intent (skeptic, ready-to-buy, comparing, just browsing) and a marketing message context. They arrive the way real traffic does — not uniformly.</p>
-            <span class="hstep-tag">🧠 Real intent distribution</span>
-          </div>
-        </div>
-        <div class="hstep" onclick="selectStep(3)">
-          <div class="hstep-head">
-            <div class="hstep-num">04</div>
-            <div class="hstep-label">Personas browse &amp; judge independently</div>
-          </div>
-          <div class="hstep-body">
-            <p class="hstep-desc">Each agent scrolls, clicks, and navigates your product flow on their own — no scripts, no hints. They decide when something confuses them and drop off exactly like a real visitor.</p>
-            <span class="hstep-tag">🤖 Fully automated · 28 min</span>
-          </div>
-        </div>
-        <div class="hstep" onclick="selectStep(4)">
-          <div class="hstep-head">
-            <div class="hstep-num">05</div>
-            <div class="hstep-label">Report + design fixes</div>
-          </div>
-          <div class="hstep-body">
-            <p class="hstep-desc">Every drop-off mapped to the exact moment and reason. Issues ranked by impact. Specific design fixes your team can act on this week — not vague advice.</p>
+            <p class="hstep-desc">Every drop-off mapped to the exact moment and reason it happened. Issues ranked by how many personas they affected. Specific design fixes — not vague recommendations — your team can act on this week.</p>
             <span class="hstep-tag">📋 Actionable within hours</span>
           </div>
         </div>
       </div>
       <!-- Right: visual panel -->
       <div class="how-panel">
-
         <!-- Panel 01: Paste URL -->
         <div class="hpanel active" id="hpanel-0">
           <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:20px">Step 01 — Input</div>
@@ -768,44 +718,8 @@
             <strong style="color:var(--ink)">Trained on 500+ top B2C products</strong> — every insight is grounded in what actually converts, not generic UX theory.
           </div>
         </div>
-
-        <!-- Panel 02: Persona selection -->
-        <div class="hpanel" id="hpanel-1">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:14px">Step 02 — Persona Matching</div>
-          <div class="persona-grid">
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=47" alt="Mei"/><div class="pg-name">Mei, 21</div><div class="pg-loc">Singapore</div><div class="pg-tag pg-mobile">Mobile-first</div></div>
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=11" alt="Tyler"/><div class="pg-name">Tyler, 29</div><div class="pg-loc">Texas</div><div class="pg-tag pg-saas">SaaS buyer</div></div>
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=57" alt="Klaus"/><div class="pg-name">Klaus, 54</div><div class="pg-loc">Berlin</div><div class="pg-tag pg-ent">Enterprise</div></div>
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=25" alt="Ana"/><div class="pg-name">Ana, 36</div><div class="pg-loc">São Paulo</div><div class="pg-tag pg-smb">SMB owner</div></div>
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=32" alt="James"/><div class="pg-name">James, 44</div><div class="pg-loc">London</div><div class="pg-tag pg-ent">Enterprise</div></div>
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=5" alt="Priya"/><div class="pg-name">Priya, 27</div><div class="pg-loc">Mumbai</div><div class="pg-tag pg-mobile">Mobile-first</div></div>
-            <div class="pg-card"><img class="pg-av" src="https://i.pravatar.cc/48?img=68" alt="Sofia"/><div class="pg-name">Sofia, 33</div><div class="pg-loc">Milan</div><div class="pg-tag pg-saas">SaaS buyer</div></div>
-            <div class="pg-card pg-more"><div class="pg-more-n">+4,993</div><div class="pg-more-l">more matched</div></div>
-          </div>
-          <div style="margin-top:14px;padding:12px 14px;background:rgba(239,104,32,.06);border-radius:12px;font-size:11px;color:var(--ink2);line-height:1.6">
-            <strong style="color:var(--or)">AI matching</strong> — Racoonn picks personas based on your product category, price point, and target market. Not random noise.
-          </div>
-        </div>
-
-        <!-- Panel 03: Intent assignment -->
-        <div class="hpanel" id="hpanel-2" style="padding:24px 28px">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:14px">Step 03 — Intent &amp; Scenario</div>
-          <div class="intent-table">
-            <div class="it-head"><span>Persona</span><span>Intent</span><span>Arrives via</span></div>
-            <div class="it-row"><span class="it-name">Mei, 21 · SG</span><span class="it-badge skeptic">Skeptic</span><span class="it-src">Twitter ad</span></div>
-            <div class="it-row"><span class="it-name">Tyler, 29 · TX</span><span class="it-badge compare">Comparing</span><span class="it-src">G2 review</span></div>
-            <div class="it-row"><span class="it-name">Klaus, 54 · DE</span><span class="it-badge buy">Ready to buy</span><span class="it-src">Google search</span></div>
-            <div class="it-row"><span class="it-name">Ana, 36 · BR</span><span class="it-badge browse">Browsing</span><span class="it-src">LinkedIn post</span></div>
-            <div class="it-row"><span class="it-name">Priya, 27 · IN</span><span class="it-badge skeptic">Skeptic</span><span class="it-src">Product Hunt</span></div>
-            <div class="it-more">+ 4,995 more assigned unique intent &amp; entry context...</div>
-          </div>
-          <div style="margin-top:14px;padding:12px 14px;background:rgba(239,104,32,.06);border-radius:12px;font-size:11px;color:var(--ink2);line-height:1.6">
-            <strong style="color:var(--or)">Real traffic mix</strong> — 40% skeptics, 25% comparing, 20% ready-to-buy, 15% browsing. Mirrors actual conversion funnel distribution.
-          </div>
-        </div>
-
-        <!-- Panel 04: Agent activity feed -->
-        <div class="hpanel" id="hpanel-3" style="padding:20px 24px">
+        <!-- Panel 02: Agent activity feed -->
+        <div class="hpanel" id="hpanel-1" style="padding:20px 24px;display:none">
           <div class="feed-header">
             <div class="feed-status"><span class="feed-pulse"></span>LIVE RUN · 5,000 AGENTS</div>
             <div class="feed-time">28 min</div>
@@ -867,101 +781,525 @@
           </div>
         </div>
 
-        <!-- Panel 05: Report + design fixes -->
-        <div class="hpanel" id="hpanel-4">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:16px">Step 05 — Report &amp; Fixes</div>
+        <!-- Panel 03: Report preview -->
+        <div class="hpanel" id="hpanel-2">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:16px">Step 03 — Your report</div>
           <div class="panel-issue">
             <div class="panel-issue-dot p1"></div>
             <div><div class="panel-issue-title">Missing pricing clarity</div><div class="panel-issue-count">Affected 9 of 25 sampled personas</div></div>
             <div style="margin-left:auto;font-size:10px;font-weight:800;background:rgba(248,113,113,.1);color:#e05555;padding:3px 8px;border-radius:5px">P1</div>
           </div>
-          <div class="fix-card">💡 <strong>Fix:</strong> Add a "Start free, no credit card" line directly under the CTA button. Reduces Skeptic drop-off by ~34%.</div>
-          <div class="panel-issue" style="margin-top:10px">
+          <div class="panel-issue">
             <div class="panel-issue-dot p1"></div>
             <div><div class="panel-issue-title">CLI hero alienates non-technical users</div><div class="panel-issue-count">Affected 6 of 25 sampled personas</div></div>
             <div style="margin-left:auto;font-size:10px;font-weight:800;background:rgba(248,113,113,.1);color:#e05555;padding:3px 8px;border-radius:5px">P1</div>
           </div>
-          <div class="fix-card">💡 <strong>Fix:</strong> Lead with a URL input field instead of a code block. Add a "No code needed" badge. Retains 23% more non-dev personas.</div>
-          <div class="panel-issue" style="margin-top:10px">
+          <div class="panel-issue">
             <div class="panel-issue-dot p2"></div>
             <div><div class="panel-issue-title">Demo only shows B2C SaaS use case</div><div class="panel-issue-count">Affected 7 of 25 sampled personas</div></div>
             <div style="margin-left:auto;font-size:10px;font-weight:800;background:rgba(251,191,36,.1);color:#c08020;padding:3px 8px;border-radius:5px">P2</div>
           </div>
-          <div class="fix-card">💡 <strong>Fix:</strong> Add 3 industry tabs (SaaS / E-commerce / Agency) to the demo section. Increases relevance signal for 40% of traffic.</div>
+          <div class="panel-conv">
+            <div class="panel-conv-num">18<span style="font-size:18px;color:var(--ink3)">/100</span></div>
+            <div class="panel-conv-label"><strong style="color:var(--ink)">Conversion rate</strong><br/>2 critical blockers identified</div>
+          </div>
         </div>
-
       </div>
-
+    </div>
     </div>
   </div>
 </section>
 
-<!-- Early Access Modal -->
-<div class="ea-overlay" id="ea-overlay" onclick="closeModal(event)">
-  <div class="ea-modal">
-    <button class="ea-close" onclick="hideModal()">✕</button>
-    <div id="ea-form-wrap">
-      <div class="ea-title">Get early access 🦝</div>
-      <div class="ea-sub">Paste your URL. We'll run 5,000 personas and send the report.</div>
-      <form class="ea-form" onsubmit="handleModalSubmit(event)">
-        <div class="ea-input-row"><span>🔗</span><input type="url" id="ea-url" placeholder="https://yourproduct.com" required/></div>
-        <div class="ea-input-row"><span>✉️</span><input type="email" id="ea-email" placeholder="you@email.com" required/></div>
-        <button id="ea-btn" type="submit">Join Waitlist →</button>
-      </form>
+
+<!-- ④ EXAMPLE REPORT -->
+<div class="report-wrap" id="report">
+  <div class="report-header">
+    <div class="report-badge">
+      <div class="rbadge-logo">L</div>
+      <span class="rbadge-text"><strong>Lovable.dev</strong> · Example Racoonn Report · 5,000 persona agents · 25 min</span>
     </div>
-    <div class="ea-success" id="ea-success" style="display:none">
-      <div style="font-size:48px;margin-bottom:16px">🦝</div>
-      <div style="font-size:22px;font-weight:900;margin-bottom:8px">You're on the list.</div>
-      <div style="font-size:14px;color:var(--ink3)">We'll email you when your report is ready.</div>
+    <h2 class="report-h">This is what<br/><em>your report looks like.</em></h2>
+    <p class="report-sub">Real behavior paths. Real thoughts. Real drop-off numbers. Click an agent client to see their experience.</p>
+  </div>
+
+  <!-- The Report Card -->
+  <div class="report-card">
+    <div class="rcard">
+      <!-- Top bar -->
+      <div class="rcard-topbar">
+        <div class="rcard-topbar-dot"></div>
+        <div class="rcard-topbar-dot"></div>
+        <div class="rcard-topbar-dot"></div>
+        <span class="rcard-topbar-title">Racoonn Report · lovable.dev · March 24, 2026</span>
+        <div class="rcard-topbar-status">Run complete</div>
+      </div>
+
+      <!-- Tab bar -->
+      <div class="rtabs-bar">
+        <button class="rtab-btn active" onclick="switchReportTab('feedback')">Agent Feedback</button>
+        <button class="rtab-btn" onclick="switchReportTab('funnel')">Drop-off by Step</button>
+        <button class="rtab-btn" onclick="switchReportTab('suggest')">Design Suggestions</button>
+      </div>
+
+      <!-- Panel 1: Agent Feedback -->
+      <div class="rtab-panel active" id="tab-feedback">
+      <!-- Agent client selector -->
+      <div class="rcard-agents-bar">
+        <div class="rcard-agents-label">Select agent client</div>
+        <div class="agent-pills" id="agentPills">
+          <button class="agent-pill active" onclick="selectAgent(0)"><img src="https://i.pravatar.cc/60?img=47" alt="Mei, 21, Singapore" width="60" height="60" loading="lazy"/>Mei, 21 · SG</button>
+          <button class="agent-pill" onclick="selectAgent(1)"><img src="https://i.pravatar.cc/60?img=11" alt="Tyler, 29, Texas" width="60" height="60" loading="lazy"/>Tyler, 29 · TX</button>
+          <button class="agent-pill" onclick="selectAgent(2)"><img src="https://i.pravatar.cc/60?img=25" alt="Ana, 36, Brazil" width="60" height="60" loading="lazy"/>Ana, 36 · BR</button>
+          <button class="agent-pill" onclick="selectAgent(3)"><img src="https://i.pravatar.cc/60?img=57" alt="Klaus, 54, Germany" width="60" height="60" loading="lazy"/>Klaus, 54 · DE</button>
+          <button class="agent-pill" onclick="selectAgent(4)"><img src="https://i.pravatar.cc/60?img=9" alt="Priya, 27, India" width="60" height="60" loading="lazy"/>Priya, 27 · IN</button>
+          <button class="agent-pill" onclick="selectAgent(5)"><img src="https://i.pravatar.cc/60?img=16" alt="Léa, 24, France" width="60" height="60" loading="lazy"/>Léa, 24 · FR</button>
+        </div>
+      </div>
+
+      <!-- Body: profile + main -->
+      <div class="rcard-body">
+        <!-- Profile panel -->
+        <div class="rcard-profile">
+          <img class="rp-photo" id="rp-photo" src="https://i.pravatar.cc/120?img=47" alt="AI persona agent profile photo" width="120" height="120" loading="lazy"/>
+          <div class="rp-name" id="rp-name">Mei Lin</div>
+          <div class="rp-subloc" id="rp-subloc">Singapore · 21 yrs</div>
+          <div class="rp-chips" id="rp-chips">
+            <div class="rp-chip"><span class="rp-chip-ico">💼</span>Design student</div>
+            <div class="rp-chip"><span class="rp-chip-ico">📱</span>iPhone 14</div>
+            <div class="rp-chip"><span class="rp-chip-ico">🎯</span>Build a portfolio site</div>
+            <div class="rp-chip"><span class="rp-chip-ico">💰</span>Price-sensitive</div>
+          </div>
+          <div class="rp-outcome mix" id="rp-outcome">⚡ Dropped at deploy step</div>
+        </div>
+
+        <!-- Main panel -->
+        <div class="rcard-main" id="rcard-main">
+          <!-- Journey -->
+          <div>
+            <div class="issues-label">Behavior path</div>
+            <div class="journey" id="r-journey">
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">Landing</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">Sign up</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">First prompt</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">App built</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle warn">?</div><div class="jstep-label">Edit app</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle fail">✗</div><div class="jstep-label">Deploy</div></div></div>
+            </div>
+          </div>
+
+          <!-- Inner monologue -->
+          <div>
+            <div class="monologue-label">Inner monologue</div>
+            <div class="thoughts" id="r-thoughts">
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble">"Is this a website builder or an AI chatbot? I'll just try typing something..."</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble">"Oh wow — it actually built a real page. That was fast. This feels like magic."</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble warn">"Connect my domain?? What does that even mean? Did I break something?"</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble fail">"I don't see a 'share' button anywhere. I'll just come back later... [never returns]"</div></div>
+            </div>
+          </div>
+
+          <!-- Issues -->
+          <div>
+            <div class="issues-label">Issues found</div>
+            <div class="issues" id="r-issues">
+              <div class="issue"><span class="issue-pri p1">P1</span><span class="issue-text">Deploy step assumes domain knowledge — no plain-language option to just share a link</span><span class="issue-agents">41 clients</span></div>
+              <div class="issue"><span class="issue-pri p2">P2</span><span class="issue-text">Progress bar disappears during build — users don't know if it's still working</span><span class="issue-agents">28 clients</span></div>
+              <div class="issue"><span class="issue-pri p3">P3</span><span class="issue-text">Blank prompt input — 34% of users paused 30+ sec unsure what to type</span><span class="issue-agents">34 clients</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div><!-- end tab-feedback -->
+
+      <!-- Panel 2: Drop-off Funnel -->
+      <div class="rtab-panel" id="tab-funnel">
+        <div class="funnel-wrap">
+          <div class="funnel-row"><span class="funnel-step">Landing</span><div class="funnel-track"><div class="funnel-fill top" style="width:100%"><span class="funnel-pct">100%</span></div></div><span class="funnel-delta"></span></div>
+          <div class="funnel-row"><span class="funnel-step">Sign up</span><div class="funnel-track"><div class="funnel-fill hi" style="width:78%"><span class="funnel-pct">78%</span></div></div><span class="funnel-delta big">−22%</span></div>
+          <div class="funnel-row"><span class="funnel-step">First prompt</span><div class="funnel-track"><div class="funnel-fill hi" style="width:61%"><span class="funnel-pct">61%</span></div></div><span class="funnel-delta big">−17%</span></div>
+          <div class="funnel-row"><span class="funnel-step">App built</span><div class="funnel-track"><div class="funnel-fill mid" style="width:47%"><span class="funnel-pct">47%</span></div></div><span class="funnel-delta">−14%</span></div>
+          <div class="funnel-row"><span class="funnel-step">Edit app</span><div class="funnel-track"><div class="funnel-fill mid" style="width:31%"><span class="funnel-pct">31%</span></div></div><span class="funnel-delta big">−16%</span></div>
+          <div class="funnel-row"><span class="funnel-step">Deploy</span><div class="funnel-track"><div class="funnel-fill lo" style="width:18%"><span class="funnel-pct">18%</span></div></div><span class="funnel-delta big">−13%</span></div>
+          <div class="funnel-callouts">
+            <div class="fcallout"><div class="fcallout-num">−22%</div><div class="fcallout-lbl">lost before even signing up — landing page doesn't explain value fast enough</div></div>
+            <div class="fcallout"><div class="fcallout-num">−17%</div><div class="fcallout-lbl">confused at blank prompt — no example, no hint of what to type</div></div>
+            <div class="fcallout"><div class="fcallout-num">82%</div><div class="fcallout-lbl">of users never deployed — deploy step assumes domain knowledge users don't have</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: Design Suggestions -->
+      <div class="rtab-panel" id="tab-suggest">
+        <div class="suggest-wrap">
+          <div class="suggest-item">
+            <div class="srank p1">P1</div>
+            <div class="sbody"><div class="stitle">Add a "Share link" shortcut before the deploy step</div><div class="sdesc">82% of users never reached deploy. A simple "copy link to share" option would let users complete their goal without needing domain knowledge.</div><span class="simpact">↑ Est. +18% conversion</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p1">P2</div>
+            <div class="sbody"><div class="stitle">Show example prompts on the blank input screen</div><div class="sdesc">34% of users stalled 30+ seconds at the prompt screen. Add 3 tappable example prompts ("Build me a landing page for...") to reduce blank-page paralysis.</div><span class="simpact">↑ Est. +11% at prompt step</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p2">P3</div>
+            <div class="sbody"><div class="stitle">Show a persistent build progress indicator</div><div class="sdesc">28 clients thought the app had crashed during build. A visible progress bar or animated status message reduces abandonment while waiting.</div><span class="simpact">↑ Est. +8% retention at build step</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p3">P4</div>
+            <div class="sbody"><div class="stitle">Rewrite the landing page headline for non-technical users</div><div class="sdesc">22% dropped before signup. Mobile users (mostly 18–25) didn't understand "vibe-code your app" — plain language like "build a real website by describing it" tested better.</div><span class="simpact">↑ Est. +7% signup rate</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p4">P5</div>
+            <div class="sbody"><div class="stitle">Optimize edit panel for mobile — current overlay is too small</div><div class="sdesc">Mobile users (Klaus, Priya, Léa) all struggled with the edit panel tap targets. Recommend bottom-sheet pattern on screens under 430px.</div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <div class="report-card" style="padding-top:0">
+    <div class="conversion">
+      <div class="conv-left">
+        <div class="conv-label">Conversion — completed signup &amp; created first app</div>
+        <div class="conv-bar"><div class="conv-fill" id="convFill"></div></div>
+        <div class="conv-sub">18 out of 100 sampled agent clients completed the key action · 2 critical blockers identified</div>
+      </div>
+      <div class="conv-right">
+        <div class="conv-num"><em>18</em>/100</div>
+        <div class="conv-num-sub">conversion rate</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-footer-pad"></div>
 </div>
 
-<footer>
-  <div style="font-size:13px;color:var(--ink3)">© 2026 Racoonn · <strong style="color:var(--ink2)">$49 / month</strong> · First 50 teams free</div>
-  <div style="display:flex;gap:24px;font-size:12px">
-    <a href="mailto:admin@racoonn.me" style="color:var(--ink3);text-decoration:none">Contact</a>
-    <a href="/privacy" style="color:var(--ink3);text-decoration:none">Privacy Policy</a>
-    <a href="/terms" style="color:var(--ink3);text-decoration:none">Terms of Service</a>
+<!-- ⑤ CTA -->
+<section class="cta" id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-q">What's your product's<br/><em>conversion rate right now?</em></h2>
+    <p class="cta-sub">Paste your URL. We'll run 5,000 diverse persona agent clients and tell you exactly what's breaking — before your real users give up.</p>
+    <form class="url-form" id="waitlist-form" onsubmit="handleSubmit(event)">
+      <div class="url-form-row">
+        <span class="form-icon">🔗</span>
+        <input type="url" id="url-input" placeholder="https://yourproduct.com" autocomplete="url" required/>
+      </div>
+      <div class="url-form-row">
+        <span class="form-icon">✉️</span>
+        <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email" required/>
+      </div>
+      <button type="submit">Get Early Access →</button>
+    </form>
+    <p class="cta-note" id="cta-note">Free for first 50 teams. No credit card required.</p>
+    <div class="cta-social">
+      <div class="social-item">
+        <div class="social-avatars">
+          <img class="social-av" src="https://i.pravatar.cc/40?img=11" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=25" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=33" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=44" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+        </div>
+        <span>47 teams already on the waitlist</span>
+      </div>
+    </div>
   </div>
+</section>
+
+</main>
+<footer>
+  <div class="f-logo"><span class="logo-dot"></span>Racoonn</div>
+  <nav class="f-links" aria-label="Footer navigation">
+    <a href="mailto:admin@racoonn.me">Contact</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+  </nav>
+  <div class="f-copy">© 2026 Racoonn · AI-powered user testing · Know why users leave.</div>
 </footer>
 
 <script>
-// ── IntersectionObserver for fade-up ─────────────────────────────────────
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-}, { threshold: 0.12 });
-document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+/* ── Agent client data ── */
+const AGENTS = [
+  {
+    photo:'https://i.pravatar.cc/120?img=47', tphoto:'https://i.pravatar.cc/40?img=47',
+    name:'Mei Lin', subloc:'Singapore · 21 yrs',
+    chips:[['💼','Design student'],['📱','iPhone 14'],['🎯','Build portfolio site'],['💰','Price-sensitive']],
+    meta:'21 · Singapore<br/>Design student · iPhone 14<br/>First-time SaaS user',
+    tags:['Mobile-first','Price-sensitive','Visual learner'],
+    outcome:{cls:'mix', text:'⚡ Dropped at deploy step'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'warn',l:'Edit app'},{s:'fail',l:'Deploy'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"Is this a website builder or an AI chatbot? I\'ll just try typing..."'},
+      {t:'norm',q:'"Oh wow — it actually built a real page. That was fast."'},
+      {t:'warn',q:'"Connect my domain?? What does that mean? Did I break something?"'},
+      {t:'fail',q:'"I don\'t see a \'share\' button anywhere. I\'ll come back later... [never returns]"'},
+    ],
+    issues:[
+      {p:'p1',t:'Deploy step assumes domain knowledge — no plain-language share option',n:'41 clients'},
+      {p:'p2',t:'Progress bar disappears during build — users unsure if it\'s still working',n:'28 clients'},
+      {p:'p3',t:'Blank prompt input — 34% paused 30+ sec unsure what to type',n:'34 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=11', tphoto:'https://i.pravatar.cc/40?img=11',
+    name:'Tyler Oaks', subloc:'Austin TX · 29 yrs',
+    chips:[['💼','Full-stack developer'],['💻','MacBook Pro'],['🎯','Side project'],['⚡','Power user']],
+    meta:'29 · Austin, TX<br/>Full-stack developer · MacBook Pro<br/>7 yrs experience',
+    tags:['Power user','Skips tutorials','Keyboard-driven'],
+    outcome:{cls:'pos', text:'✅ Converted to paid'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'warn',l:'Edit app'},{s:'ok',l:'GitHub sync'},{s:'ok',l:'Paid'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I\'m skipping the tutorial and going straight to editing the code."'},
+      {t:'norm',q:'"GitHub sync worked first try — this is actually solid."'},
+      {t:'warn',q:'"Why did the AI just rewrite the components I didn\'t ask to change??"'},
+      {t:'norm',q:'"I can live with that. Upgrading to pro."'},
+    ],
+    issues:[
+      {p:'p1',t:'AI rewrites untouched components on partial edits — destroys manual work',n:'52 clients'},
+      {p:'p2',t:'No diff view after AI changes — impossible to track what changed',n:'38 clients'},
+      {p:'p3',t:'Version history hidden in sidebar — 67% couldn\'t find undo in 3 min',n:'67 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=25', tphoto:'https://i.pravatar.cc/40?img=25',
+    name:'Ana Souza', subloc:'São Paulo · 36 yrs',
+    chips:[['💼','Senior product designer'],['💻','Figma power user'],['🎯','Client showcase site'],['🎨','Design-obsessed']],
+    meta:'36 · São Paulo<br/>Senior product designer<br/>Figma power user',
+    tags:['Aesthetic-driven','Brand-conscious','High standards'],
+    outcome:{cls:'neg', text:'🔴 Abandoned before sign-up'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'warn',l:'Scroll'},{s:'fail',l:'Left page'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"Let me see what kind of designs this actually produces..."'},
+      {t:'warn',q:'"Every example looks identical. Same card layout, same Tailwind defaults."'},
+      {t:'fail',q:'"I can\'t tell if this can do high-quality design. I\'m not going to risk my time."'},
+    ],
+    issues:[
+      {p:'p1',t:'No design gallery showing visual diversity — designers assume generic output',n:'19 clients'},
+      {p:'p1',t:'Pricing page ignores design quality — no customization proof points',n:'19 clients'},
+      {p:'p2',t:'No template gallery to preview before committing to a prompt',n:'24 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=57', tphoto:'https://i.pravatar.cc/40?img=57',
+    name:'Klaus Meier', subloc:'Munich · 54 yrs',
+    chips:[['💼','VP Operations'],['💻','Dell laptop'],['🎯','Business portal'],['🔒','Security-conscious']],
+    meta:'54 · Munich<br/>VP Operations · Dell laptop<br/>Reads every word on screen',
+    tags:['Low tech comfort','Compliance-aware','Risk-averse'],
+    outcome:{cls:'neg', text:'🔴 Never started a project'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'warn',l:'Scroll ×3'},{s:'fail',l:'Left page'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I\'ll read the homepage carefully before I sign up for anything."'},
+      {t:'warn',q:'"Who owns the code I build? Is it on their servers? I can\'t find an answer."'},
+      {t:'fail',q:'"No GDPR mention. No data ownership statement. This isn\'t for serious business."'},
+    ],
+    issues:[
+      {p:'p1',t:'No code ownership statement visible on landing or sign-up flow',n:'22 clients'},
+      {p:'p1',t:'No GDPR / SOC2 badges anywhere in the conversion funnel',n:'22 clients'},
+      {p:'p2',t:'FAQ buried below fold, doesn\'t answer any security questions',n:'15 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=9', tphoto:'https://i.pravatar.cc/40?img=9',
+    name:'Priya Nair', subloc:'Bangalore · 27 yrs',
+    chips:[['💼','Product Manager · ex-Razorpay'],['📱','Pixel 7'],['🎯','Internal tool MVP'],['🔍','Tests edge cases']],
+    meta:'27 · Bangalore<br/>Product Manager · ex-Razorpay<br/>Tests edge cases deliberately',
+    tags:['Efficiency-driven','Tests limits','Detail-oriented'],
+    outcome:{cls:'mix', text:'⚡ Completed but frustrated'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'warn',l:'Complex edit'},{s:'warn',l:'Re-prompt'},{s:'ok',l:'Done'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I\'m going to try a complex multi-step form to really test this."'},
+      {t:'warn',q:'"It simplified my request without telling me. I got a basic form, not what I asked for."'},
+      {t:'fail',q:'"It just deleted the features I already had. Where is the undo button?!"'},
+      {t:'norm',q:'"Found it eventually. This should not be this hard."'},
+    ],
+    issues:[
+      {p:'p1',t:'Version history hidden in sidebar — 67% of clients couldn\'t find it in 3 min',n:'67 clients'},
+      {p:'p1',t:'AI silently simplifies complex requests with no warning to the user',n:'31 clients'},
+      {p:'p2',t:'Re-prompting UX unclear — no sign the AI remembers previous session context',n:'29 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=16', tphoto:'https://i.pravatar.cc/40?img=16',
+    name:'Léa Moreau', subloc:'Paris · 24 yrs',
+    chips:[['💼','Content creator · 85K IG'],['📱','iPhone 13 mini'],['🎯','Link-in-bio landing page'],['⚡','Expects instant results']],
+    meta:'24 · Paris<br/>Content creator · 85K Instagram<br/>Expects instant results',
+    tags:['Impatient','Visual learner','Mobile-native'],
+    outcome:{cls:'pos', text:'✅ Converted to paid'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'ok',l:'Upgraded'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I just want to make a portfolio site quickly. Let me try typing my idea."'},
+      {t:'warn',q:'"Hmm, what should I even type? There\'s nothing here to guide me."'},
+      {t:'norm',q:'"Oh! It built an actual site in 8 minutes. This is incredible."'},
+      {t:'norm',q:'"I\'m upgrading immediately. Worth every penny."'},
+    ],
+    issues:[
+      {p:'p2',t:'Blank prompt input with zero guidance — 34% of users froze for 30+ sec',n:'34 clients'},
+      {p:'p2',t:'No "next step" CTA after first build — users don\'t know they can iterate',n:'27 clients'},
+      {p:'p3',t:'Mobile layout cramped on iPhone — editor sidebar overlaps content',n:'18 clients'},
+    ]
+  }
+];
 
-// ── How It Works accordion ────────────────────────────────────────────────
+let currentAgent = 0;
+let autoTimer = null;
+const INTERVAL = 5500;
+
+function switchReportTab(tab) {
+  document.querySelectorAll('.rtab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.rtab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.rtab-btn[onclick="switchReportTab('${tab}')"]`).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function selectAgent(idx, userClick = true) {
+  if (userClick) clearAuto();
+  currentAgent = idx;
+  const a = AGENTS[idx];
+  const pills = document.querySelectorAll('.agent-pill');
+  pills.forEach((p,i) => p.classList.toggle('active', i===idx));
+
+  const body = document.getElementById('rcard-main');
+  body.style.opacity = '0';
+  body.style.transform = 'translateY(6px)';
+
+  setTimeout(() => {
+    document.getElementById('rp-photo').src = a.photo;
+    document.getElementById('rp-name').textContent = a.name;
+    document.getElementById('rp-subloc').textContent = a.subloc || '';
+    document.getElementById('rp-chips').innerHTML = (a.chips||[]).map(([ico,txt])=>`<div class="rp-chip"><span class="rp-chip-ico">${ico}</span>${txt}</div>`).join('');
+    const out = document.getElementById('rp-outcome');
+    out.className = 'rp-outcome ' + a.outcome.cls;
+    out.textContent = a.outcome.text;
+
+    // Journey
+    document.getElementById('r-journey').innerHTML = a.journey.flatMap((s,i) => {
+      const node = `<div class="jstep"><div class="jstep-node"><div class="jstep-circle ${s.s}">${s.s==='ok'?'✓':s.s==='warn'?'?':'✗'}</div><div class="jstep-label">${s.l}</div></div></div>`;
+      const conn = i < a.journey.length-1 ? `<div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>` : '';
+      return [node, conn];
+    }).join('');
+
+    // Thoughts
+    document.getElementById('r-thoughts').innerHTML = a.thoughts.map(t =>
+      `<div class="thought"><img class="thought-avatar" src="${a.tphoto}" alt="" aria-hidden="true"/><div class="thought-bubble ${t.t==='warn'?'warn':t.t==='fail'?'fail':''}">${t.q}</div></div>`
+    ).join('');
+
+    // Issues
+    document.getElementById('r-issues').innerHTML = a.issues.map(i =>
+      `<div class="issue"><span class="issue-pri ${i.p}">P${i.p.slice(1)}</span><span class="issue-text">${i.t}</span><span class="issue-agents">${i.n}</span></div>`
+    ).join('');
+
+    body.style.transition = 'opacity .3s ease, transform .3s ease';
+    body.style.opacity = '1';
+    body.style.transform = 'translateY(0)';
+  }, 150);
+
+  if (!userClick) startAuto();
+}
+
+function startAuto() {
+  clearAuto();
+  autoTimer = setTimeout(() => selectAgent((currentAgent + 1) % AGENTS.length, false), INTERVAL);
+}
+
+function clearAuto() {
+  if (autoTimer) clearTimeout(autoTimer);
+  autoTimer = null;
+}
+
+
+// How section accordion
+
 function selectStep(idx) {
-  document.querySelectorAll('.hstep').forEach((el, i) => el.classList.toggle('active', i === idx));
+  document.querySelectorAll('.hstep').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
   document.querySelectorAll('.hpanel').forEach((el, i) => {
     el.classList.toggle('active', i === idx);
-    el.style.display = i === idx ? 'block' : 'none';
   });
 }
-// Init panels display
-document.querySelectorAll('.hpanel').forEach((el, i) => { el.style.display = i === 0 ? 'block' : 'none'; });
 
-// ── Auto-rotate How steps ─────────────────────────────────────────────────
-let autoTimer;
-function startAuto() {
-  let cur = 0;
-  autoTimer = setInterval(() => {
-    cur = (cur + 1) % document.querySelectorAll('.hstep').length;
-    selectStep(cur);
-  }, 3500);
+// Handle form
+async function handleSubmit(e) {
+  e.preventDefault();
+  const url = document.getElementById('url-input').value.trim();
+  const email = document.getElementById('email-input').value.trim();
+  if (!url || !email) return;
+
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Joining waitlist…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, email }),
+    });
+    const data = await res.json();
+    const form = document.getElementById('waitlist-form');
+    form.innerHTML = `
+      <div style="text-align:center;padding:24px 16px">
+        <div style="font-size:40px;margin-bottom:12px">🦝</div>
+        <div style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px">You're on the list!</div>
+        <div style="font-size:14px;color:var(--ink3)">Check your inbox — we sent a welcome email to <strong>${email}</strong></div>
+      </div>
+    `;
+    const count = data.count || '';
+    document.getElementById('cta-note').textContent = count ? `${count} teams on the waitlist.` : "You're on the list.";
+  } catch {
+    btn.textContent = 'Get Early Access →';
+    btn.disabled = false;
+    document.getElementById('cta-note').textContent = 'Something went wrong — try again.';
+  }
 }
-document.querySelectorAll('.hstep').forEach(el => {
-  el.addEventListener('click', () => { clearInterval(autoTimer); });
-});
+
+// Scroll fade-in (WCAG: no motion if prefers-reduced-motion)
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}
+
+// Animate conversion bar on scroll
+const convObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => { document.getElementById('convFill').style.width = '18%'; }, 100);
+      convObs.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const convEl = document.querySelector('.conv-bar');
+if (convEl) convObs.observe(convEl);
+
+// Start auto-rotate
 startAuto();
 
-// ── Early Access Modal ────────────────────────────────────────────────────
 function showModal() {
   document.getElementById('ea-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('ea-url') && document.getElementById('ea-url').focus(), 300);
 }
 function hideModal() {
   document.getElementById('ea-overlay').classList.remove('open');
@@ -970,27 +1308,57 @@ function hideModal() {
 function closeModal(e) {
   if (e.target === document.getElementById('ea-overlay')) hideModal();
 }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') hideModal(); });
+
 async function handleModalSubmit(e) {
   e.preventDefault();
+  const url = document.getElementById('ea-url').value.trim();
+  const email = document.getElementById('ea-email').value.trim();
   const btn = document.getElementById('ea-btn');
-  const url = document.getElementById('ea-url').value;
-  const email = document.getElementById('ea-email').value;
-  btn.textContent = 'Joining…'; btn.disabled = true;
+  btn.textContent = 'Joining…';
+  btn.disabled = true;
   try {
-    const r = await fetch('/api/waitlist', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({url, email}) });
-    if (r.ok) {
-      document.getElementById('ea-form-wrap').style.display = 'none';
-      document.getElementById('ea-success').style.display = 'block';
-    } else { throw new Error('fail'); }
-  } catch {
-    btn.textContent = 'Try again'; btn.disabled = false;
+    await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, email })
+    });
+    document.getElementById('ea-success-email').textContent = email;
+    document.getElementById('ea-form-wrap').style.display = 'none';
+    document.getElementById('ea-success').style.display = 'block';
+    setTimeout(hideModal, 3500);
+  } catch(err) {
+    btn.textContent = 'Join Waitlist →';
+    btn.disabled = false;
   }
 }
-
-// ── Waitlist count ────────────────────────────────────────────────────────
-fetch('/api/waitlist/count').then(r=>r.json()).then(d=>{
-  document.querySelectorAll('.wl-count').forEach(el => el.textContent = d.count);
-}).catch(()=>{});
 </script>
+<!-- Early Access Modal -->
+<div class="ea-overlay" id="ea-overlay" onclick="closeModal(event)">
+  <div class="ea-modal">
+    <button class="ea-close" onclick="hideModal()" aria-label="Close">✕</button>
+    <div id="ea-form-wrap">
+      <div class="ea-title">Get Early Access 🦝</div>
+      <div class="ea-sub">Join the waitlist — first 50 teams analyze free.</div>
+      <form class="ea-form" onsubmit="handleModalSubmit(event)">
+        <div class="ea-input-row">
+          <span class="ea-input-icon">🔗</span>
+          <input type="url" id="ea-url" placeholder="https://yourproduct.com" required/>
+        </div>
+        <div class="ea-input-row">
+          <span class="ea-input-icon">✉️</span>
+          <input type="email" id="ea-email" placeholder="your@email.com" required/>
+        </div>
+        <button class="ea-submit" type="submit" id="ea-btn">Join Waitlist →</button>
+        <div class="ea-note">No spam. We'll email when you're up.</div>
+      </form>
+    </div>
+    <div class="ea-success" id="ea-success" style="display:none">
+      <div class="ea-success-icon">🦝</div>
+      <div class="ea-success-title">You're on the list!</div>
+      <div class="ea-success-sub">We'll email <strong id="ea-success-email"></strong> when it's your turn.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
