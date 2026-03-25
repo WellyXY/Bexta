@@ -53,13 +53,13 @@
     .fade-up.visible{opacity:1;transform:translateY(0)}
 
     /* ── NAV ── */
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(247,244,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd2)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(247,244,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd2)}
     .logo{font-weight:900;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:7px;text-decoration:none}
     .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--or)}
-    nav ul{list-style:none;display:flex;gap:28px}
-    nav ul a{font-size:13px;font-weight:500;color:var(--ink2);text-decoration:none;transition:color .15s}
+    nav ul{list-style:none;display:flex;gap:32px}
+    nav ul a{font-size:14px;font-weight:600;color:var(--ink2);text-decoration:none;transition:color .15s;letter-spacing:-.01em}
     nav ul a:hover{color:var(--ink)}
-    .btn-nav{background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 18px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:opacity .15s,transform .15s}
+    .btn-nav{background:var(--or);color:#fff;font-size:14px;font-weight:700;padding:10px 24px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:opacity .15s,transform .15s;letter-spacing:-.01em}
     .btn-nav:hover{opacity:.85;transform:translateY(-1px)}
 
     /* ─────────────────────────────────
@@ -1059,7 +1059,7 @@
     <form class="url-form" id="waitlist-form" onsubmit="handleSubmit(event)">
       <div class="url-form-row">
         <span class="form-icon">🔗</span>
-        <input type="url" id="url-input" placeholder="https://yourproduct.com" autocomplete="url" required/>
+        <input type="text" id="url-input" placeholder="https://yourproduct.com (optional)" autocomplete="url"/>
       </div>
       <div class="url-form-row">
         <span class="form-icon">✉️</span>
@@ -1418,7 +1418,7 @@ async function handleModalSubmit(e) {
       <form class="ea-form" onsubmit="handleModalSubmit(event)">
         <div class="ea-input-row">
           <span class="ea-input-icon">🔗</span>
-          <input type="url" id="ea-url" placeholder="https://yourproduct.com" required/>
+          <input type="text" id="ea-url" placeholder="https://yourproduct.com (optional)"/>
         </div>
         <div class="ea-input-row">
           <span class="ea-input-icon">✉️</span>
