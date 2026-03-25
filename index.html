@@ -269,10 +269,15 @@
     .astep.active .astep-body{max-height:160px;opacity:1;margin-top:14px}
     .astep-desc{font-size:13px;color:var(--ink2);line-height:1.7;padding-left:78px}
     /* Right panels */
-    .ar-panel{position:sticky;top:80px;background:#FAF4EE;border-radius:28px;overflow:hidden;border:1px solid rgba(239,104,32,.12)}
-    .apanel{display:none;padding:28px;min-height:400px}
-    .apanel.active{display:block}
-    .apanel-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:18px}
+    .ar-panel{position:sticky;top:80px;background:#FAF4EE;border-radius:28px;overflow:hidden;border:1px solid rgba(239,104,32,.15);padding:0}
+    .ar-diagram-wrap{display:flex;flex-direction:column;height:100%;min-height:460px}
+    .ar-diagram-header{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--or);background:rgba(239,104,32,.1);padding:10px 20px;border-bottom:1px solid rgba(239,104,32,.12);text-align:center}
+    .ar-svg{width:100%;flex:1;display:block;padding:16px 8px}
+    .ar-n .ar-nc{transition:fill .3s}
+    .ar-n.active .ar-nc{fill:var(--or)}
+    .ar-n.active rect{stroke:var(--or);stroke-width:1.5}
+    .ar-diagram-footer{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);background:rgba(24,20,15,.04);padding:8px 20px;border-top:1px solid rgba(24,20,15,.06);display:flex;align-items:center;gap:6px}
+    .ar-df-dot{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block}
     /* Panel 1: Agent grid */
     .ag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
     .ag-card{background:var(--cream);border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1.5px solid transparent;transition:border-color .2s}
@@ -859,167 +864,79 @@
           </div>
         </div>
       </div>
-      <!-- Right: visual panels -->
+      <!-- Right: SVG network diagram -->
       <div class="ar-panel">
-        <!-- Panel 01: Agent Selection -->
-        <div class="apanel active" id="apanel-0">
-          <div class="apanel-label">Step 01 — Agent Pool</div>
-          <div class="ag-grid">
-            <div class="ag-card sel">
-              <img class="ag-av" src="https://i.pravatar.cc/80?img=47" alt="Mei"/>
-              <div class="ag-name">Mei, 21<br/>Singapore</div>
-              <div class="ag-tag">SaaS Founder</div>
-            </div>
-            <div class="ag-card sel">
-              <img class="ag-av" src="https://i.pravatar.cc/80?img=11" alt="Tyler"/>
-              <div class="ag-name">Tyler, 29<br/>Texas, US</div>
-              <div class="ag-tag">Marketer</div>
-            </div>
-            <div class="ag-card">
-              <img class="ag-av" src="https://i.pravatar.cc/80?img=25" alt="Ana"/>
-              <div class="ag-name">Ana, 36<br/>São Paulo</div>
-              <div class="ag-tag">Designer</div>
-            </div>
-            <div class="ag-card sel">
-              <img class="ag-av" src="https://i.pravatar.cc/80?img=57" alt="Klaus"/>
-              <div class="ag-name">Klaus, 54<br/>Berlin</div>
-              <div class="ag-tag">CTO</div>
-            </div>
-            <div class="ag-card">
-              <img class="ag-av" src="https://i.pravatar.cc/80?img=9" alt="Priya"/>
-              <div class="ag-name">Priya, 27<br/>Bangalore</div>
-              <div class="ag-tag">PM</div>
-            </div>
-            <div class="ag-card sel">
-              <img class="ag-av" src="https://i.pravatar.cc/80?img=16" alt="Léa"/>
-              <div class="ag-name">Léa, 24<br/>Paris</div>
-              <div class="ag-tag">Freelancer</div>
-            </div>
-          </div>
-          <div class="ag-note">Highlighted agents match your product's target market. Weights are applied so the distribution mirrors real traffic — not a random sample.</div>
-        </div>
-        <!-- Panel 02: Intent Calibration -->
-        <div class="apanel" id="apanel-1">
-          <div class="apanel-label">Step 02 — Intent Assignment</div>
-          <div class="int-rows">
-            <div class="int-row">
-              <img class="int-av" src="https://i.pravatar.cc/80?img=47" alt="Mei"/>
-              <div class="int-label">
-                <div class="int-name">Mei, 21 · Singapore</div>
-                <div class="int-intent">Saw your tweet. Curious but skeptical about AI tools.</div>
-              </div>
-              <div class="int-badge skeptic">Skeptic</div>
-            </div>
-            <div class="int-row">
-              <img class="int-av" src="https://i.pravatar.cc/80?img=11" alt="Tyler"/>
-              <div class="int-label">
-                <div class="int-name">Tyler, 29 · Texas</div>
-                <div class="int-intent">Googled "user testing alternative". Comparing 3 tools.</div>
-              </div>
-              <div class="int-badge compare">Comparing</div>
-            </div>
-            <div class="int-row">
-              <img class="int-av" src="https://i.pravatar.cc/80?img=57" alt="Klaus"/>
-              <div class="int-label">
-                <div class="int-name">Klaus, 54 · Berlin</div>
-                <div class="int-intent">Budget approved. Ready to buy if pricing is clear.</div>
-              </div>
-              <div class="int-badge buy">Ready to buy</div>
-            </div>
-            <div class="int-row">
-              <img class="int-av" src="https://i.pravatar.cc/80?img=16" alt="Léa"/>
-              <div class="int-label">
-                <div class="int-name">Léa, 24 · Paris</div>
-                <div class="int-intent">Friend recommended it. Just browsing for now.</div>
-              </div>
-              <div class="int-badge browse">Browsing</div>
-            </div>
+        <div class="ar-diagram-wrap">
+          <div class="ar-diagram-header">AUTONOMOUS AGENT FRAMEWORK</div>
+          <svg class="ar-svg" viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <!-- Defs -->
+            <defs>
+              <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="rgba(239,104,32,.4)"/>
+              </marker>
+            </defs>
+            <!-- Cross lines (Cookiy AI X pattern) -->
+            <line x1="90" y1="65" x2="310" y2="315" stroke="rgba(239,104,32,.18)" stroke-width="1.5" stroke-dasharray="5,5" class="ar-line-cross"/>
+            <line x1="310" y1="65" x2="90" y2="315" stroke="rgba(239,104,32,.18)" stroke-width="1.5" stroke-dasharray="5,5" class="ar-line-cross"/>
+            <!-- Main flow lines -->
+            <line x1="90" y1="65" x2="310" y2="65" stroke="rgba(239,104,32,.35)" stroke-width="1.5" class="ar-line"/>
+            <line x1="90" y1="65" x2="200" y2="190" stroke="rgba(239,104,32,.35)" stroke-width="1.5" class="ar-line"/>
+            <line x1="310" y1="65" x2="200" y2="190" stroke="rgba(239,104,32,.35)" stroke-width="1.5" class="ar-line"/>
+            <line x1="200" y1="190" x2="90" y2="315" stroke="rgba(239,104,32,.35)" stroke-width="1.5" class="ar-line"/>
+            <line x1="200" y1="190" x2="310" y2="315" stroke="rgba(239,104,32,.35)" stroke-width="1.5" class="ar-line"/>
+            <line x1="90" y1="315" x2="310" y2="315" stroke="rgba(239,104,32,.35)" stroke-width="1.5" class="ar-line"/>
+
+            <!-- N1: Agent Selection (top-left) -->
+            <g class="ar-n" id="ar-n-0">
+              <circle cx="90" cy="65" r="24" fill="#18140F" class="ar-nc"/>
+              <text x="90" y="71" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Inter,sans-serif">01</text>
+              <!-- Mini card -->
+              <rect x="4" y="96" width="118" height="38" rx="8" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
+              <text x="63" y="112" text-anchor="middle" fill="#18140F" font-size="9.5" font-weight="700" font-family="Inter,sans-serif">AGENT SELECTION</text>
+              <text x="63" y="126" text-anchor="middle" fill="#A09890" font-size="8.5" font-family="Inter,sans-serif">5,000 diverse profiles</text>
+            </g>
+
+            <!-- N2: Intent Calibration (top-right) -->
+            <g class="ar-n" id="ar-n-1">
+              <circle cx="310" cy="65" r="24" fill="#18140F" class="ar-nc"/>
+              <text x="310" y="71" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Inter,sans-serif">02</text>
+              <rect x="278" y="96" width="118" height="38" rx="8" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
+              <text x="337" y="112" text-anchor="middle" fill="#18140F" font-size="9.5" font-weight="700" font-family="Inter,sans-serif">INTENT + MESSAGE</text>
+              <text x="337" y="126" text-anchor="middle" fill="#A09890" font-size="8.5" font-family="Inter,sans-serif">Unique entry context</text>
+            </g>
+
+            <!-- N3: Live Browsing (center) -->
+            <g class="ar-n" id="ar-n-2">
+              <circle cx="200" cy="190" r="24" fill="#EF6820" class="ar-nc"/>
+              <text x="200" y="196" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Inter,sans-serif">03</text>
+              <rect x="142" y="221" width="116" height="38" rx="8" fill="white" stroke="rgba(239,104,32,.2)" stroke-width="1"/>
+              <text x="200" y="237" text-anchor="middle" fill="#18140F" font-size="9.5" font-weight="700" font-family="Inter,sans-serif">LIVE BROWSING</text>
+              <text x="200" y="251" text-anchor="middle" fill="#A09890" font-size="8.5" font-family="Inter,sans-serif">Scroll · click · navigate</text>
+            </g>
+
+            <!-- N4: Drop-off Detection (bottom-left) -->
+            <g class="ar-n" id="ar-n-3">
+              <circle cx="90" cy="315" r="24" fill="#18140F" class="ar-nc"/>
+              <text x="90" y="321" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Inter,sans-serif">04</text>
+              <rect x="4" y="280" width="118" height="28" rx="8" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
+              <text x="63" y="292" text-anchor="middle" fill="#18140F" font-size="9.5" font-weight="700" font-family="Inter,sans-serif">DROP-OFF</text>
+              <text x="63" y="303" text-anchor="middle" fill="#A09890" font-size="8.5" font-family="Inter,sans-serif">Where &amp; why they left</text>
+            </g>
+
+            <!-- N5: Report & Design Fixes (bottom-right) -->
+            <g class="ar-n" id="ar-n-4">
+              <circle cx="310" cy="315" r="24" fill="#18140F" class="ar-nc"/>
+              <text x="310" y="321" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Inter,sans-serif">05</text>
+              <rect x="278" y="280" width="118" height="28" rx="8" fill="white" stroke="rgba(24,20,15,.08)" stroke-width="1"/>
+              <text x="337" y="292" text-anchor="middle" fill="#18140F" font-size="9.5" font-weight="700" font-family="Inter,sans-serif">REPORT + FIXES</text>
+              <text x="337" y="303" text-anchor="middle" fill="#A09890" font-size="8.5" font-family="Inter,sans-serif">Ranked issues &amp; actions</text>
+            </g>
+          </svg>
+          <div class="ar-diagram-footer">
+            <span class="ar-df-dot"></span>AUTO-SYNTHESIZED
           </div>
         </div>
-        <!-- Panel 03: Live Browsing -->
-        <div class="apanel" id="apanel-2">
-          <div class="apanel-label">Step 03 — Agent Session · Mei, 21 · Singapore</div>
-          <div class="browse-frame">
-            <div class="browse-bar">https://yourproduct.com</div>
-            <div class="browse-steps">
-              <div class="browse-step"><div class="browse-dot ok">✓</div><span>Landed on homepage. Read hero headline.</span><span class="browse-time">0:04</span></div>
-              <div class="browse-step"><div class="browse-dot ok">✓</div><span>Scrolled to "How it works" section.</span><span class="browse-time">0:22</span></div>
-              <div class="browse-step"><div class="browse-dot warn">?</div><span>Clicked pricing — saw "Contact us" only.</span><span class="browse-time">0:41</span></div>
-              <div class="browse-step"><div class="browse-dot warn">?</div><span>Searched for a free trial button. Not found.</span><span class="browse-time">0:58</span></div>
-              <div class="browse-step"><div class="browse-dot fail">✗</div><span>Left tab open. Never returned.</span><span class="browse-time">1:12</span></div>
-            </div>
-          </div>
-          <div style="font-size:12px;color:var(--ink2);line-height:1.6;font-style:italic;padding:0 4px">"If there's no trial, I'll just use the free tool I already know. Not worth the risk."</div>
-        </div>
-        <!-- Panel 04: Drop-off Detection -->
-        <div class="apanel" id="apanel-3">
-          <div class="apanel-label">Step 04 — Drop-off Map</div>
-          <div class="drop-rows">
-            <div class="drop-row">
-              <img class="drop-av" src="https://i.pravatar.cc/80?img=47" alt="Mei"/>
-              <div class="drop-bar-wrap">
-                <div class="drop-bar-name">Mei — Dropped at Pricing</div>
-                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:52%;background:#ef4444"></div></div>
-                <div class="drop-reason">"No trial option visible. Too risky to commit."</div>
-              </div>
-              <span class="drop-x">✗</span>
-            </div>
-            <div class="drop-row">
-              <img class="drop-av" src="https://i.pravatar.cc/80?img=11" alt="Tyler"/>
-              <div class="drop-bar-wrap">
-                <div class="drop-bar-name">Tyler — Dropped at Signup Step 3</div>
-                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:78%;background:#f59e0b"></div></div>
-                <div class="drop-reason">"Asked for credit card too early. I barely know the product."</div>
-              </div>
-              <span class="drop-x">✗</span>
-            </div>
-            <div class="drop-row">
-              <img class="drop-av" src="https://i.pravatar.cc/80?img=57" alt="Klaus"/>
-              <div class="drop-bar-wrap">
-                <div class="drop-bar-name">Klaus — Converted ✓</div>
-                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:100%;background:#22c55e"></div></div>
-                <div class="drop-reason">"Annual plan pricing was clear. Signed up."</div>
-              </div>
-              <span class="drop-x" style="color:#22c55e">✓</span>
-            </div>
-            <div class="drop-row">
-              <img class="drop-av" src="https://i.pravatar.cc/80?img=16" alt="Léa"/>
-              <div class="drop-bar-wrap">
-                <div class="drop-bar-name">Léa — Dropped at Hero</div>
-                <div class="drop-bar-track"><div class="drop-bar-fill" style="width:18%;background:#ef4444"></div></div>
-                <div class="drop-reason">"Didn't understand what it does in 5 seconds."</div>
-              </div>
-              <span class="drop-x">✗</span>
-            </div>
-          </div>
-        </div>
-        <!-- Panel 05: Report & Fixes -->
-        <div class="apanel" id="apanel-4">
-          <div class="apanel-label">Step 05 — Prioritized Report</div>
-          <div class="rp-issues">
-            <div class="rp-issue">
-              <div class="rp-pri p1">P1</div>
-              <div class="rp-issue-text">No free trial or low-risk entry point visible</div>
-              <div class="rp-issue-n">3,100 agents</div>
-            </div>
-            <div class="rp-issue">
-              <div class="rp-pri p1">P1</div>
-              <div class="rp-issue-text">Hero copy unclear for non-technical visitors</div>
-              <div class="rp-issue-n">2,400 agents</div>
-            </div>
-            <div class="rp-issue">
-              <div class="rp-pri p2">P2</div>
-              <div class="rp-issue-text">Credit card required too early in signup flow</div>
-              <div class="rp-issue-n">1,800 agents</div>
-            </div>
-          </div>
-          <div class="rp-fix">
-            <div class="rp-fix-label">Design fixes this week</div>
-            <div class="rp-fix-item">Add "Start free — no card" CTA above the fold</div>
-            <div class="rp-fix-item">Rewrite hero to lead with the outcome, not the process</div>
-            <div class="rp-fix-item">Move credit card to step 5, after first value moment</div>
-          </div>
-        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -1441,7 +1358,7 @@ function clearAuto() {
 
 function selectAStep(idx) {
   document.querySelectorAll('.astep').forEach((el, i) => el.classList.toggle('active', i === idx));
-  document.querySelectorAll('.apanel').forEach((el, i) => el.classList.toggle('active', i === idx));
+  document.querySelectorAll('.ar-n').forEach((el, i) => el.classList.toggle('active', i === idx));
 }
 function selectStep(idx) {
   document.querySelectorAll('.hstep').forEach((el, i) => {
