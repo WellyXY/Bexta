@@ -1193,6 +1193,43 @@ if (convEl) convObs.observe(convEl);
 
 // Start auto-rotate
 startAuto();
+
+function showModal() {
+  document.getElementById('ea-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('ea-url') && document.getElementById('ea-url').focus(), 300);
+}
+function hideModal() {
+  document.getElementById('ea-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('ea-overlay')) hideModal();
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') hideModal(); });
+
+async function handleModalSubmit(e) {
+  e.preventDefault();
+  const url = document.getElementById('ea-url').value.trim();
+  const email = document.getElementById('ea-email').value.trim();
+  const btn = document.getElementById('ea-btn');
+  btn.textContent = 'Joining…';
+  btn.disabled = true;
+  try {
+    await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, email })
+    });
+    document.getElementById('ea-success-email').textContent = email;
+    document.getElementById('ea-form-wrap').style.display = 'none';
+    document.getElementById('ea-success').style.display = 'block';
+    setTimeout(hideModal, 3500);
+  } catch(err) {
+    btn.textContent = 'Join Waitlist →';
+    btn.disabled = false;
+  }
+}
 </script>
 <!-- Early Access Modal -->
 <div class="ea-overlay" id="ea-overlay" onclick="closeModal(event)">
