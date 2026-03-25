@@ -19,13 +19,15 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/></noscript>
   <style>
     /* ─── Design tokens (8px grid, warm palette, Linear-inspired) ─── */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --bg:#F7F4EF;   --bg2:#F0EBE3;  --cream:#FAFAF8;
-      --ink:#18140F;  --ink2:#5C5650; --ink3:#A09890;
+      --ink:#18140F;  --ink2:#5C5650; --ink3:#6E6760;
       --or:#EF6820;   --or2:#D95910;
       --ol:rgba(239,104,32,.10);
       --brd:rgba(24,20,15,.09);
@@ -437,6 +439,7 @@
   </ul>
   <a class="btn-nav" href="#cta">Get Early Access</a>
 </nav>
+<main id="main-content">
 
 <!-- ① HERO -->
 <div class="hero">
@@ -738,10 +741,10 @@
           <div>
             <div class="monologue-label">Inner monologue</div>
             <div class="thoughts" id="r-thoughts">
-              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble">"Is this a website builder or an AI chatbot? I'll just try typing something..."</div></div>
-              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble">"Oh wow — it actually built a real page. That was fast. This feels like magic."</div></div>
-              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble warn">"Connect my domain?? What does that even mean? Did I break something?"</div></div>
-              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble fail">"I don't see a 'share' button anywhere. I'll just come back later... [never returns]"</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble">"Is this a website builder or an AI chatbot? I'll just try typing something..."</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble">"Oh wow — it actually built a real page. That was fast. This feels like magic."</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble warn">"Connect my domain?? What does that even mean? Did I break something?"</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47" alt="AI persona" width="40" height="40"/><div class="thought-bubble fail">"I don't see a 'share' button anywhere. I'll just come back later... [never returns]"</div></div>
             </div>
           </div>
 
@@ -1037,7 +1040,7 @@ function selectAgent(idx, userClick = true) {
 
     // Thoughts
     document.getElementById('r-thoughts').innerHTML = a.thoughts.map(t =>
-      `<div class="thought"><img class="thought-avatar" src="${a.tphoto}"/><div class="thought-bubble ${t.t==='warn'?'warn':t.t==='fail'?'fail':''}">${t.q}</div></div>`
+      `<div class="thought"><img class="thought-avatar" src="${a.tphoto}" alt="" aria-hidden="true"/><div class="thought-bubble ${t.t==='warn'?'warn':t.t==='fail'?'fail':''}">${t.q}</div></div>`
     ).join('');
 
     // Issues
