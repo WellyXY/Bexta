@@ -212,6 +212,23 @@ app.get('/api/admin/reports/:id', requireAdmin, async (req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
+
+// ── PH Audit Report ───────────────────────────────────────────────────────
+const PH_IDS = new Set([1,2,4,5,8,9,10,11,12,14,15,16,17,18,19,21,22,23,24,25]);
+app.get('/api/admin/ph-report', requireAdmin, (req, res) => {
+  const personas = REPORT_SEED.personas.filter(p => PH_IDS.has(p.id));
+  const converted  = personas.filter(p => p.outcome === 'converted').length;
+  const dropped    = personas.filter(p => p.outcome === 'dropped').length;
+  const undecided  = personas.filter(p => p.outcome === 'undecided').length;
+  const avg_score  = Math.round(personas.reduce((s,p) => s + p.score, 0) / personas.length * 10) / 10;
+  res.json({
+    meta: { label: 'Product Hunt Audience Audit', run_date: REPORT_SEED.meta.run_date, total: personas.length },
+    summary: { converted, dropped, undecided, avg_score, conversion_rate: Math.round(converted/personas.length*100) },
+    top_issues: REPORT_SEED.top_issues,
+    personas,
+  });
+});
+
 // ── Static + API ───────────────────────────────────────────
 app.use(express.static(path.join(__dirname)));
 
@@ -239,8 +256,8 @@ app.post('/api/waitlist', async (req, res) => {
     return res.json({ ok: true, count: parseInt(count) });
   }
   memoryList.push(entry);
-  sendWelcomeEmail(entry.email, entry.url);
-  res.json({ ok: true, count: memoryList.length });
+  sendWelcomeEmail(entry.email, entry.url); // async, don't await
+  return res.json({ ok: true, count: memoryList.length });
 });
 
 app.get('/api/waitlist/count', async (req, res) => {

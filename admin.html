@@ -242,6 +242,11 @@
       <div class="sb-label">Reports</div>
       <div class="sb-badge" id="sb-rp-count">—</div>
     </div>
+    <div class="sb-item" id="nav-phreport" onclick="showTab('phreport')">
+      <div class="sb-icon">🚀</div>
+      <div class="sb-label">PH Audit</div>
+      <div class="sb-badge" id="sb-ph-count">20</div>
+    </div>
   </div>
   <div class="sb-footer">
     <div class="sb-footer-txt">© 2026 Betax</div>
@@ -276,14 +281,18 @@ let waitlistData = null;
 let reportsData = null;
 
 // ── Init ──────────────────────────────────────────────────
+let phReportData = null;
+
 async function init() {
   try {
-    const [wl, rp] = await Promise.all([
+    const [wl, rp, ph] = await Promise.all([
       api('/api/admin/waitlist'),
       api('/api/admin/reports'),
+      api('/api/admin/ph-report'),
     ]);
     waitlistData = wl;
     reportsData = rp;
+    phReportData = ph;
     document.getElementById('sb-wl-count').textContent = wl.count;
     document.getElementById('sb-rp-count').textContent = rp.length;
     showTab('waitlist');
@@ -299,6 +308,7 @@ function showTab(tab) {
   document.getElementById('nav-' + tab).classList.add('active');
   if (tab === 'waitlist') renderWaitlist();
   else if (tab === 'reports') renderReportList();
+  else if (tab === 'phreport') renderPHReport();
 }
 
 // ── Waitlist ──────────────────────────────────────────────
@@ -817,6 +827,78 @@ function renderPersonas(all, filter) {
       </div>
     `;
   }).join('');
+}
+
+
+// ── PH Audit Report ───────────────────────────────────────────────────────
+function renderPHReport() {
+  const d = phReportData;
+  if (!d) return;
+  document.getElementById('tb-title').textContent = 'Product Hunt Audience Audit';
+  document.getElementById('tb-sub').textContent = d.meta.run_date + ' · ' + d.meta.total + ' PH-profile personas';
+  document.getElementById('tb-actions').innerHTML = '';
+
+  const s = d.summary;
+  const scoreColor = v => v>=7?'var(--green)':v>=5?'var(--yellow)':'var(--red)';
+  const outcomeLabel = { converted:'✓ Converted', dropped:'✗ Dropped', undecided:'~ Undecided' };
+
+  const issueHTML = (d.top_issues||[]).map(issue => {
+    const bg = issue.priority==='P1' ? 'var(--rd-dim)' : issue.priority==='P2' ? 'var(--yw-dim)' : 'rgba(255,255,255,.04)';
+    const clr = issue.priority==='P1' ? 'var(--red)' : issue.priority==='P2' ? 'var(--yellow)' : 'var(--muted)';
+    return `<div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+      <div style="flex-shrink:0;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:800;background:${bg};color:${clr}">${esc(issue.priority)}</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px">${esc(issue.title)}</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Affected ${issue.affected} personas · ${esc((issue.segments||[]).join(', '))}</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.5">${esc(issue.description)}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const personaHTML = (d.personas||[]).map(p => {
+    const sc = scoreColor(p.score);
+    const tech = p.tech_comfort || p.tech || 0;
+    const oc = p.outcome;
+    return `<div class="pcard">
+      <div class="pc-top">
+        <div class="pc-avatar"><img src="${avatarUrl(p.name)}" alt="${esc(p.name)}" loading="lazy" onerror="this.parentElement.style.background='var(--s3)'"/></div>
+        <div class="pc-info">
+          <div class="pc-name">${esc(p.name)}</div>
+          <div class="pc-sub">${p.age||''} · ${esc(p.location||'')} · ${esc(p.role||'')}</div>
+        </div>
+        <div class="pc-outcome oc-${oc}">${outcomeLabel[oc]||oc}</div>
+      </div>
+      <div class="pc-score">
+        <div class="pc-score-track"><div class="pc-score-fill" style="width:${(p.score||0)*10}%;background:${sc}"></div></div>
+        <div class="pc-score-val" style="color:${sc}">${p.score||0}/10</div>
+      </div>
+      <div class="pc-expect">${esc(p.pre_expectation||'')}</div>
+      <div style="font-size:11px;color:var(--muted);margin:6px 0 4px">💬 Biggest gap: ${esc(p.biggest_gap||'')}</div>
+      <div class="pc-thoughts">
+        ${(p.thoughts||[]).map(t=>`<div class="thought t-${t.type}"><div class="ti">${t.type==='fail'?'✗':t.type==='warn'?'⚠':'→'}</div><div>${esc(t.quote)}</div></div>`).join('')}
+      </div>
+      <div class="pc-tags">
+        <span class="ptag">tech ${tech}/10</span>
+        <span class="ptag">${esc(p.channel||'')}</span>
+        <span class="ptag">${esc(p.use_case||'')}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="stats">
+      <div class="stat"><div class="stat-num c-orange">${d.meta.total}</div><div class="stat-lbl">PH Personas</div></div>
+      <div class="stat"><div class="stat-num c-green">${s.converted}</div><div class="stat-lbl">Converted</div></div>
+      <div class="stat"><div class="stat-num c-red">${s.dropped}</div><div class="stat-lbl">Dropped</div></div>
+      <div class="stat"><div class="stat-num c-yellow">${s.undecided}</div><div class="stat-lbl">Undecided</div></div>
+      <div class="stat"><div class="stat-num" style="color:${scoreColor(s.avg_score)}">${s.avg_score}</div><div class="stat-lbl">Avg Score</div></div>
+      <div class="stat"><div class="stat-num c-orange">${s.conversion_rate}%</div><div class="stat-lbl">Conv. Rate</div></div>
+    </div>
+    <div class="sh"><div class="sh-label">Top Issues (PH Audience)</div><div class="sh-line"></div></div>
+    ${issueHTML}
+    <div class="sh" style="margin-top:24px"><div class="sh-label">20 Personas · PH Profile</div><div class="sh-line"></div></div>
+    <div class="pgrid" id="pgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px">${personaHTML}</div>
+  `;
 }
 
 init();
