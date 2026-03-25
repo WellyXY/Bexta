@@ -245,7 +245,7 @@ const fmt = ts => {
   return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
 };
 const api = path => fetch(`${path}?token=${token}`).then(r => r.ok ? r.json() : Promise.reject(r.status));
-const avatarUrl = name => `https://api.dicebear.com/9.x/open-peeps/svg?seed=${encodeURIComponent(name)}&backgroundColor=0f0d0b,1a1714`;
+const avatarUrl = name => `https://i.pravatar.cc/80?u=${encodeURIComponent(name)}`;
 
 let currentTab = 'waitlist';
 let waitlistData = null;
