@@ -141,7 +141,7 @@ async function sendWelcomeEmail(email, url) {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Racoonn <hello@racoonn.me>',
+        from: 'Racoonn <admin@racoonn.me>',
         to: email,
         subject: "You're on the Racoonn waitlist 🦝",
         html: `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;font-family:-apple-system,sans-serif;background:#faf9f7;color:#1a1714">
