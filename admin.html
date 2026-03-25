@@ -158,6 +158,30 @@
     .ch-fill{height:100%;border-radius:3px;background:var(--orange)}
     .ch-pct{font-size:11px;font-weight:700;color:var(--text);width:28px;text-align:right}
 
+
+    /* ── Demographics ── */
+    .demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .demo-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:16px}
+    .demo-card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:12px}
+    .demo-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+    .demo-bar-label{font-size:11px;color:var(--muted);width:90px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .demo-bar-track{flex:1;height:6px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden}
+    .demo-bar-fill{height:100%;border-radius:3px}
+    .demo-bar-val{font-size:11px;font-weight:700;color:var(--text);width:36px;text-align:right;flex-shrink:0}
+    .demo-bar-sub{font-size:10px;color:var(--dim);width:20px;text-align:right;flex-shrink:0}
+
+    /* ── Recommendations ── */
+    .rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:24px}
+    .rec-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px}
+    .rec-card.top{border-color:var(--or-bdr);background:var(--or-dim)}
+    .rec-rank{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .rec-rank-num{font-size:10px;font-weight:800;background:rgba(255,255,255,.06);color:var(--muted);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+    .rec-card.top .rec-rank-num{background:rgba(239,104,32,.2);color:var(--orange)}
+    .rec-segment{font-size:12px;font-weight:700;color:#fff}
+    .rec-rate{font-size:18px;font-weight:900;color:var(--green);margin-bottom:4px}
+    .rec-desc{font-size:11px;color:var(--muted);line-height:1.5}
+    .rec-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+    .rec-tag{font-size:10px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.04);color:var(--muted)}
     /* ── Filter tabs ── */
     .ftabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
     .ftab{font-size:11px;padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .12s;display:flex;align-items:center;gap:4px}
@@ -525,6 +549,12 @@ function renderReportDetail(data) {
       </div>
     </div>
 
+    <div class="sh"><div class="sh-label">Demographic distribution</div><div class="sh-line"></div></div>
+    <div class="demo-grid" id="demo-grid"></div>
+
+    <div class="sh"><div class="sh-label">Target audience recommendations</div><div class="sh-line"></div></div>
+    <div class="rec-grid" id="rec-grid"></div>
+
     <div class="sh"><div class="sh-label">All personas</div><div class="sh-line"></div></div>
     <div class="ftabs" id="ftabs"></div>
     <div class="pgrid" id="pgrid"></div>
@@ -554,7 +584,195 @@ function renderReportDetail(data) {
     renderPersonas(personas, b.dataset.f);
   }));
 
+  renderDemographics(personas);
+  renderRecommendations(personas);
   renderPersonas(personas, 'all');
+}
+
+
+function renderDemographics(personas) {
+  if (!personas.length) return;
+
+  // Age groups
+  const ageGroups = { '18–24':0, '25–30':0, '31–36':0, '37–42':0, '43–50':0, '51+':0 };
+  personas.forEach(p => {
+    const a = p.age || 0;
+    if (a <= 24) ageGroups['18–24']++;
+    else if (a <= 30) ageGroups['25–30']++;
+    else if (a <= 36) ageGroups['31–36']++;
+    else if (a <= 42) ageGroups['37–42']++;
+    else if (a <= 50) ageGroups['43–50']++;
+    else ageGroups['51+']++;
+  });
+
+  // Countries
+  const countries = {};
+  personas.forEach(p => {
+    const c = (p.location || '').split(', ').pop() || '?';
+    countries[c] = (countries[c] || 0) + 1;
+  });
+  const topCountries = Object.entries(countries).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  // Roles (top 6)
+  const roles = {};
+  personas.forEach(p => { roles[p.role||'?'] = (roles[p.role||'?'] || 0) + 1; });
+  const topRoles = Object.entries(roles).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  // Tech comfort buckets
+  const techBuckets = { 'Low (1–3)':0, 'Mid (4–6)':0, 'High (7–10)':0 };
+  personas.forEach(p => {
+    const t = p.tech_comfort || p.tech || 5;
+    if (t <= 3) techBuckets['Low (1–3)']++;
+    else if (t <= 6) techBuckets['Mid (4–6)']++;
+    else techBuckets['High (7–10)']++;
+  });
+
+  // Channels (top 6)
+  const channels = {};
+  personas.forEach(p => { channels[p.channel||'?'] = (channels[p.channel||'?'] || 0) + 1; });
+  const topChannels = Object.entries(channels).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  // Use cases (top 6)
+  const usecases = {};
+  personas.forEach(p => { usecases[p.use_case||'?'] = (usecases[p.use_case||'?'] || 0) + 1; });
+  const topUsecases = Object.entries(usecases).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  const n = personas.length;
+  const colors = ['#ef6820','#4ade80','#60a5fa','#f59e0b','#a78bfa','#f87171'];
+
+  function barsHTML(entries, total) {
+    const max = entries[0]?.[1] || 1;
+    return entries.map(([label, count], i) => {
+      const pct = Math.round(count / total * 100);
+      const barW = Math.round(count / max * 100);
+      return `<div class="demo-bar-row">
+        <div class="demo-bar-label" title="${esc(label)}">${esc(label)}</div>
+        <div class="demo-bar-track"><div class="demo-bar-fill" style="width:${barW}%;background:${colors[i%colors.length]}"></div></div>
+        <div class="demo-bar-val">${count}</div>
+        <div class="demo-bar-sub">${pct}%</div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('demo-grid').innerHTML = `
+    <div class="demo-card">
+      <div class="demo-card-title">Age distribution</div>
+      ${barsHTML(Object.entries(ageGroups).filter(([,v])=>v>0), n)}
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-title">Top countries</div>
+      ${barsHTML(topCountries, n)}
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-title">Top roles</div>
+      ${barsHTML(topRoles, n)}
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-title">Tech comfort</div>
+      ${barsHTML(Object.entries(techBuckets), n)}
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-title">Discovery channel</div>
+      ${barsHTML(topChannels, n)}
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-title">Use case</div>
+      ${barsHTML(topUsecases, n)}
+    </div>
+  `;
+}
+
+function renderRecommendations(personas) {
+  if (!personas.length) return;
+
+  // Build segment conversion rates
+  const segments = {};
+  function addSeg(key, p) {
+    if (!segments[key]) segments[key] = { total:0, converted:0, dropped:0, label:key };
+    segments[key].total++;
+    if (p.outcome === 'converted') segments[key].converted++;
+    if (p.outcome === 'dropped') segments[key].dropped++;
+  }
+
+  personas.forEach(p => {
+    // By channel
+    addSeg('ch:' + (p.channel||'?'), p);
+    // By tech level
+    const t = p.tech_comfort || p.tech || 5;
+    const tl = t >= 7 ? 'Tech-savvy (7–10)' : t >= 4 ? 'Mid-tech (4–6)' : 'Low-tech (1–3)';
+    addSeg('tech:' + tl, p);
+    // By role category
+    const r = p.role || '?';
+    const cat = /founder|maker|builder|indie/i.test(r) ? 'Founders & makers' :
+                /product|PM|manager/i.test(r) ? 'Product managers' :
+                /developer|engineer/i.test(r) ? 'Developers' :
+                /designer|UX|UI/i.test(r) ? 'Designers' :
+                /marketing|growth/i.test(r) ? 'Marketers & growth' :
+                /creator|blogger|writer|social/i.test(r) ? 'Creators & writers' :
+                /agency|freelance/i.test(r) ? 'Agencies & freelancers' : 'Other';
+    addSeg('role:' + cat, p);
+    // By age group
+    const a = p.age || 0;
+    const ag = a <= 25 ? '18–25' : a <= 35 ? '26–35' : a <= 45 ? '36–45' : '46+';
+    addSeg('age:' + ag, p);
+  });
+
+  // Score: conversion_rate weighted by total
+  const scored = Object.values(segments)
+    .filter(s => s.total >= 5)
+    .map(s => ({ ...s, conv_rate: Math.round(s.converted / s.total * 100), key: s.label }))
+    .sort((a, b) => b.conv_rate - a.conv_rate)
+    .slice(0, 8);
+
+  const descs = {
+    'ch:Product Hunt': 'High-intent early adopters actively looking for new tools.',
+    'ch:Twitter/X': 'Tech-forward builders who share and discover tools socially.',
+    'ch:LinkedIn': 'Professional evaluators with budget and decision-making power.',
+    'ch:Instagram': 'Creative professionals and personal brand builders.',
+    'ch:Friend referral': 'High-trust visitors — come pre-validated by a peer.',
+    'ch:Newsletter': 'Engaged readers who take action on curated recommendations.',
+    'ch:Reddit': 'Skeptical but highly engaged — need proof before converting.',
+    'ch:YouTube': 'Visual learners who want to see the product in action.',
+    'tech:Tech-savvy (7–10)': 'Developers, founders, PMs — immediately grasp the value and trust the CLI output.',
+    'tech:Mid-tech (4–6)': 'Marketers and designers — understand the concept but need clearer pricing.',
+    'tech:Low-tech (1–3)': 'Non-technical users — alienated by jargon and terminal UI.',
+    'role:Founders & makers': 'Core audience — ship fast, need data, willing to pay for speed.',
+    'role:Product managers': 'Key segment — have budget and authority; need B2B persona examples.',
+    'role:Developers': 'Power users — excited by CLI; need docs and API reference.',
+    'role:Designers': 'High intent for portfolio/agency use cases; GDPR-sensitive.',
+    'role:Marketers & growth': 'Conversion-obsessed; price-sensitive without a clear ROI calc.',
+    'role:Creators & writers': 'Interested in audience insight but see a product-market fit gap.',
+    'role:Agencies & freelancers': 'High potential for repeat use; need white-label and bulk pricing.',
+    'age:18–25': 'Student and early-career audience — price-sensitive but enthusiastic adopters.',
+    'age:26–35': 'Sweet spot — building products, have some budget, early adopter mindset.',
+    'age:36–45': 'Experienced buyers — higher bar for trust signals and company credibility.',
+    'age:46+': 'Skeptical of new tools; need proof points and enterprise-grade trust signals.',
+  };
+
+  const html = scored.map((s, i) => {
+    const isTop = i < 3;
+    const prefix = s.label.includes(':') ? s.label.split(':')[0] : '';
+    const cleanLabel = s.label.replace(/^(ch|tech|role|age):/, '');
+    const desc = descs[s.label] || 'High-converting segment worth targeting.';
+    const tagType = { ch:'Channel', tech:'Tech level', role:'Role', age:'Age' }[prefix] || '';
+    return `
+      <div class="rec-card${isTop?' top':''}">
+        <div class="rec-rank">
+          <div class="rec-rank-num">${i+1}</div>
+          <div class="rec-segment">${esc(cleanLabel)}</div>
+        </div>
+        <div class="rec-rate">${s.conv_rate}% conv.</div>
+        <div class="rec-desc">${esc(desc)}</div>
+        <div class="rec-tags">
+          ${tagType ? `<span class="rec-tag">${tagType}</span>` : ''}
+          <span class="rec-tag">${s.total} personas</span>
+          <span class="rec-tag">${s.converted} converted</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('rec-grid').innerHTML = html;
 }
 
 function renderPersonas(all, filter) {

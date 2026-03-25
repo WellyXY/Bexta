@@ -1,4 +1,5 @@
 const express = require('express');
+const { generate: generatePersonas } = require('./generate-personas');
 const path = require('path');
 const { Pool } = require('pg');
 
@@ -99,16 +100,29 @@ async function initDB() {
   // Seed report data once
   const { rows: existing } = await pool.query('SELECT id FROM reports LIMIT 1');
   if (existing.length === 0) {
+    // Generate 500 diverse personas
+    const personas500 = generatePersonas(500);
+    const converted = personas500.filter(p => p.outcome === 'converted').length;
+    const dropped   = personas500.filter(p => p.outcome === 'dropped').length;
+    const undecided = personas500.filter(p => p.outcome === 'undecided').length;
+    const avgScore  = Math.round(personas500.reduce((s,p) => s + p.score, 0) / personas500.length * 10) / 10;
+    const convRate  = Math.round(converted / 500 * 100);
+    const summary500 = { total_personas: 500, converted, dropped, undecided, conversion_rate: convRate, avg_score: avgScore };
+
     const { rows: [rep] } = await pool.query(
       `INSERT INTO reports (url, run_date, model, summary, stage_dropoff, top_issues)
        VALUES ($1,$2,$3,$4,$5,$6) RETURNING id`,
       [REPORT_SEED.meta.url, REPORT_SEED.meta.run_date, REPORT_SEED.meta.model,
-       JSON.stringify(REPORT_SEED.summary), JSON.stringify(REPORT_SEED.stage_dropoff), JSON.stringify(REPORT_SEED.top_issues)]
+       JSON.stringify(summary500), JSON.stringify(REPORT_SEED.stage_dropoff), JSON.stringify(REPORT_SEED.top_issues)]
     );
-    for (const p of REPORT_SEED.personas) {
-      await pool.query('INSERT INTO report_personas (report_id, data) VALUES ($1,$2)', [rep.id, JSON.stringify(p)]);
+    // Insert all 500 personas in batches
+    const batchSize = 50;
+    for (let i = 0; i < personas500.length; i += batchSize) {
+      const batch = personas500.slice(i, i + batchSize);
+      const vals = batch.map((p, j) => `($1, ${j+2})`).join(',');
+      await pool.query(`INSERT INTO report_personas (report_id, data) VALUES ${vals}`, [rep.id, ...batch.map(p => JSON.stringify(p))]);
     }
-    console.log('[DB] Seeded initial report data');
+    console.log(`[DB] Seeded report with ${personas500.length} personas`);
   }
 
   console.log('[DB] tables ready');
