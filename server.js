@@ -69,6 +69,7 @@ async function initDB() {
     CREATE TABLE IF NOT EXISTS waitlist (
       id         SERIAL PRIMARY KEY,
       url        TEXT NOT NULL,
+      email      TEXT,
       ip         TEXT,
       user_agent TEXT,
       referrer   TEXT,
@@ -125,10 +126,43 @@ async function initDB() {
     console.log(`[DB] Seeded report with ${personas500.length} personas`);
   }
 
+  // Add email column if not exists (migration)
+  await pool.query(`ALTER TABLE waitlist ADD COLUMN IF NOT EXISTS email TEXT`).catch(() => {});
   console.log('[DB] tables ready');
 }
 
 const memoryList = [];
+
+async function sendWelcomeEmail(email, url) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || !email) return;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: 'Racoonn <hello@racoonn.me>',
+        to: email,
+        subject: "You're on the Racoonn waitlist 🦝",
+        html: `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;font-family:-apple-system,sans-serif;background:#faf9f7;color:#1a1714">
+          <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:16px;padding:40px;box-shadow:0 2px 16px rgba(0,0,0,.06)">
+            <div style="font-size:48px;text-align:center;margin-bottom:24px">🦝</div>
+            <h1 style="font-size:24px;font-weight:900;margin:0 0 8px;color:#0f0d0b">You're on the list.</h1>
+            <p style="font-size:15px;color:#6b6560;line-height:1.6;margin:0 0 24px">We received your submission for <strong style="color:#0f0d0b">${url}</strong>. We'll run 5,000 AI persona agents on it and send you the full report when it's ready.</p>
+            <div style="background:#faf9f7;border-radius:10px;padding:16px 20px;margin-bottom:24px">
+              <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9a9490;margin-bottom:8px">What happens next</div>
+              <div style="font-size:14px;color:#4a4540;line-height:1.7">1. We'll notify you when we're ready to run your report<br/>2. You'll get a full breakdown of where users drop off and why<br/>3. Prioritized issues with affected visitor counts</div>
+            </div>
+            <p style="font-size:13px;color:#9a9490;margin:0">Built with 🦝 by the Racoonn team · <a href="https://racoonn.me" style="color:#ef6820;text-decoration:none">racoonn.me</a></p>
+          </div>
+        </body></html>`
+      }),
+    });
+    console.log('[email] Welcome sent to', email);
+  } catch(err) {
+    console.error('[email] Failed:', err.message);
+  }
+}
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'betax-admin-2026';
 
 function requireAdmin(req, res, next) {
@@ -186,8 +220,10 @@ app.post('/api/waitlist', async (req, res) => {
   if (!url || typeof url !== 'string' || url.trim().length < 3) {
     return res.status(400).json({ error: 'Invalid URL' });
   }
+  const { email } = req.body;
   const entry = {
     url: url.trim(),
+    email: (email || '').trim(),
     ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
     user_agent: req.headers['user-agent'] || '',
     referrer: req.headers.referer || '',
@@ -195,13 +231,15 @@ app.post('/api/waitlist', async (req, res) => {
   };
   if (process.env.DATABASE_URL) {
     await pool.query(
-      'INSERT INTO waitlist (url, ip, user_agent, referrer) VALUES ($1,$2,$3,$4)',
-      [entry.url, entry.ip, entry.user_agent, entry.referrer]
+      'INSERT INTO waitlist (url, email, ip, user_agent, referrer) VALUES ($1,$2,$3,$4,$5)',
+      [entry.url, entry.email, entry.ip, entry.user_agent, entry.referrer]
     );
     const { rows: [{ count }] } = await pool.query('SELECT COUNT(*) FROM waitlist');
+    sendWelcomeEmail(entry.email, entry.url); // async, don't await
     return res.json({ ok: true, count: parseInt(count) });
   }
   memoryList.push(entry);
+  sendWelcomeEmail(entry.email, entry.url);
   res.json({ ok: true, count: memoryList.length });
 });
 

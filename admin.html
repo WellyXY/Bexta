@@ -326,7 +326,7 @@ function renderWaitlist() {
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>#</th><th>URL</th><th>Submitted</th><th>IP</th><th>Referrer</th><th>User Agent</th>
+          <th>#</th><th>URL</th><th>Email</th><th>Submitted</th><th>IP</th><th>Referrer</th>
         </tr></thead>
         <tbody id="wl-tbody"></tbody>
       </table>
@@ -341,13 +341,11 @@ function renderWaitlist() {
     <tr>
       <td class="td-dim">${entries.length - i}</td>
       <td class="td-url" title="${esc(e.url)}">${esc(e.url)}</td>
+      <td style="color:#c0bcb8;font-size:12px">${esc(e.email||'—')}</td>
       <td class="td-dim">${fmt(e.created_at)}</td>
       <td class="td-mono">${esc(e.ip||'—')}</td>
-      <td class="td-dim" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e.referrer||'')}">
+      <td class="td-dim" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e.referrer||'')}">
         ${esc(e.referrer||'—')}
-      </td>
-      <td class="td-mono" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(e.user_agent||'')}">
-        ${esc(e.user_agent||'—')}
       </td>
     </tr>
   `).join('');
@@ -363,8 +361,8 @@ async function refreshWaitlist() {
 
 function exportCSV() {
   const entries = (waitlistData && waitlistData.entries) || [];
-  const rows = [['id','url','created_at','ip','referrer','user_agent']];
-  entries.forEach(e => rows.push([e.id, e.url, e.created_at, e.ip||'', e.referrer||'', e.user_agent||'']));
+  const rows = [['id','url','email','created_at','ip','referrer']];
+  entries.forEach(e => rows.push([e.id, e.url, e.email||'', e.created_at, e.ip||'', e.referrer||'']));
   const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
