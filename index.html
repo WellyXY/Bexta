@@ -17,6 +17,8 @@
   <meta name="twitter:description" content="5,000 AI persona agents test your product and tell you exactly why users leave."/>
   <link rel="canonical" href="https://racoonn.me/"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     /* ─── Design tokens (8px grid, warm palette, Linear-inspired) ─── */
@@ -351,11 +353,82 @@
       footer{flex-direction:column;gap:10px;padding:20px}
     }
   </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Racoonn",
+    "url": "https://racoonn.me",
+    "description": "Run 5,000 AI persona agents on your product landing page. Get real drop-off data, inner monologues, and prioritized UX issues in 28 minutes.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "49",
+      "priceCurrency": "USD",
+      "description": "Per analysis run"
+    },
+    "featureList": [
+      "5,000 AI persona agents",
+      "Drop-off analysis by page section",
+      "Inner monologue simulation",
+      "Prioritized issue reports",
+      "28-minute turnaround"
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Racoonn",
+      "url": "https://racoonn.me"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does Racoonn work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Paste your product URL. Racoonn runs 5,000 diverse AI persona agents that browse your page, simulate real user behavior, and report where they drop off and why — in about 28 minutes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Racoonn different from Hotjar or Google Analytics?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Analytics tools tell you WHERE users leave. Racoonn tells you WHY — through AI-simulated inner monologues, persona-specific reactions, and prioritized UX issues with affected visitor counts."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the Racoonn report include?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Each report includes a drop-off funnel by page section, inner monologues from 5,000 diverse personas, prioritized P1/P2/P3 issues with affected visitor counts, and actionable fix suggestions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does Racoonn cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Racoonn starts at $49 per analysis run — compared to $3,000+ for traditional user research. The first 50 teams get early access for free."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Main navigation">
   <a class="logo" href="#"><span class="logo-dot"></span>Racoonn</a>
   <ul>
     <li><a href="#problem">Why</a></li>
@@ -535,12 +608,12 @@
       <div class="rcard-agents-bar">
         <div class="rcard-agents-label">Select agent client</div>
         <div class="agent-pills" id="agentPills">
-          <button class="agent-pill active" onclick="selectAgent(0)"><img src="https://i.pravatar.cc/60?img=47"/>Mei, 21 · SG</button>
-          <button class="agent-pill" onclick="selectAgent(1)"><img src="https://i.pravatar.cc/60?img=11"/>Tyler, 29 · TX</button>
-          <button class="agent-pill" onclick="selectAgent(2)"><img src="https://i.pravatar.cc/60?img=25"/>Ana, 36 · BR</button>
-          <button class="agent-pill" onclick="selectAgent(3)"><img src="https://i.pravatar.cc/60?img=57"/>Klaus, 54 · DE</button>
-          <button class="agent-pill" onclick="selectAgent(4)"><img src="https://i.pravatar.cc/60?img=9"/>Priya, 27 · IN</button>
-          <button class="agent-pill" onclick="selectAgent(5)"><img src="https://i.pravatar.cc/60?img=16"/>Léa, 24 · FR</button>
+          <button class="agent-pill active" onclick="selectAgent(0)"><img src="https://i.pravatar.cc/60?img=47" alt="Mei, 21, Singapore" width="60" height="60" loading="lazy"/>Mei, 21 · SG</button>
+          <button class="agent-pill" onclick="selectAgent(1)"><img src="https://i.pravatar.cc/60?img=11" alt="Tyler, 29, Texas" width="60" height="60" loading="lazy"/>Tyler, 29 · TX</button>
+          <button class="agent-pill" onclick="selectAgent(2)"><img src="https://i.pravatar.cc/60?img=25" alt="Ana, 36, Brazil" width="60" height="60" loading="lazy"/>Ana, 36 · BR</button>
+          <button class="agent-pill" onclick="selectAgent(3)"><img src="https://i.pravatar.cc/60?img=57" alt="Klaus, 54, Germany" width="60" height="60" loading="lazy"/>Klaus, 54 · DE</button>
+          <button class="agent-pill" onclick="selectAgent(4)"><img src="https://i.pravatar.cc/60?img=9" alt="Priya, 27, India" width="60" height="60" loading="lazy"/>Priya, 27 · IN</button>
+          <button class="agent-pill" onclick="selectAgent(5)"><img src="https://i.pravatar.cc/60?img=16" alt="Léa, 24, France" width="60" height="60" loading="lazy"/>Léa, 24 · FR</button>
         </div>
       </div>
 
@@ -548,7 +621,7 @@
       <div class="rcard-body">
         <!-- Profile panel -->
         <div class="rcard-profile">
-          <img class="rp-photo" id="rp-photo" src="https://i.pravatar.cc/120?img=47"/>
+          <img class="rp-photo" id="rp-photo" src="https://i.pravatar.cc/120?img=47" alt="AI persona agent profile photo" width="120" height="120" loading="lazy"/>
           <div class="rp-name" id="rp-name">Mei Lin</div>
           <div class="rp-subloc" id="rp-subloc">Singapore · 21 yrs</div>
           <div class="rp-chips" id="rp-chips">
@@ -687,10 +760,10 @@
     <div class="cta-social">
       <div class="social-item">
         <div class="social-avatars">
-          <img class="social-av" src="https://i.pravatar.cc/40?img=11"/>
-          <img class="social-av" src="https://i.pravatar.cc/40?img=25"/>
-          <img class="social-av" src="https://i.pravatar.cc/40?img=33"/>
-          <img class="social-av" src="https://i.pravatar.cc/40?img=44"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=11" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=25" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=33" alt="Waitlist member" width="40" height="40" loading="lazy"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=44" alt="Waitlist member" width="40" height="40" loading="lazy"/>
         </div>
         <span>47 teams already on the waitlist</span>
       </div>
@@ -698,6 +771,7 @@
   </div>
 </section>
 
+</main>
 <footer>
   <div class="f-logo"><span class="logo-dot"></span>Racoonn</div>
   <div class="f-copy">© 2026 Racoonn · Know why users leave.</div>
