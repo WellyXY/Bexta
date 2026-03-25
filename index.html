@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Betax — Know Why Users Leave</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── Design tokens (8px grid, warm palette, Linear-inspired) ─── */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#F7F4EF;   --bg2:#F0EBE3;  --cream:#FAFAF8;
+      --ink:#18140F;  --ink2:#5C5650; --ink3:#A09890;
+      --or:#EF6820;   --or2:#D95910;
+      --ol:rgba(239,104,32,.10);
+      --brd:rgba(24,20,15,.09);
+      --brd2:rgba(24,20,15,.05);
+      --dark:#0F0D0B;  --dark2:#181410; --dark3:#221E1A;
+      --r:16px; --r2:12px; --r3:8px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-size:16px;line-height:1.5}
+
+    /* ── Utility ── */
+    .mx{max-width:1160px;margin:0 auto;padding:0 48px}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--or);display:block;margin-bottom:12px}
+    .fade-up{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(247,244,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd2)}
+    .logo{font-weight:900;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:7px;text-decoration:none}
+    .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--or)}
+    nav ul{list-style:none;display:flex;gap:28px}
+    nav ul a{font-size:13px;font-weight:500;color:var(--ink2);text-decoration:none;transition:color .15s}
+    nav ul a:hover{color:var(--ink)}
+    .btn-nav{background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 18px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:opacity .15s,transform .15s}
+    .btn-nav:hover{opacity:.85;transform:translateY(-1px)}
+
+    /* ─────────────────────────────────
+       ① HERO — Fear-based
+    ───────────────────────────────── */
+    .hero{padding:128px 48px 96px;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+    .hero-left{min-width:0}
+    .hero-label{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--brd);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:28px}
+    .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--or);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.6)}}
+    .hero h1{font-size:clamp(40px,4.5vw,60px);font-weight:900;line-height:1.08;letter-spacing:-2px;color:var(--ink);margin-bottom:12px}
+    .hero h1 em{font-style:normal;color:var(--or)}
+    .hero-sub{font-size:18px;color:var(--ink2);line-height:1.65;max-width:440px;margin:20px 0 36px;font-weight:400}
+    .hero-sub strong{color:var(--ink);font-weight:600}
+    .btn-cta{background:var(--ink);color:#fff;font-size:15px;font-weight:700;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;transition:all .2s;display:inline-block;text-decoration:none}
+    .btn-cta:hover{background:#2A2520;transform:translateY(-2px);box-shadow:0 8px 24px rgba(24,20,15,.18)}
+    .btn-cta:active{transform:translateY(0) scale(.97)}
+    .hero-hint{font-size:12px;color:var(--ink3);margin-top:12px}
+
+    /* Hero compare strip */
+    .hero-compare{margin-top:40px;border:1px solid var(--brd);border-radius:14px;overflow:hidden;background:#fff}
+    .hc-row{display:flex;align-items:center;padding:13px 20px;gap:0;border-bottom:1px solid var(--brd2)}
+    .hc-row:last-child{border-bottom:none}
+    .hc-bad{font-size:13px;color:var(--ink3);text-decoration:line-through;flex:1;min-width:0}
+    .hc-mid{width:32px;text-align:center;font-size:13px;color:var(--or);font-weight:900;flex-shrink:0}
+    .hc-good{font-size:14px;font-weight:700;color:var(--ink);flex:1;text-align:right}
+    .hc-good em{font-style:normal;color:var(--or)}
+    .hc-header{display:flex;padding:9px 20px;background:var(--bg2);border-bottom:1px solid var(--brd2)}
+    .hc-header span{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);flex:1;min-width:0}
+    .hc-header span:last-child{text-align:right;color:var(--or)}
+
+    /* Hero right: mock terminal */
+    .hero-right{position:relative;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start}
+    .hero-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(239,104,32,.18),transparent 65%);pointer-events:none;border-radius:24px}
+    .term{background:var(--dark);border-radius:var(--r);width:100%;max-width:460px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.22);position:relative;z-index:2}
+    .term-bar{background:var(--dark2);padding:10px 14px;display:flex;align-items:center;gap:6px}
+    .td{width:9px;height:9px;border-radius:50%}.td.r{background:#FF5F57}.td.y{background:#FEBC2E}.td.g{background:#28C840}
+    .term-ttl{font-size:11px;color:rgba(255,255,255,.3);margin-left:auto}
+    .term-body{padding:18px;font-family:'SF Mono','Fira Code',monospace;font-size:11.5px;line-height:1.9}
+    .tl{display:flex;gap:8px;margin-bottom:1px}
+    .tp{color:var(--or);user-select:none}.tc{color:#e5ddd5}.to{padding-left:14px;color:rgba(229,221,213,.5)}
+    .tg{color:#28C840}.tor{color:var(--or)}.tdm{color:rgba(229,221,213,.22)}
+    .tcur{display:inline-block;width:6px;height:12px;background:var(--or);vertical-align:middle;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
+    .term-float{position:absolute;bottom:14px;right:-18px;background:#fff;border:1px solid var(--brd);border-radius:10px;padding:9px 13px;font-size:11.5px;font-weight:600;color:var(--ink);box-shadow:0 4px 20px rgba(0,0,0,.09);z-index:3;white-space:nowrap}
+    .term-float-sub{font-size:11px;color:var(--ink3);font-weight:400;margin-top:2px}
+
+    /* Hero proof stats */
+    /* Data foundation panel (merged with terminal) */
+    .data-panel{background:var(--dark);border-radius:var(--r);padding:20px 20px 18px;margin-top:10px;position:relative;overflow:hidden}
+    .data-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 110%,rgba(239,104,32,.12),transparent 60%);pointer-events:none}
+    .dp-header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+    .dp-pulse{width:6px;height:6px;border-radius:50%;background:#28C840;flex-shrink:0;animation:pulse-dot 2.4s ease-in-out infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    .dp-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+    /* Card grid */
+    .dp-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden}
+    .dp-card{background:#141210;padding:14px 14px 13px;transition:background .15s}
+    .dp-card:hover{background:#1c1a18}
+    .dp-card-num{font-size:28px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1}
+    .dp-card-num em{font-style:normal;color:var(--or)}
+    .dp-card-lbl{font-size:11px;font-weight:700;color:var(--or);margin:5px 0 5px;letter-spacing:.01em}
+    .dp-card-desc{font-size:10px;color:rgba(255,255,255,.25);line-height:1.5}
+    .dp-products{font-family:'SF Mono','Fira Code',monospace;font-size:10px;color:rgba(255,255,255,.2);line-height:1.9;letter-spacing:.01em;margin-top:14px}
+
+    /* Profile card redesign */
+    .rcard-profile{padding:22px 20px;border-right:1px solid rgba(255,255,255,.05)}
+    .rp-photo{width:88px;height:88px;border-radius:12px;object-fit:cover;border:2px solid rgba(255,255,255,.10);margin-bottom:13px;display:block}
+    .rp-name{font-size:17px;font-weight:800;color:#fff;margin-bottom:2px}
+    .rp-subloc{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:14px}
+    .rp-chips{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+    .rp-chip{display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.06);font-size:12px;color:rgba(255,255,255,.5);line-height:1.2}
+    .rp-chip-ico{font-size:13px;flex-shrink:0;line-height:1}
+    .rp-outcome{margin-top:4px;padding:9px 12px;border-radius:var(--r3);font-size:12px;font-weight:600}
+
+    /* Report tabs */
+    .rtabs-bar{display:flex;border-bottom:1px solid rgba(255,255,255,.07)}
+    .rtab-btn{padding:14px 24px;font-size:13px;font-weight:600;color:rgba(255,255,255,.35);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;font-family:inherit}
+    .rtab-btn:hover:not(.active){color:rgba(255,255,255,.6)}
+    .rtab-btn.active{color:#fff;border-bottom-color:var(--or)}
+    .rtab-panel{display:none}
+    .rtab-panel.active{display:block}
+
+    /* Funnel */
+    .funnel-wrap{padding:28px 28px 8px}
+    .funnel-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .funnel-step{font-size:12px;color:rgba(255,255,255,.4);width:90px;flex-shrink:0;text-align:right}
+    .funnel-track{flex:1;height:34px;background:rgba(255,255,255,.04);border-radius:7px;position:relative;overflow:hidden}
+    .funnel-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding:0 12px;min-width:60px;transition:width .9s ease}
+    .funnel-fill.top{background:rgba(239,104,32,.55)}
+    .funnel-fill.hi{background:rgba(239,104,32,.35)}
+    .funnel-fill.mid{background:rgba(239,104,32,.22)}
+    .funnel-fill.lo{background:rgba(239,104,32,.14)}
+    .funnel-pct{font-size:13px;font-weight:700;color:#fff;white-space:nowrap}
+    .funnel-delta{font-size:11px;font-weight:700;color:rgba(248,113,113,.7);width:40px;flex-shrink:0;text-align:left}
+    .funnel-delta.big{color:#f87171;font-size:12px}
+    .funnel-callouts{display:flex;gap:10px;margin:20px 0 20px}
+    .fcallout{flex:1;padding:14px 16px;background:rgba(255,255,255,.03);border-radius:var(--r2);border:1px solid rgba(255,255,255,.07)}
+    .fcallout-num{font-size:26px;font-weight:900;color:var(--or);letter-spacing:-1px;line-height:1}
+    .fcallout-lbl{font-size:11px;color:rgba(255,255,255,.35);margin-top:5px;line-height:1.5}
+
+    /* Suggestions */
+    .suggest-wrap{padding:8px 28px 8px}
+    .suggest-item{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .suggest-item:last-child{border-bottom:none}
+    .srank{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:2px}
+    .srank.p1{background:rgba(248,113,113,.15);color:#f87171}
+    .srank.p2{background:rgba(251,191,36,.12);color:#fbbf24}
+    .srank.p3{background:rgba(74,222,128,.10);color:#4ade80}
+    .srank.p4,.srank.p5{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3)}
+    .sbody{flex:1;min-width:0}
+    .stitle{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}
+    .sdesc{font-size:12px;color:rgba(255,255,255,.35);line-height:1.65}
+    .simpact{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;font-weight:700;color:var(--or);background:rgba(239,104,32,.10);padding:3px 8px;border-radius:100px}
+
+    /* ─────────────────────────────────
+       ② PROBLEM — 3 realities
+    ───────────────────────────────── */
+    .problem{padding:96px 48px;background:var(--dark);position:relative;overflow:hidden}
+    .problem::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(239,104,32,.10) 0%,transparent 70%);border-radius:50%;top:-150px;right:-100px;pointer-events:none}
+    .problem-inner{max-width:1160px;margin:0 auto}
+    .problem-h{font-size:clamp(28px,3.5vw,44px);font-weight:900;color:#fff;letter-spacing:-1.2px;line-height:1.15;max-width:580px;margin-bottom:56px}
+    .problem-h em{font-style:normal;color:var(--or)}
+    .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .prob-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:36px 32px;border-radius:0;position:relative}
+    .prob-card:first-child{border-radius:var(--r) 0 0 var(--r)}
+    .prob-card:last-child{border-radius:0 var(--r) var(--r) 0}
+    .prob-icon{font-size:28px;margin-bottom:20px}
+    .prob-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.3}
+    .prob-body{font-size:14px;color:rgba(255,255,255,.45);line-height:1.7}
+    .prob-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;background:rgba(239,104,32,.15);color:var(--or);letter-spacing:.04em}
+
+    /* ─────────────────────────────────
+       ③ HOW IT WORKS — 3 steps
+    ───────────────────────────────── */
+    .how{padding:96px 48px;background:var(--cream)}
+    .how-inner{max-width:1160px;margin:0 auto}
+    .how-header{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:56px}
+    .how-h{font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-1.2px;line-height:1.15}
+    .how-h em{font-style:normal;color:var(--or)}
+    .how-sub{font-size:15px;color:var(--ink2);line-height:1.7}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--brd2);border-radius:var(--r);overflow:hidden}
+    .step-card{background:var(--cream);padding:36px 32px;position:relative}
+    .step-card::after{content:'';position:absolute;right:0;top:50%;width:1px;height:40%;background:var(--brd);transform:translateY(-50%)}
+    .step-card:last-child::after{display:none}
+    .step-num{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--or);margin-bottom:16px}
+    .step-icon{width:44px;height:44px;background:var(--ol);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:20px}
+    .step-card h4{font-size:17px;font-weight:700;margin-bottom:8px}
+    .step-card p{font-size:14px;color:var(--ink2);line-height:1.6}
+    .step-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--or);background:var(--ol);padding:4px 10px;border-radius:100px}
+    .step-model-note{margin-top:14px;font-size:12px;color:var(--ink3);line-height:1.6;padding:10px 12px;background:var(--bg2);border-radius:var(--r3);border-left:2px solid var(--or)}
+    .step-model-note strong{color:var(--ink2)}
+    .how-time-badge{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 16px;border-radius:100px;letter-spacing:-.01em}
+
+    /* ─────────────────────────────────
+       ④ EXAMPLE REPORT — Star section
+    ───────────────────────────────── */
+    .report-wrap{background:var(--dark);padding:96px 0 0}
+    .report-header{max-width:1160px;margin:0 auto;padding:0 48px 48px}
+    .report-badge{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:100px;padding:6px 14px 6px 6px;margin-bottom:24px}
+    .rbadge-logo{width:24px;height:24px;background:#7c3aed;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff}
+    .rbadge-text{font-size:12px;font-weight:600;color:rgba(255,255,255,.5)}
+    .rbadge-text strong{color:#fff}
+    .report-h{font-size:clamp(28px,3.5vw,44px);font-weight:900;color:#fff;letter-spacing:-1.2px;line-height:1.12}
+    .report-h em{font-style:normal;color:var(--or)}
+    .report-sub{font-size:15px;color:rgba(255,255,255,.4);margin-top:12px;max-width:480px;line-height:1.65}
+
+    /* Report card — looks like actual product */
+    .report-card{max-width:1160px;margin:0 auto;padding:0 48px}
+    .rcard{background:var(--dark2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r) var(--r) 0 0;overflow:hidden}
+
+    /* Report top bar */
+    .rcard-topbar{background:var(--dark3);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .rcard-topbar-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15)}
+    .rcard-topbar-title{font-size:12px;font-weight:600;color:rgba(255,255,255,.35);margin-left:4px}
+    .rcard-topbar-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#4ade80}
+    .rcard-topbar-status::before{content:'';display:block;width:6px;height:6px;border-radius:50%;background:#4ade80}
+
+    /* Agent client selector */
+    .rcard-agents-bar{padding:20px 24px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+    .rcard-agents-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+    .agent-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:0;scrollbar-width:none}
+    .agent-pills::-webkit-scrollbar{display:none}
+    .agent-pill{display:flex;align-items:center;gap:8px;padding:7px 14px 7px 7px;border-radius:100px;border:1.5px solid rgba(255,255,255,.08);background:none;cursor:pointer;transition:all .2s;white-space:nowrap;color:rgba(255,255,255,.4);font-size:12px;font-weight:600}
+    .agent-pill img{width:26px;height:26px;border-radius:50%;object-fit:cover;filter:grayscale(40%) brightness(.7);transition:filter .2s}
+    .agent-pill.active{border-color:var(--or);background:rgba(239,104,32,.10);color:#fff}
+    .agent-pill.active img{filter:none}
+    .agent-pill:hover:not(.active){border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.7)}
+    .agent-pill .ap-progress{height:2px;background:rgba(255,255,255,.08);border-radius:1px;margin-top:3px;width:100%}
+
+    /* Report body */
+    .rcard-body{display:grid;grid-template-columns:280px 1fr;gap:0;min-height:400px}
+
+    /* Left panel — agent profile */
+    .rcard-profile{padding:28px 24px;border-right:1px solid rgba(255,255,255,.05)}
+    .rp-photo{width:88px;height:88px;border-radius:12px;object-fit:cover;border:2px solid rgba(255,255,255,.10);margin-bottom:13px;display:block}
+    .rp-name{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+    .rp-meta{font-size:12px;color:rgba(255,255,255,.35);line-height:1.6}
+    .rp-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+    .rp-tag{font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+    .rp-outcome{margin-top:20px;padding:12px 14px;border-radius:var(--r3);font-size:12px;font-weight:600}
+    .rp-outcome.pos{background:rgba(74,222,128,.08);color:#4ade80;border:1px solid rgba(74,222,128,.15)}
+    .rp-outcome.neg{background:rgba(248,113,113,.08);color:#f87171;border:1px solid rgba(248,113,113,.15)}
+    .rp-outcome.mix{background:rgba(251,191,36,.08);color:#fbbf24;border:1px solid rgba(251,191,36,.15)}
+
+    /* Right panel — journey + monologue + issues */
+    .rcard-main{padding:28px 28px 24px;display:flex;flex-direction:column;gap:24px}
+
+    /* Journey timeline */
+    .journey{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+    .journey::-webkit-scrollbar{display:none}
+    .jstep{display:flex;align-items:flex-start;flex-shrink:0}
+    .jstep-node{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .jstep-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+    .jstep-circle.ok{background:rgba(74,222,128,.12);color:#4ade80;border:1.5px solid rgba(74,222,128,.2)}
+    .jstep-circle.warn{background:rgba(251,191,36,.12);color:#fbbf24;border:1.5px solid rgba(251,191,36,.25)}
+    .jstep-circle.fail{background:rgba(248,113,113,.12);color:#f87171;border:1.5px solid rgba(248,113,113,.2)}
+    .jstep-label{font-size:10px;color:rgba(255,255,255,.35);text-align:center;max-width:64px;line-height:1.3;margin-top:2px}
+    .jstep-connector{width:32px;height:28px;display:flex;align-items:center;margin:0 2px;flex-shrink:0}
+    .jstep-line{width:100%;height:1px;background:rgba(255,255,255,.10);position:relative}
+    .jstep-line::after{content:'▶';position:absolute;right:-4px;top:50%;transform:translateY(-50%);font-size:7px;color:rgba(255,255,255,.15)}
+
+    /* Inner monologue */
+    .monologue-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    .thoughts{display:flex;flex-direction:column;gap:8px}
+    .thought{display:flex;align-items:flex-start;gap:10px}
+    .thought-avatar{width:20px;height:20px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-top:2px;opacity:.7}
+    .thought-bubble{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:0 10px 10px 10px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,.6);line-height:1.55;font-style:italic;position:relative}
+    .thought-bubble.warn{border-color:rgba(251,191,36,.2);background:rgba(251,191,36,.05);color:rgba(251,191,36,.8)}
+    .thought-bubble.fail{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.05);color:rgba(248,113,113,.8)}
+
+    /* Issues list */
+    .issues-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    .issues{display:flex;flex-direction:column;gap:6px}
+    .issue{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border-radius:var(--r3);border:1px solid rgba(255,255,255,.05)}
+    .issue-pri{font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;letter-spacing:.04em}
+    .issue-pri.p1{background:rgba(248,113,113,.15);color:#f87171}
+    .issue-pri.p2{background:rgba(251,146,60,.12);color:#fb923c}
+    .issue-pri.p3{background:rgba(250,204,21,.10);color:#facc15}
+    .issue-text{font-size:12px;color:rgba(255,255,255,.5);flex:1}
+    .issue-agents{font-size:11px;color:rgba(255,255,255,.2);white-space:nowrap}
+
+    /* Conversion meter */
+    .conversion{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:20px 24px;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+    .conv-left{}
+    .conv-label{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:12px}
+    .conv-bar{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;width:100%}
+    .conv-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--or),#FF9030);width:18%;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+    .conv-sub{font-size:12px;color:rgba(255,255,255,.2);margin-top:8px}
+    .conv-right{text-align:right}
+    .conv-num{font-size:48px;font-weight:900;letter-spacing:-2px;line-height:1;color:#fff}
+    .conv-num em{font-style:normal;color:var(--or)}
+    .conv-num-sub{font-size:13px;color:rgba(255,255,255,.3);margin-top:4px}
+    .report-footer-pad{height:64px;background:var(--dark)}
+
+    /* ─────────────────────────────────
+       ⑤ CTA — URL input
+    ───────────────────────────────── */
+    .cta{padding:96px 48px;position:relative;overflow:hidden}
+    .cta::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(239,104,32,.08) 0%,transparent 70%);border-radius:50%;top:-200px;right:-100px;pointer-events:none}
+    .cta-inner{max-width:680px;margin:0 auto;text-align:center;position:relative;z-index:2}
+    .cta-q{font-size:clamp(28px,3.5vw,44px);font-weight:900;letter-spacing:-1.5px;line-height:1.12;margin-bottom:14px;color:var(--ink)}
+    .cta-q em{font-style:normal;color:var(--or)}
+    .cta-sub{font-size:16px;color:var(--ink2);margin-bottom:40px;line-height:1.65}
+    .url-form{display:flex;gap:8px;background:#fff;border:1.5px solid var(--brd);border-radius:100px;padding:6px 6px 6px 22px;max-width:500px;margin:0 auto;box-shadow:0 4px 24px rgba(24,20,15,.07);transition:box-shadow .2s}
+    .url-form:focus-within{box-shadow:0 4px 24px rgba(24,20,15,.12),0 0 0 3px rgba(239,104,32,.12)}
+    .url-form input{flex:1;background:none;border:none;outline:none;font-size:14px;color:var(--ink);font-family:'Inter',sans-serif;min-width:0}
+    .url-form input::placeholder{color:var(--ink3)}
+    .url-form button{background:var(--or);color:#fff;border:none;font-size:13px;font-weight:700;padding:11px 22px;border-radius:100px;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .url-form button:hover{background:var(--or2);transform:translateY(-1px)}
+    .url-form button:active{transform:scale(.97)}
+    .cta-note{font-size:12px;color:var(--ink3);margin-top:14px}
+    .cta-social{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:40px;padding-top:32px;border-top:1px solid var(--brd)}
+    .social-item{font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px}
+    .social-avatars{display:flex}
+    .social-av{width:24px;height:24px;border-radius:50%;object-fit:cover;border:2px solid var(--bg);margin-left:-6px}
+    .social-av:first-child{margin-left:0}
+
+    footer{background:var(--bg2);border-top:1px solid var(--brd2);padding:24px 48px;display:flex;align-items:center;justify-content:space-between}
+    .f-logo{font-weight:900;font-size:14px;color:var(--ink);display:flex;align-items:center;gap:6px}
+    .f-copy{font-size:12px;color:var(--ink3)}
+
+    /* ── Responsive ── */
+    @media(max-width:960px){
+      nav{padding:0 20px}
+      nav ul{display:none}
+      .hero,.how-header{grid-template-columns:1fr;padding:90px 20px 60px;gap:40px}
+      .hero-right{display:none}
+      .problem,.how,.cta{padding:64px 20px}
+      .prob-grid,.steps{grid-template-columns:1fr}
+      .prob-card:first-child,.prob-card:last-child{border-radius:0}
+      .prob-card:first-child{border-radius:var(--r) var(--r) 0 0}
+      .prob-card:last-child{border-radius:0 0 var(--r) var(--r)}
+      .step-card::after{display:none}
+      .report-card,.report-header,.conversion{padding-left:20px;padding-right:20px}
+      .rcard-body{grid-template-columns:1fr}
+      .rcard-profile{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+      footer{flex-direction:column;gap:10px;padding:20px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><span class="logo-dot"></span>Betax</a>
+  <ul>
+    <li><a href="#problem">Why</a></li>
+    <li><a href="#how">How</a></li>
+    <li><a href="#report">Example</a></li>
+  </ul>
+  <a class="btn-nav" href="#cta">Get Early Access</a>
+</nav>
+
+<!-- ① HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-label"><span class="hero-dot"></span>Now in early access</div>
+    <h1>You think users<br/>get your product.<br/><em>They left at second 30.</em></h1>
+    <p class="hero-sub">5,000 diverse persona agent clients browse your product and tell you <strong>where they dropped</strong> and <strong>why they didn't pay</strong> — in 28 minutes.</p>
+    <a class="btn-cta" href="#cta">Test my product free</a>
+    <p class="hero-hint">No setup. First 50 teams free.</p>
+    <div class="hero-compare">
+      <div class="hc-header">
+        <span>Traditional UX Research</span>
+        <span>Betax</span>
+      </div>
+      <div class="hc-row">
+        <span class="hc-bad">⏱ 2–4 weeks to get results</span>
+        <span class="hc-mid">→</span>
+        <span class="hc-good">Report in <em>28 min</em></span>
+      </div>
+      <div class="hc-row">
+        <span class="hc-bad">💸 $3,000+ minimum budget</span>
+        <span class="hc-mid">→</span>
+        <span class="hc-good">Starts at <em>$49</em></span>
+      </div>
+      <div class="hc-row">
+        <span class="hc-bad">🗓 Recruit, schedule, interview</span>
+        <span class="hc-mid">→</span>
+        <span class="hc-good">Just <em>paste a URL</em></span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="term">
+      <div class="term-bar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="term-ttl">betax · live run</span></div>
+      <div class="term-body">
+        <div class="tl"><span class="tp">$</span><span class="tc"> betax run --url yourapp.com --agents 5000</span></div>
+        <div class="tl"><span class="to tg">✓ Spawning 5,000 diverse persona agents...</span></div>
+        <div class="tl"><span class="to tdm">  [Mei, 21, SG] Navigating onboarding...</span></div>
+        <div class="tl"><span class="to tdm">  [Tyler, 29, TX] Testing checkout...</span></div>
+        <div class="tl"><span class="to tdm">  [Klaus, 54, DE] Reading pricing page...</span></div>
+        <div class="tl"><span class="to tdm">  ...</span></div>
+        <div class="tl" style="margin-top:8px"><span class="to tor">⚡ 78/100 done (6m 12s)</span></div>
+        <div class="tl"><span class="to tg">✓ Critical drop: /signup step 3 (−31%)</span></div>
+        <div class="tl"><span class="to tg">✓ 14 clients rage-clicked mobile nav</span></div>
+        <div class="tl" style="margin-top:8px"><span class="tp">$</span><span class="tcur"></span></div>
+      </div>
+    </div>
+    <div class="term-float">📋 Report ready<div class="term-float-sub">28 min · 847 interactions</div></div>
+    <!-- Data foundation panel -->
+    <div class="data-panel">
+      <div class="dp-header">
+        <span class="dp-pulse"></span>
+        <span class="dp-label">Model Training Foundation</span>
+      </div>
+      <div class="dp-card-grid">
+        <div class="dp-card"><div class="dp-card-num">100K<em>+</em></div><div class="dp-card-lbl">Sessions Analyzed</div><div class="dp-card-desc">Real user interactions powering every insight</div></div>
+        <div class="dp-card"><div class="dp-card-num">5,000</div><div class="dp-card-lbl">Persona Profiles</div><div class="dp-card-desc">Ages 18–65 across 24 countries</div></div>
+        <div class="dp-card"><div class="dp-card-num">500<em>+</em></div><div class="dp-card-lbl">B2C Products</div><div class="dp-card-desc">Top-performing products analyzed</div></div>
+        <div class="dp-card"><div class="dp-card-num">28m</div><div class="dp-card-lbl">Avg Report Time</div><div class="dp-card-desc">URL to full report, no setup</div></div>
+        <div class="dp-card"><div class="dp-card-num">24</div><div class="dp-card-lbl">Countries</div><div class="dp-card-desc">Global diversity, all markets</div></div>
+        <div class="dp-card"><div class="dp-card-num">12</div><div class="dp-card-lbl">Industries</div><div class="dp-card-desc">SaaS, e-commerce, fintech &amp; more</div></div>
+      </div>
+      <div class="dp-products">Notion · Stripe · Figma · Airbnb · Linear · Vercel · Loom · Miro · Framer · Raycast · Superhuman · Cron · Clerk · Resend · PlanetScale · Neon · +484 more</div>
+    </div>
+  </div>
+</div><!-- end .hero -->
+
+<!-- ② PROBLEM -->
+<section class="problem" id="problem">
+  <div class="problem-inner">
+    <span class="eyebrow" style="color:var(--or)">Three feedback methods. Three lies.</span>
+    <h2 class="problem-h">Every way you test today<br/><em>is broken.</em></h2>
+    <div class="prob-grid">
+      <div class="prob-card fade-up">
+        <div class="prob-icon">💸</div>
+        <div class="prob-title">Recruiting real users</div>
+        <div class="prob-body">$3,000 minimum. 3 weeks to recruit. And they're too polite to tell you your product is confusing.</div>
+        <div class="prob-tag">Expensive + Slow + Biased</div>
+      </div>
+      <div class="prob-card fade-up" style="transition-delay:.08s">
+        <div class="prob-icon">🤝</div>
+        <div class="prob-title">Friends & teammates</div>
+        <div class="prob-body">They know your vision. They want you to succeed. Their feedback is encouragement, not signal.</div>
+        <div class="prob-tag">Too friendly to be useful</div>
+      </div>
+      <div class="prob-card fade-up" style="transition-delay:.16s">
+        <div class="prob-icon">📊</div>
+        <div class="prob-title">GA & Hotjar data</div>
+        <div class="prob-body">Tells you <em style="color:#fbbf24;font-style:normal">WHERE</em> they left. Never tells you <em style="color:#f87171;font-style:normal">WHY</em>. You're left guessing at fixes.</div>
+        <div class="prob-tag">What, not Why</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <div>
+        <span class="eyebrow">How It Works</span>
+        <h2 class="how-h">Paste URL.<br/><em>AI does the rest.</em></h2>
+      </div>
+      <div>
+        <p class="how-sub">No setup. No recruitment. No waiting weeks.<br/>Our AI spins up 5,000 diverse persona agent clients, browses your product, and delivers a full report — <strong>in under 30 minutes.</strong></p>
+        <div class="how-time-badge">⚡ URL → Full report in &lt;30 min</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step-card fade-up">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔗</div>
+        <h4>Paste your URL</h4>
+        <p>Any product, landing page, or onboarding flow. That's literally all you need to start.</p>
+        <div class="step-tag">Takes 10 seconds</div>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:.08s">
+        <div class="step-num">02</div>
+        <div class="step-icon">🤖</div>
+        <h4>AI builds your customers</h4>
+        <p>We deploy agents from a pool of <strong>5,000 diverse persona profiles</strong> — different ages, backgrounds, goals, and tech literacy levels — so feedback reflects your real audience, not a generic user.</p>
+        <div class="step-model-note">Model trained on feedback &amp; design patterns from <strong>500+ top B2C products</strong> — so every insight is grounded in what actually converts.</div>
+        <div class="step-tag">Fully automated</div>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:.16s">
+        <div class="step-num">03</div>
+        <div class="step-icon">📋</div>
+        <h4>Get your full report</h4>
+        <p>Behavior paths, inner monologues, drop-off rates, and prioritized fixes — delivered in under 30 minutes. No waiting. No back-and-forth.</p>
+        <div class="step-tag">Results in &lt;30 min</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ EXAMPLE REPORT -->
+<div class="report-wrap" id="report">
+  <div class="report-header">
+    <div class="report-badge">
+      <div class="rbadge-logo">L</div>
+      <span class="rbadge-text"><strong>Lovable.dev</strong> · Example Betax Report · 5,000 persona agents · 25 min</span>
+    </div>
+    <h2 class="report-h">This is what<br/><em>your report looks like.</em></h2>
+    <p class="report-sub">Real behavior paths. Real thoughts. Real drop-off numbers. Click an agent client to see their experience.</p>
+  </div>
+
+  <!-- The Report Card -->
+  <div class="report-card">
+    <div class="rcard">
+      <!-- Top bar -->
+      <div class="rcard-topbar">
+        <div class="rcard-topbar-dot"></div>
+        <div class="rcard-topbar-dot"></div>
+        <div class="rcard-topbar-dot"></div>
+        <span class="rcard-topbar-title">Betax Report · lovable.dev · March 24, 2026</span>
+        <div class="rcard-topbar-status">Run complete</div>
+      </div>
+
+      <!-- Tab bar -->
+      <div class="rtabs-bar">
+        <button class="rtab-btn active" onclick="switchReportTab('feedback')">Agent Feedback</button>
+        <button class="rtab-btn" onclick="switchReportTab('funnel')">Drop-off by Step</button>
+        <button class="rtab-btn" onclick="switchReportTab('suggest')">Design Suggestions</button>
+      </div>
+
+      <!-- Panel 1: Agent Feedback -->
+      <div class="rtab-panel active" id="tab-feedback">
+      <!-- Agent client selector -->
+      <div class="rcard-agents-bar">
+        <div class="rcard-agents-label">Select agent client</div>
+        <div class="agent-pills" id="agentPills">
+          <button class="agent-pill active" onclick="selectAgent(0)"><img src="https://i.pravatar.cc/60?img=47"/>Mei, 21 · SG</button>
+          <button class="agent-pill" onclick="selectAgent(1)"><img src="https://i.pravatar.cc/60?img=11"/>Tyler, 29 · TX</button>
+          <button class="agent-pill" onclick="selectAgent(2)"><img src="https://i.pravatar.cc/60?img=25"/>Ana, 36 · BR</button>
+          <button class="agent-pill" onclick="selectAgent(3)"><img src="https://i.pravatar.cc/60?img=57"/>Klaus, 54 · DE</button>
+          <button class="agent-pill" onclick="selectAgent(4)"><img src="https://i.pravatar.cc/60?img=9"/>Priya, 27 · IN</button>
+          <button class="agent-pill" onclick="selectAgent(5)"><img src="https://i.pravatar.cc/60?img=16"/>Léa, 24 · FR</button>
+        </div>
+      </div>
+
+      <!-- Body: profile + main -->
+      <div class="rcard-body">
+        <!-- Profile panel -->
+        <div class="rcard-profile">
+          <img class="rp-photo" id="rp-photo" src="https://i.pravatar.cc/120?img=47"/>
+          <div class="rp-name" id="rp-name">Mei Lin</div>
+          <div class="rp-subloc" id="rp-subloc">Singapore · 21 yrs</div>
+          <div class="rp-chips" id="rp-chips">
+            <div class="rp-chip"><span class="rp-chip-ico">💼</span>Design student</div>
+            <div class="rp-chip"><span class="rp-chip-ico">📱</span>iPhone 14</div>
+            <div class="rp-chip"><span class="rp-chip-ico">🎯</span>Build a portfolio site</div>
+            <div class="rp-chip"><span class="rp-chip-ico">💰</span>Price-sensitive</div>
+          </div>
+          <div class="rp-outcome mix" id="rp-outcome">⚡ Dropped at deploy step</div>
+        </div>
+
+        <!-- Main panel -->
+        <div class="rcard-main" id="rcard-main">
+          <!-- Journey -->
+          <div>
+            <div class="issues-label">Behavior path</div>
+            <div class="journey" id="r-journey">
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">Landing</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">Sign up</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">First prompt</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle ok">✓</div><div class="jstep-label">App built</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle warn">?</div><div class="jstep-label">Edit app</div></div></div>
+              <div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>
+              <div class="jstep"><div class="jstep-node"><div class="jstep-circle fail">✗</div><div class="jstep-label">Deploy</div></div></div>
+            </div>
+          </div>
+
+          <!-- Inner monologue -->
+          <div>
+            <div class="monologue-label">Inner monologue</div>
+            <div class="thoughts" id="r-thoughts">
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble">"Is this a website builder or an AI chatbot? I'll just try typing something..."</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble">"Oh wow — it actually built a real page. That was fast. This feels like magic."</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble warn">"Connect my domain?? What does that even mean? Did I break something?"</div></div>
+              <div class="thought"><img class="thought-avatar" src="https://i.pravatar.cc/40?img=47"/><div class="thought-bubble fail">"I don't see a 'share' button anywhere. I'll just come back later... [never returns]"</div></div>
+            </div>
+          </div>
+
+          <!-- Issues -->
+          <div>
+            <div class="issues-label">Issues found</div>
+            <div class="issues" id="r-issues">
+              <div class="issue"><span class="issue-pri p1">P1</span><span class="issue-text">Deploy step assumes domain knowledge — no plain-language option to just share a link</span><span class="issue-agents">41 clients</span></div>
+              <div class="issue"><span class="issue-pri p2">P2</span><span class="issue-text">Progress bar disappears during build — users don't know if it's still working</span><span class="issue-agents">28 clients</span></div>
+              <div class="issue"><span class="issue-pri p3">P3</span><span class="issue-text">Blank prompt input — 34% of users paused 30+ sec unsure what to type</span><span class="issue-agents">34 clients</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div><!-- end tab-feedback -->
+
+      <!-- Panel 2: Drop-off Funnel -->
+      <div class="rtab-panel" id="tab-funnel">
+        <div class="funnel-wrap">
+          <div class="funnel-row"><span class="funnel-step">Landing</span><div class="funnel-track"><div class="funnel-fill top" style="width:100%"><span class="funnel-pct">100%</span></div></div><span class="funnel-delta"></span></div>
+          <div class="funnel-row"><span class="funnel-step">Sign up</span><div class="funnel-track"><div class="funnel-fill hi" style="width:78%"><span class="funnel-pct">78%</span></div></div><span class="funnel-delta big">−22%</span></div>
+          <div class="funnel-row"><span class="funnel-step">First prompt</span><div class="funnel-track"><div class="funnel-fill hi" style="width:61%"><span class="funnel-pct">61%</span></div></div><span class="funnel-delta big">−17%</span></div>
+          <div class="funnel-row"><span class="funnel-step">App built</span><div class="funnel-track"><div class="funnel-fill mid" style="width:47%"><span class="funnel-pct">47%</span></div></div><span class="funnel-delta">−14%</span></div>
+          <div class="funnel-row"><span class="funnel-step">Edit app</span><div class="funnel-track"><div class="funnel-fill mid" style="width:31%"><span class="funnel-pct">31%</span></div></div><span class="funnel-delta big">−16%</span></div>
+          <div class="funnel-row"><span class="funnel-step">Deploy</span><div class="funnel-track"><div class="funnel-fill lo" style="width:18%"><span class="funnel-pct">18%</span></div></div><span class="funnel-delta big">−13%</span></div>
+          <div class="funnel-callouts">
+            <div class="fcallout"><div class="fcallout-num">−22%</div><div class="fcallout-lbl">lost before even signing up — landing page doesn't explain value fast enough</div></div>
+            <div class="fcallout"><div class="fcallout-num">−17%</div><div class="fcallout-lbl">confused at blank prompt — no example, no hint of what to type</div></div>
+            <div class="fcallout"><div class="fcallout-num">82%</div><div class="fcallout-lbl">of users never deployed — deploy step assumes domain knowledge users don't have</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: Design Suggestions -->
+      <div class="rtab-panel" id="tab-suggest">
+        <div class="suggest-wrap">
+          <div class="suggest-item">
+            <div class="srank p1">P1</div>
+            <div class="sbody"><div class="stitle">Add a "Share link" shortcut before the deploy step</div><div class="sdesc">82% of users never reached deploy. A simple "copy link to share" option would let users complete their goal without needing domain knowledge.</div><span class="simpact">↑ Est. +18% conversion</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p1">P2</div>
+            <div class="sbody"><div class="stitle">Show example prompts on the blank input screen</div><div class="sdesc">34% of users stalled 30+ seconds at the prompt screen. Add 3 tappable example prompts ("Build me a landing page for...") to reduce blank-page paralysis.</div><span class="simpact">↑ Est. +11% at prompt step</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p2">P3</div>
+            <div class="sbody"><div class="stitle">Show a persistent build progress indicator</div><div class="sdesc">28 clients thought the app had crashed during build. A visible progress bar or animated status message reduces abandonment while waiting.</div><span class="simpact">↑ Est. +8% retention at build step</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p3">P4</div>
+            <div class="sbody"><div class="stitle">Rewrite the landing page headline for non-technical users</div><div class="sdesc">22% dropped before signup. Mobile users (mostly 18–25) didn't understand "vibe-code your app" — plain language like "build a real website by describing it" tested better.</div><span class="simpact">↑ Est. +7% signup rate</span></div>
+          </div>
+          <div class="suggest-item">
+            <div class="srank p4">P5</div>
+            <div class="sbody"><div class="stitle">Optimize edit panel for mobile — current overlay is too small</div><div class="sdesc">Mobile users (Klaus, Priya, Léa) all struggled with the edit panel tap targets. Recommend bottom-sheet pattern on screens under 430px.</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Conversion meter -->
+  <div class="conversion" style="margin-top:2px;border-radius:0 0 var(--r) var(--r)">
+    <div class="conv-left">
+      <div class="conv-label">Conversion — completed signup & created first app</div>
+      <div class="conv-bar"><div class="conv-fill" id="convFill"></div></div>
+      <div class="conv-sub">18 out of 100 sampled agent clients completed the key action · 2 critical blockers identified</div>
+    </div>
+    <div class="conv-right">
+      <div class="conv-num"><em>18</em>/100</div>
+      <div class="conv-num-sub">conversion rate</div>
+    </div>
+  </div>
+
+  <div class="report-footer-pad"></div>
+</div>
+
+<!-- ⑤ CTA -->
+<section class="cta" id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-q">What's your product's<br/><em>conversion rate right now?</em></h2>
+    <p class="cta-sub">Paste your URL. We'll run 5,000 diverse persona agent clients and tell you exactly what's breaking — before your real users give up.</p>
+    <form class="url-form" onsubmit="handleSubmit(event)">
+      <input type="text" id="url-input" placeholder="https://yourproduct.com" />
+      <button type="submit">Get Early Access →</button>
+    </form>
+    <p class="cta-note" id="cta-note">Free for first 50 teams. No credit card required.</p>
+    <div class="cta-social">
+      <div class="social-item">
+        <div class="social-avatars">
+          <img class="social-av" src="https://i.pravatar.cc/40?img=11"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=25"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=33"/>
+          <img class="social-av" src="https://i.pravatar.cc/40?img=44"/>
+        </div>
+        <span>47 teams already on the waitlist</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo"><span class="logo-dot"></span>Betax</div>
+  <div class="f-copy">© 2026 Betax · Know why users leave.</div>
+</footer>
+
+<script>
+/* ── Agent client data ── */
+const AGENTS = [
+  {
+    photo:'https://i.pravatar.cc/120?img=47', tphoto:'https://i.pravatar.cc/40?img=47',
+    name:'Mei Lin', subloc:'Singapore · 21 yrs',
+    chips:[['💼','Design student'],['📱','iPhone 14'],['🎯','Build portfolio site'],['💰','Price-sensitive']],
+    meta:'21 · Singapore<br/>Design student · iPhone 14<br/>First-time SaaS user',
+    tags:['Mobile-first','Price-sensitive','Visual learner'],
+    outcome:{cls:'mix', text:'⚡ Dropped at deploy step'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'warn',l:'Edit app'},{s:'fail',l:'Deploy'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"Is this a website builder or an AI chatbot? I\'ll just try typing..."'},
+      {t:'norm',q:'"Oh wow — it actually built a real page. That was fast."'},
+      {t:'warn',q:'"Connect my domain?? What does that mean? Did I break something?"'},
+      {t:'fail',q:'"I don\'t see a \'share\' button anywhere. I\'ll come back later... [never returns]"'},
+    ],
+    issues:[
+      {p:'p1',t:'Deploy step assumes domain knowledge — no plain-language share option',n:'41 clients'},
+      {p:'p2',t:'Progress bar disappears during build — users unsure if it\'s still working',n:'28 clients'},
+      {p:'p3',t:'Blank prompt input — 34% paused 30+ sec unsure what to type',n:'34 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=11', tphoto:'https://i.pravatar.cc/40?img=11',
+    name:'Tyler Oaks', subloc:'Austin TX · 29 yrs',
+    chips:[['💼','Full-stack developer'],['💻','MacBook Pro'],['🎯','Side project'],['⚡','Power user']],
+    meta:'29 · Austin, TX<br/>Full-stack developer · MacBook Pro<br/>7 yrs experience',
+    tags:['Power user','Skips tutorials','Keyboard-driven'],
+    outcome:{cls:'pos', text:'✅ Converted to paid'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'warn',l:'Edit app'},{s:'ok',l:'GitHub sync'},{s:'ok',l:'Paid'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I\'m skipping the tutorial and going straight to editing the code."'},
+      {t:'norm',q:'"GitHub sync worked first try — this is actually solid."'},
+      {t:'warn',q:'"Why did the AI just rewrite the components I didn\'t ask to change??"'},
+      {t:'norm',q:'"I can live with that. Upgrading to pro."'},
+    ],
+    issues:[
+      {p:'p1',t:'AI rewrites untouched components on partial edits — destroys manual work',n:'52 clients'},
+      {p:'p2',t:'No diff view after AI changes — impossible to track what changed',n:'38 clients'},
+      {p:'p3',t:'Version history hidden in sidebar — 67% couldn\'t find undo in 3 min',n:'67 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=25', tphoto:'https://i.pravatar.cc/40?img=25',
+    name:'Ana Souza', subloc:'São Paulo · 36 yrs',
+    chips:[['💼','Senior product designer'],['💻','Figma power user'],['🎯','Client showcase site'],['🎨','Design-obsessed']],
+    meta:'36 · São Paulo<br/>Senior product designer<br/>Figma power user',
+    tags:['Aesthetic-driven','Brand-conscious','High standards'],
+    outcome:{cls:'neg', text:'🔴 Abandoned before sign-up'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'warn',l:'Scroll'},{s:'fail',l:'Left page'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"Let me see what kind of designs this actually produces..."'},
+      {t:'warn',q:'"Every example looks identical. Same card layout, same Tailwind defaults."'},
+      {t:'fail',q:'"I can\'t tell if this can do high-quality design. I\'m not going to risk my time."'},
+    ],
+    issues:[
+      {p:'p1',t:'No design gallery showing visual diversity — designers assume generic output',n:'19 clients'},
+      {p:'p1',t:'Pricing page ignores design quality — no customization proof points',n:'19 clients'},
+      {p:'p2',t:'No template gallery to preview before committing to a prompt',n:'24 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=57', tphoto:'https://i.pravatar.cc/40?img=57',
+    name:'Klaus Meier', subloc:'Munich · 54 yrs',
+    chips:[['💼','VP Operations'],['💻','Dell laptop'],['🎯','Business portal'],['🔒','Security-conscious']],
+    meta:'54 · Munich<br/>VP Operations · Dell laptop<br/>Reads every word on screen',
+    tags:['Low tech comfort','Compliance-aware','Risk-averse'],
+    outcome:{cls:'neg', text:'🔴 Never started a project'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'warn',l:'Scroll ×3'},{s:'fail',l:'Left page'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I\'ll read the homepage carefully before I sign up for anything."'},
+      {t:'warn',q:'"Who owns the code I build? Is it on their servers? I can\'t find an answer."'},
+      {t:'fail',q:'"No GDPR mention. No data ownership statement. This isn\'t for serious business."'},
+    ],
+    issues:[
+      {p:'p1',t:'No code ownership statement visible on landing or sign-up flow',n:'22 clients'},
+      {p:'p1',t:'No GDPR / SOC2 badges anywhere in the conversion funnel',n:'22 clients'},
+      {p:'p2',t:'FAQ buried below fold, doesn\'t answer any security questions',n:'15 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=9', tphoto:'https://i.pravatar.cc/40?img=9',
+    name:'Priya Nair', subloc:'Bangalore · 27 yrs',
+    chips:[['💼','Product Manager · ex-Razorpay'],['📱','Pixel 7'],['🎯','Internal tool MVP'],['🔍','Tests edge cases']],
+    meta:'27 · Bangalore<br/>Product Manager · ex-Razorpay<br/>Tests edge cases deliberately',
+    tags:['Efficiency-driven','Tests limits','Detail-oriented'],
+    outcome:{cls:'mix', text:'⚡ Completed but frustrated'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'warn',l:'Complex edit'},{s:'warn',l:'Re-prompt'},{s:'ok',l:'Done'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I\'m going to try a complex multi-step form to really test this."'},
+      {t:'warn',q:'"It simplified my request without telling me. I got a basic form, not what I asked for."'},
+      {t:'fail',q:'"It just deleted the features I already had. Where is the undo button?!"'},
+      {t:'norm',q:'"Found it eventually. This should not be this hard."'},
+    ],
+    issues:[
+      {p:'p1',t:'Version history hidden in sidebar — 67% of clients couldn\'t find it in 3 min',n:'67 clients'},
+      {p:'p1',t:'AI silently simplifies complex requests with no warning to the user',n:'31 clients'},
+      {p:'p2',t:'Re-prompting UX unclear — no sign the AI remembers previous session context',n:'29 clients'},
+    ]
+  },
+  {
+    photo:'https://i.pravatar.cc/120?img=16', tphoto:'https://i.pravatar.cc/40?img=16',
+    name:'Léa Moreau', subloc:'Paris · 24 yrs',
+    chips:[['💼','Content creator · 85K IG'],['📱','iPhone 13 mini'],['🎯','Link-in-bio landing page'],['⚡','Expects instant results']],
+    meta:'24 · Paris<br/>Content creator · 85K Instagram<br/>Expects instant results',
+    tags:['Impatient','Visual learner','Mobile-native'],
+    outcome:{cls:'pos', text:'✅ Converted to paid'},
+    journey:[
+      {s:'ok',l:'Landing'},{s:'ok',l:'Sign up'},{s:'ok',l:'First prompt'},
+      {s:'ok',l:'App built'},{s:'ok',l:'Upgraded'}
+    ],
+    thoughts:[
+      {t:'norm',q:'"I just want to make a portfolio site quickly. Let me try typing my idea."'},
+      {t:'warn',q:'"Hmm, what should I even type? There\'s nothing here to guide me."'},
+      {t:'norm',q:'"Oh! It built an actual site in 8 minutes. This is incredible."'},
+      {t:'norm',q:'"I\'m upgrading immediately. Worth every penny."'},
+    ],
+    issues:[
+      {p:'p2',t:'Blank prompt input with zero guidance — 34% of users froze for 30+ sec',n:'34 clients'},
+      {p:'p2',t:'No "next step" CTA after first build — users don\'t know they can iterate',n:'27 clients'},
+      {p:'p3',t:'Mobile layout cramped on iPhone — editor sidebar overlaps content',n:'18 clients'},
+    ]
+  }
+];
+
+let currentAgent = 0;
+let autoTimer = null;
+const INTERVAL = 5500;
+
+function switchReportTab(tab) {
+  document.querySelectorAll('.rtab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.rtab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.rtab-btn[onclick="switchReportTab('${tab}')"]`).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function selectAgent(idx, userClick = true) {
+  if (userClick) clearAuto();
+  currentAgent = idx;
+  const a = AGENTS[idx];
+  const pills = document.querySelectorAll('.agent-pill');
+  pills.forEach((p,i) => p.classList.toggle('active', i===idx));
+
+  const body = document.getElementById('rcard-main');
+  body.style.opacity = '0';
+  body.style.transform = 'translateY(6px)';
+
+  setTimeout(() => {
+    document.getElementById('rp-photo').src = a.photo;
+    document.getElementById('rp-name').textContent = a.name;
+    document.getElementById('rp-subloc').textContent = a.subloc || '';
+    document.getElementById('rp-chips').innerHTML = (a.chips||[]).map(([ico,txt])=>`<div class="rp-chip"><span class="rp-chip-ico">${ico}</span>${txt}</div>`).join('');
+    const out = document.getElementById('rp-outcome');
+    out.className = 'rp-outcome ' + a.outcome.cls;
+    out.textContent = a.outcome.text;
+
+    // Journey
+    document.getElementById('r-journey').innerHTML = a.journey.flatMap((s,i) => {
+      const node = `<div class="jstep"><div class="jstep-node"><div class="jstep-circle ${s.s}">${s.s==='ok'?'✓':s.s==='warn'?'?':'✗'}</div><div class="jstep-label">${s.l}</div></div></div>`;
+      const conn = i < a.journey.length-1 ? `<div class="jstep"><div class="jstep-connector"><div class="jstep-line"></div></div></div>` : '';
+      return [node, conn];
+    }).join('');
+
+    // Thoughts
+    document.getElementById('r-thoughts').innerHTML = a.thoughts.map(t =>
+      `<div class="thought"><img class="thought-avatar" src="${a.tphoto}"/><div class="thought-bubble ${t.t==='warn'?'warn':t.t==='fail'?'fail':''}">${t.q}</div></div>`
+    ).join('');
+
+    // Issues
+    document.getElementById('r-issues').innerHTML = a.issues.map(i =>
+      `<div class="issue"><span class="issue-pri ${i.p}">P${i.p.slice(1)}</span><span class="issue-text">${i.t}</span><span class="issue-agents">${i.n}</span></div>`
+    ).join('');
+
+    body.style.transition = 'opacity .3s ease, transform .3s ease';
+    body.style.opacity = '1';
+    body.style.transform = 'translateY(0)';
+  }, 150);
+
+  if (!userClick) startAuto();
+}
+
+function startAuto() {
+  clearAuto();
+  autoTimer = setTimeout(() => selectAgent((currentAgent + 1) % AGENTS.length, false), INTERVAL);
+}
+
+function clearAuto() {
+  if (autoTimer) clearTimeout(autoTimer);
+  autoTimer = null;
+}
+
+// Handle form
+function handleSubmit(e) {
+  e.preventDefault();
+  const val = document.getElementById('url-input').value;
+  const s = JSON.parse(localStorage.getItem('bx')||'[]');
+  s.push({url: val, ts: new Date().toISOString()});
+  localStorage.setItem('bx', JSON.stringify(s));
+  e.target.innerHTML = `<span style="padding:12px 20px;font-size:14px;font-weight:700;color:var(--ink)">✓ You're on the list — we'll be in touch!</span>`;
+  document.getElementById('cta-note').textContent = s.length + ' teams on the waitlist.';
+}
+
+// Scroll fade-in (WCAG: no motion if prefers-reduced-motion)
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}
+
+// Animate conversion bar on scroll
+const convObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => { document.getElementById('convFill').style.width = '18%'; }, 100);
+      convObs.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const convEl = document.querySelector('.conv-bar');
+if (convEl) convObs.observe(convEl);
+
+// Start auto-rotate
+startAuto();
+</script>
+</body>
+</html>
