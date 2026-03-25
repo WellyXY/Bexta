@@ -6,6 +6,14 @@ const { Pool } = require('pg');
 const REPORT_DATA = {
   meta: { url: 'https://bexta-production.up.railway.app/', run_date: '2026-03-24', total_personas: 25, model: 'claude-sonnet-4-6' },
   summary: { converted: 5, dropped: 10, undecided: 10, conversion_rate: 20, avg_score: 5.1 },
+  stage_dropoff: [
+    { stage: 'Hero',         section: 's1', entered: 25, dropped: 2, drop_pct: 8,  main_reason: 'CLI terminal hero signals developer-only tool; non-tech users bounce immediately' },
+    { stage: 'Comparison',   section: 's2', entered: 23, dropped: 1, drop_pct: 4,  main_reason: 'Impressive stats but users without SaaS context lose orientation' },
+    { stage: 'Why',          section: 's3', entered: 22, dropped: 2, drop_pct: 9,  main_reason: 'No trust signals; EU and enterprise users notice missing Privacy Policy' },
+    { stage: 'How it works', section: 's4', entered: 20, dropped: 2, drop_pct: 10, main_reason: '"5,000 agents" and "persona profiles" alienate low-tech comfort users' },
+    { stage: 'Demo report',  section: 's6', entered: 18, dropped: 3, drop_pct: 17, main_reason: 'B2C SaaS-only demo; B2B, portfolio, and local biz users cannot project their use case' },
+    { stage: 'CTA',          section: 's8', entered: 15, dropped: 0, drop_pct: 0,  main_reason: '5 converted; 10 undecided blocked by missing pricing clarity and GDPR concerns' },
+  ],
   top_issues: [
     { priority: 'P1', title: 'Missing GDPR / Privacy Policy / Impressum', affected: 8, segments: ['German users', 'Enterprise buyers', 'EU professionals'], description: 'All German personas and enterprise buyers dropped immediately. No Privacy Policy, no GDPR statement, no Impressum (legally required in Germany). Biggest single drop driver.' },
     { priority: 'P1', title: 'Non-technical users alienated by CLI terminal hero', affected: 6, segments: ['Low tech comfort (1-4)', 'Non-SaaS use cases', 'Instagram/Friend discovery'], description: 'The terminal on the right of the hero signals "developer tool" to users who have never written code. Teachers, local business owners, bloggers, and creators bounce within 30 seconds.' },
