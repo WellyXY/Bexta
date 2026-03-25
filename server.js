@@ -75,6 +75,28 @@ const memoryList = [];
 
 // ── Middleware ────────────────────────────────────────────
 app.use(express.json());
+// ── Admin dashboard ───────────────────────────────────────
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'betax-admin-2026';
+
+function requireAdmin(req, res, next) {
+  if (req.query.token !== ADMIN_TOKEN) {
+    return res.status(401).send('Unauthorized. Add ?token=YOUR_ADMIN_TOKEN');
+  }
+  next();
+}
+
+app.get('/admin', requireAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+app.get('/admin/report', requireAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin-report.html'));
+});
+
+app.get('/api/admin/report-data', requireAdmin, (req, res) => {
+  res.json(REPORT_DATA);
+});
+
 app.use(express.static(path.join(__dirname)));
 
 // ── API: submit waitlist ──────────────────────────────────
@@ -111,28 +133,6 @@ app.get('/api/waitlist/count', async (req, res) => {
     return res.json({ count: parseInt(rows[0].count) });
   }
   res.json({ count: memoryList.length });
-});
-
-// ── Admin dashboard ───────────────────────────────────────
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'betax-admin-2026';
-
-function requireAdmin(req, res, next) {
-  if (req.query.token !== ADMIN_TOKEN) {
-    return res.status(401).send('Unauthorized. Add ?token=YOUR_ADMIN_TOKEN');
-  }
-  next();
-}
-
-app.get('/admin', requireAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin.html'));
-});
-
-app.get('/admin/report', requireAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin-report.html'));
-});
-
-app.get('/api/admin/report-data', requireAdmin, (req, res) => {
-  res.json(REPORT_DATA);
 });
 
 app.get('/api/admin/waitlist', async (req, res) => {
