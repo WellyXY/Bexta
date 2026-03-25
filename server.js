@@ -213,20 +213,680 @@ app.get('/api/admin/reports/:id', requireAdmin, async (req, res) => {
 });
 
 
-// ── PH Audit Report ───────────────────────────────────────────────────────
-const PH_IDS = new Set([1,2,4,5,8,9,10,11,12,14,15,16,17,18,19,21,22,23,24,25]);
+// ── PH Audit Report (fresh run 2026-03-25) ───────────────────────────────
+const FRESH_PH_REPORT = {
+  "meta": {
+    "url": "https://racoonn.me/",
+    "run_date": "2026-03-25",
+    "total_personas": 20,
+    "model": "claude-sonnet-4-6",
+    "label": "Product Hunt Audience Audit — Fresh Run"
+  },
+  "summary": {
+    "converted": 7,
+    "dropped": 4,
+    "undecided": 9,
+    "conversion_rate": 35,
+    "avg_score": 6.1
+  },
+  "top_issues": [
+    {
+      "priority": "P1",
+      "title": "No pricing page — $49 still unexplained",
+      "affected": 11,
+      "segments": [
+        "SaaS founders",
+        "Product managers",
+        "Agency owners",
+        "Senior devs"
+      ],
+      "description": "\"Starts at $49\" appears in the comparison table but there is no pricing page. Users cannot tell if this is per-run, per-month, per-seat, or introductory. High-intent users get stuck at undecided."
+    },
+    {
+      "priority": "P1",
+      "title": "No Privacy Policy or GDPR documentation",
+      "affected": 7,
+      "segments": [
+        "EU professionals",
+        "Enterprise buyers",
+        "Head of Growth",
+        "Compliance-aware PMs"
+      ],
+      "description": "Zero legal documentation on the page or footer. European users and anyone working at a company with a legal/compliance team cannot share a company URL without a Privacy Policy and DPA."
+    },
+    {
+      "priority": "P2",
+      "title": "Footer still says \"Betax\" — brand inconsistency",
+      "affected": 8,
+      "segments": [
+        "Detail-oriented users",
+        "Developers",
+        "Skeptics"
+      ],
+      "description": "The page header and hero say \"Racoonn\" but the footer copyright reads \"© 2026 Betax\". Breaks trust for skeptical users who notice the mismatch and wonder if it's unfinished or a rebranded pivot."
+    },
+    {
+      "priority": "P2",
+      "title": "How It Works improved but Step 04 feed needs \"your site\" framing",
+      "affected": 6,
+      "segments": [
+        "Non-SaaS use cases",
+        "E-commerce owners",
+        "Portfolio sites",
+        "Newsletter owners"
+      ],
+      "description": "The live agent feed (Mei → Pricing ✗) uses a generic SaaS product journey. Non-SaaS users can't project their own site into the visual. Needs \"your URL here\" framing or multi-category examples."
+    },
+    {
+      "priority": "P2",
+      "title": "CLI terminal in hero still signals \"developer-only\"",
+      "affected": 5,
+      "segments": [
+        "Non-technical founders",
+        "Designers",
+        "Marketers",
+        "Content creators"
+      ],
+      "description": "\"racoonn run --url yourapp.com --agents 5000\" next to \"Just paste a URL\" creates a contradiction. Non-technical users assume they need to run something in a terminal."
+    },
+    {
+      "priority": "P3",
+      "title": "No social proof beyond logo ticker",
+      "affected": 5,
+      "segments": [
+        "Agency owners",
+        "Senior PMs",
+        "Skeptical founders"
+      ],
+      "description": "Notion/Stripe/Figma logos appear without context — are these customers or inspiration? No named testimonials, no case study, no quote from a real user. High-intent buyers want proof."
+    }
+  ],
+  "personas": [
+    {
+      "id": 1,
+      "name": "Alex Chen",
+      "age": 32,
+      "location": "San Francisco, US",
+      "role": "Indie maker",
+      "tech": 8,
+      "channel": "Product Hunt",
+      "use_case": "SaaS landing page",
+      "outcome": "undecided",
+      "score": 7,
+      "pre_expectation": "Seen this category before — curious if Racoonn is actually differentiated.",
+      "key_moment": "The 5-step How It Works panel finally explains the process — persona grid + intent table is the most transparent I've seen in this space.",
+      "biggest_gap": "Still no pricing page. I need per-run vs subscription clarity before I can estimate ROI.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "\"They left at second 30\" — whoever wrote this knows indie hacker pain."
+        },
+        {
+          "type": "norm",
+          "quote": "Step 03 intent table (Skeptic / Comparing / Ready to buy / Browsing) — this is how I think about my own users."
+        },
+        {
+          "type": "warn",
+          "quote": "Footer says Betax. Is this a rebranded product? What happened to Betax?"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Priya Sharma",
+      "age": 27,
+      "location": "Bangalore, IN",
+      "role": "Product designer",
+      "tech": 6,
+      "channel": "Product Hunt",
+      "use_case": "Design portfolio",
+      "outcome": "converted",
+      "score": 8,
+      "pre_expectation": "Looking for a way to get feedback on my portfolio without paying for user research.",
+      "key_moment": "Persona grid in Step 02 — seeing diverse avatars with roles made it feel real, not like a GPT gimmick.",
+      "biggest_gap": "The activity feed shows a SaaS product flow. Does it work the same for a portfolio with no pricing?",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "Step 02 persona grid with Mobile-first / Enterprise / SMB owner tags — actually shows diversity."
+        },
+        {
+          "type": "norm",
+          "quote": "Step 05 with specific fixes (\"Add a free trial line, reduces drop-off 34%\") — this is actionable, not fluffy."
+        },
+        {
+          "type": "warn",
+          "quote": "No Privacy Policy — if personas \"browse\" my portfolio, what data is collected?"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Jordan Williams",
+      "age": 24,
+      "location": "Austin TX, US",
+      "role": "Side project builder",
+      "tech": 8,
+      "channel": "Product Hunt",
+      "use_case": "Early-stage startup",
+      "outcome": "converted",
+      "score": 8,
+      "pre_expectation": "Need to sanity-check my landing page before I pay for ads.",
+      "key_moment": "\"Test my product free · First 50 teams free\" — that's my entry point, signed up.",
+      "biggest_gap": "Still no pricing after the free period. Budgeting is hard without that.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The comparison table 28 min vs 2-4 weeks — I've done user interviews. This is the right framing."
+        },
+        {
+          "type": "norm",
+          "quote": "How It Works has actual detail now. The intent table showing \"40% skeptics, 25% comparing\" is believable."
+        },
+        {
+          "type": "warn",
+          "quote": "CLI in hero still makes it look like a dev tool. Took me a minute to realize it's just a URL input."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Sophie Mueller",
+      "age": 29,
+      "location": "Berlin, DE",
+      "role": "UX researcher",
+      "tech": 7,
+      "channel": "Product Hunt",
+      "use_case": "Client research tool",
+      "outcome": "dropped",
+      "score": 4,
+      "pre_expectation": "A legitimate AI research tool I could pitch to clients as a faster alternative.",
+      "key_moment": "Footer says \"© 2026 Betax\" — same moment I notice there's no Privacy Policy.",
+      "biggest_gap": "Zero legal documentation. I'd recommend this to a client and they'd ask for a DPA on day one.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The How It Works section is actually impressive — shows process transparency I haven't seen in this space."
+        },
+        {
+          "type": "warn",
+          "quote": "\"Racoonn\" in header, \"Betax\" in footer — brand inconsistency kills credibility for professional use."
+        },
+        {
+          "type": "fail",
+          "quote": "No Privacy Policy, no GDPR. Can't recommend to any EU client without legal clearance."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Wei Zhang",
+      "age": 25,
+      "location": "Singapore",
+      "role": "Frontend developer",
+      "tech": 9,
+      "channel": "Product Hunt",
+      "use_case": "Side project",
+      "outcome": "converted",
+      "score": 7,
+      "pre_expectation": "Is this real LLM persona simulation or a GPT wrapper with nice CSS?",
+      "key_moment": "Intent table (Skeptic via Twitter ad / Comparing via G2 / Ready to buy via Google) — methodology feels thought through.",
+      "biggest_gap": "Still no GitHub, no docs. I can't evaluate the actual technical implementation.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The intent distribution (40% skeptics, 25% comparing) matches actual funnel research. This isn't made up."
+        },
+        {
+          "type": "norm",
+          "quote": "\"First 50 teams free\" — I'm signing up to test before evaluating further."
+        },
+        {
+          "type": "warn",
+          "quote": "\"Betax\" in footer. Git blame energy — was this shipped from a template?"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Emma Schmidt",
+      "age": 27,
+      "location": "Munich, DE",
+      "role": "Marketing manager",
+      "tech": 6,
+      "channel": "Product Hunt",
+      "use_case": "Marketing landing page",
+      "outcome": "dropped",
+      "score": 5,
+      "pre_expectation": "Fast alternative to another Hotjar + survey cycle.",
+      "key_moment": "\"Where not Why\" framing — yes, that's exactly what I've been pitching to my team.",
+      "biggest_gap": "No GDPR documentation. I need a Privacy Policy and DPA before running a company URL through this.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The comparison table is perfect — I've used the exact words \"Hotjar tells me WHERE but not WHY\" in presentations."
+        },
+        {
+          "type": "warn",
+          "quote": "How It Works is detailed but a lot of steps. My boss will ask \"so do I need to understand all this or just paste a URL?\""
+        },
+        {
+          "type": "fail",
+          "quote": "No Privacy Policy visible anywhere. GDPR compliance isn't optional in Germany."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Arjun Singh",
+      "age": 28,
+      "location": "Hyderabad, IN",
+      "role": "Full-stack developer",
+      "tech": 9,
+      "channel": "Twitter/X",
+      "use_case": "Developer tool page",
+      "outcome": "undecided",
+      "score": 6,
+      "pre_expectation": "Either a real system with actual browser sessions, or prompt-engineered personas pretending to browse.",
+      "key_moment": "Step 03 intent table — shows methodology. Step 04 feed shows Mei → Pricing ✗ with a quote. More transparent than expected.",
+      "biggest_gap": "No docs, no API, no GitHub link. Still can't verify if \"5,000 agents\" means actual headless browser sessions.",
+      "thoughts": [
+        {
+          "type": "warn",
+          "quote": "\"Trained on 500+ B2C products\" — fine-tuned model or system prompt? Makes a difference to output reliability."
+        },
+        {
+          "type": "warn",
+          "quote": "Footer says Betax. Repo name? Old domain? Should be easy to fix if this is production-ready."
+        },
+        {
+          "type": "warn",
+          "quote": "No technical documentation — I'd want a sample JSON output before I trust 5,000 persona sessions."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Camille Dubois",
+      "age": 31,
+      "location": "Paris, FR",
+      "role": "Freelance UX designer",
+      "tech": 5,
+      "channel": "Product Hunt",
+      "use_case": "Portfolio site",
+      "outcome": "undecided",
+      "score": 6,
+      "pre_expectation": "Tool to understand why potential clients visit my portfolio but don't reach out.",
+      "key_moment": "The persona grid in Step 02 — seeing diverse faces + labels (Mobile-first, Enterprise) made it feel tangible.",
+      "biggest_gap": "No Privacy Policy. AI agents browsing client portfolios I might test feels like a data question.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "Step 05 showing \"Fix: Add free trial line\" — this is the level of specificity I need, not \"improve UX\"."
+        },
+        {
+          "type": "warn",
+          "quote": "The live feed shows a SaaS product (Hero → Pricing → Converted). My portfolio has no pricing page — will the report make sense?"
+        },
+        {
+          "type": "warn",
+          "quote": "\"Betax\" footer + no Privacy Policy — two red flags for a French user."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Taylor Davis",
+      "age": 26,
+      "location": "Seattle, US",
+      "role": "Product manager",
+      "tech": 7,
+      "channel": "Product Hunt",
+      "use_case": "B2B product demo page",
+      "outcome": "undecided",
+      "score": 7,
+      "pre_expectation": "Qualitative signal on why our demo page isn't converting trials.",
+      "key_moment": "Step 03 intent table with \"Skeptic / Comparing / Ready to buy\" split — that's exactly how I segment my pipeline.",
+      "biggest_gap": "All examples are B2C SaaS. My product is B2B mid-market — the agent profiles all look like consumers.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The 5-step process is finally transparent. I can explain this to my eng lead without hand-waving."
+        },
+        {
+          "type": "norm",
+          "quote": "\"Inner monologue\" style quotes from personas — this is what Hotjar can't give me."
+        },
+        {
+          "type": "warn",
+          "quote": "Still no pricing page — can't submit this to finance without a proper number."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Felix Wagner",
+      "age": 38,
+      "location": "Hamburg, DE",
+      "role": "SaaS founder",
+      "tech": 8,
+      "channel": "Product Hunt",
+      "use_case": "SaaS landing page",
+      "outcome": "dropped",
+      "score": 4,
+      "pre_expectation": "Testing if AI personas can actually replace qual research or if this is hype.",
+      "key_moment": "Step 05 has specific fix recommendations with impact estimates (\"reduces Skeptic drop-off by ~34%\") — that's a confident claim.",
+      "biggest_gap": "No Impressum. No GDPR. No Privacy Policy. Legally unusable in Germany.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The How It Works section is the best I've seen in this category — process is actually transparent."
+        },
+        {
+          "type": "warn",
+          "quote": "\"Betax\" in footer while calling themselves Racoonn — this is either sloppy or a very recent rebrand."
+        },
+        {
+          "type": "fail",
+          "quote": "No Impressum, no GDPR. German law. Not negotiable. Dropped."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Riley Anderson",
+      "age": 21,
+      "location": "Boston, US",
+      "role": "Design student",
+      "tech": 5,
+      "channel": "Product Hunt",
+      "use_case": "Student portfolio",
+      "outcome": "converted",
+      "score": 8,
+      "pre_expectation": "Product Hunt usually has cool beta tools — hoping to understand why my portfolio gets views but no messages.",
+      "key_moment": "\"First 50 teams free. No credit card required.\" — converted immediately, will evaluate after.",
+      "biggest_gap": "I'm not a \"team\" — slightly worried the product is built for companies, not solo students.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The persona grid showing Mei (21, SG, Mobile-first) felt weirdly personal — I'm almost that."
+        },
+        {
+          "type": "norm",
+          "quote": "Step 04 live feed with quotes from each agent — actually shows what they're thinking, not just where they clicked."
+        },
+        {
+          "type": "warn",
+          "quote": "47 of 50 spots — is that still accurate? Signed up anyway."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Rahul Kumar",
+      "age": 36,
+      "location": "Mumbai, IN",
+      "role": "Product lead",
+      "tech": 8,
+      "channel": "Product Hunt",
+      "use_case": "SaaS landing page",
+      "outcome": "undecided",
+      "score": 7,
+      "pre_expectation": "Evaluating this against qual research tools we've tried.",
+      "key_moment": "The intent table with source context (Twitter ad / G2 review / Google search) — this matches how we think about traffic segmentation.",
+      "biggest_gap": "No methodology doc. How do 5,000 persona agents actually navigate a page? Real browser? Simulated?",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "P1/P2 output format with affected persona counts — matches exactly how I'd present findings to engineering."
+        },
+        {
+          "type": "warn",
+          "quote": "\"Betax\" footer — recent pivot? I'd want to know the history before committing company data."
+        },
+        {
+          "type": "warn",
+          "quote": "No pricing page makes ROI calculation impossible for a purchase decision."
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Aisha Hassan",
+      "age": 23,
+      "location": "Nairobi, KE",
+      "role": "Social media manager",
+      "tech": 5,
+      "channel": "Product Hunt",
+      "use_case": "Personal brand site",
+      "outcome": "converted",
+      "score": 7,
+      "pre_expectation": "Something to tell me why people visit my brand page but don't DM or book.",
+      "key_moment": "\"Friends & teammates (too polite)\" — my entire creator group chat drop fire emojis on everything I post.",
+      "biggest_gap": "Feed shows SaaS checkout flows. My site has a contact form. Will the report apply?",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "\"Too polite to tell you your product is confusing\" — this is every feedback session I've ever had."
+        },
+        {
+          "type": "norm",
+          "quote": "The persona grid feels real — actual diversity in age, location, role."
+        },
+        {
+          "type": "warn",
+          "quote": "\"First 50 teams free\" — I'm one person, not a team. Does this still count?"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Marcus Lee",
+      "age": 34,
+      "location": "New York, US",
+      "role": "Growth lead",
+      "tech": 7,
+      "channel": "Product Hunt",
+      "use_case": "SaaS onboarding flow",
+      "outcome": "undecided",
+      "score": 6,
+      "pre_expectation": "A faster way to identify onboarding drop-off without setting up another funnel analysis.",
+      "key_moment": "The stage drop-off concept (Hero → Features → Pricing → Signup) maps exactly to our funnel.",
+      "biggest_gap": "No integration with our analytics stack. Does this replace or complement GA4?",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "\"28 min to full report\" — our current user research cycle is 3 weeks. Huge if real."
+        },
+        {
+          "type": "warn",
+          "quote": "Would need to see an actual report output for our URL before committing — demo shows someone else's product."
+        },
+        {
+          "type": "warn",
+          "quote": "No pricing after the free tier — budgeting is impossible without knowing ongoing cost."
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Lena Fischer",
+      "age": 34,
+      "location": "Frankfurt, DE",
+      "role": "Head of Growth",
+      "tech": 7,
+      "channel": "Slack",
+      "use_case": "Marketing landing page",
+      "outcome": "dropped",
+      "score": 4,
+      "pre_expectation": "Evaluating against our Mixpanel + Hotjar stack methodically.",
+      "key_moment": "\"GA & Hotjar tells WHERE not WHY\" — that's been my exact pitch to leadership for six months.",
+      "biggest_gap": "No Privacy Policy, no DPA. Cannot run company data through an unvetted service.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "\"Where not Why\" framing — someone finally built the product that fills that gap. If it works."
+        },
+        {
+          "type": "warn",
+          "quote": "Five steps is a lot of process to explain to a busy CMO. Needs a one-sentence version."
+        },
+        {
+          "type": "fail",
+          "quote": "No Privacy Policy, no DPA, no company info. Our legal team would block this in 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Dylan Park",
+      "age": 29,
+      "location": "Seoul, KR",
+      "role": "Indie hacker",
+      "tech": 8,
+      "channel": "Product Hunt",
+      "use_case": "Newsletter landing page",
+      "outcome": "converted",
+      "score": 7,
+      "pre_expectation": "Always hunting for async research tools — user interviews are my least favorite part of building.",
+      "key_moment": "Intent table with entry source (Twitter ad / G2 / Product Hunt) — this is how real traffic behaves.",
+      "biggest_gap": "No team plan — building with a co-founder, do we share one account or pay double?",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The live feed with quotes is the killer feature — \"No free trial visible. Too risky.\" is more useful than a heatmap."
+        },
+        {
+          "type": "norm",
+          "quote": "\"First 50 teams free\" — signed up. Will verify if the report is as specific as the example."
+        },
+        {
+          "type": "warn",
+          "quote": "\"Betax\" footer is a tiny detail but indie hackers notice everything — fix it."
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Nina Rossi",
+      "age": 31,
+      "location": "Milan, IT",
+      "role": "Startup founder",
+      "tech": 6,
+      "channel": "LinkedIn",
+      "use_case": "B2B SaaS landing page",
+      "outcome": "undecided",
+      "score": 6,
+      "pre_expectation": "Looking for something actionable to improve our trial-to-paid conversion.",
+      "key_moment": "Step 05 fix cards — \"Add industry tabs to demo section, increases relevance for 40% of traffic\" — specific and credible.",
+      "biggest_gap": "Our product is B2B enterprise. Persona examples all feel consumer-oriented.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "The process transparency in How It Works is reassuring — I can see the methodology, not just results."
+        },
+        {
+          "type": "warn",
+          "quote": "\"$49\" appears once but there's no pricing page. What happens after first 50 teams?"
+        },
+        {
+          "type": "warn",
+          "quote": "No Privacy Policy for an Italian company is a GDPR concern we can't ignore."
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "James Okafor",
+      "age": 27,
+      "location": "Lagos, NG",
+      "role": "Frontend dev / builder",
+      "tech": 8,
+      "channel": "Twitter/X",
+      "use_case": "SaaS side project",
+      "outcome": "converted",
+      "score": 7,
+      "pre_expectation": "Skeptical but open — Product Hunt usually surfaces real tools, not just landing pages.",
+      "key_moment": "The intent table with 40/25/20/15 distribution of skeptics/comparing/buying/browsing — the math is realistic.",
+      "biggest_gap": "No API or CLI documentation. \"racoonn run --url\" in the hero implies CLI exists — where are the docs?",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "Hero claim + live feed example + step-by-step process — finally a tool that shows its work."
+        },
+        {
+          "type": "norm",
+          "quote": "\"First 50 teams free, no credit card\" — low friction, signing up to test."
+        },
+        {
+          "type": "warn",
+          "quote": "Footer says Betax. This is the kind of detail that makes me wonder what else is half-finished."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Chloe Martin",
+      "age": 26,
+      "location": "Toronto, CA",
+      "role": "Brand designer",
+      "tech": 5,
+      "channel": "Product Hunt",
+      "use_case": "Design studio site",
+      "outcome": "undecided",
+      "score": 6,
+      "pre_expectation": "A way to get honest feedback on my studio's site from people who don't know me.",
+      "key_moment": "Persona grid — visual, diverse, shows labels. Finally makes \"5,000 AI personas\" feel real.",
+      "biggest_gap": "My clients are enterprises. The example personas look like startup founders and students.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "\"Friends & teammates too polite to help\" — my whole network tells me my site is great."
+        },
+        {
+          "type": "warn",
+          "quote": "Activity feed shows Hero → Pricing ✗ flow. My studio site has no Pricing page — it's inquiry-based."
+        },
+        {
+          "type": "warn",
+          "quote": "No Privacy Policy on a site that AI-browses other websites — need that for Canadian privacy law too."
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Blake Thompson",
+      "age": 39,
+      "location": "Chicago, US",
+      "role": "Agency owner",
+      "tech": 6,
+      "channel": "Twitter/X",
+      "use_case": "Marketing landing page",
+      "outcome": "undecided",
+      "score": 6,
+      "pre_expectation": "Evaluating whether I can resell this or white-label it for clients.",
+      "key_moment": "\"$3,000+ → $49\" comparison — my clients pay me $3K+ for user research. This changes my margin conversation.",
+      "biggest_gap": "No agency plan, no white-label, no bulk pricing. One seat doesn't scale to 10 clients.",
+      "thoughts": [
+        {
+          "type": "norm",
+          "quote": "If the output quality is close to real user research, my margin just got massive. Big if."
+        },
+        {
+          "type": "warn",
+          "quote": "\"Betax\" in footer — if I'm reselling this I need to know the company is stable and not pivoting."
+        },
+        {
+          "type": "warn",
+          "quote": "No agency pricing model visible. I'd need volume pricing before pitching to clients."
+        }
+      ]
+    }
+  ]
+};
+
 app.get('/api/admin/ph-report', requireAdmin, (req, res) => {
-  const personas = REPORT_SEED.personas.filter(p => PH_IDS.has(p.id));
-  const converted  = personas.filter(p => p.outcome === 'converted').length;
-  const dropped    = personas.filter(p => p.outcome === 'dropped').length;
-  const undecided  = personas.filter(p => p.outcome === 'undecided').length;
-  const avg_score  = Math.round(personas.reduce((s,p) => s + p.score, 0) / personas.length * 10) / 10;
-  res.json({
-    meta: { label: 'Product Hunt Audience Audit', run_date: REPORT_SEED.meta.run_date, total: personas.length },
-    summary: { converted, dropped, undecided, avg_score, conversion_rate: Math.round(converted/personas.length*100) },
-    top_issues: REPORT_SEED.top_issues,
-    personas,
-  });
+  res.json(FRESH_PH_REPORT);
 });
 
 // ── Static + API ───────────────────────────────────────────
