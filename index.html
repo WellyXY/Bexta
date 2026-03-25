@@ -185,26 +185,65 @@
     .prob-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;background:rgba(239,104,32,.15);color:var(--or);letter-spacing:.04em}
 
     /* ─────────────────────────────────
-       ③ HOW IT WORKS — 3 steps
+       ③ HOW IT WORKS — Cookiy-style accordion
     ───────────────────────────────── */
-    .how{padding:96px 48px;background:var(--cream)}
+    .how{padding:96px 48px;background:#fff}
     .how-inner{max-width:1160px;margin:0 auto}
-    .how-header{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:56px}
-    .how-h{font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-1.2px;line-height:1.15}
+    .how-top{margin-bottom:52px;max-width:600px}
+    .how-h{font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
     .how-h em{font-style:normal;color:var(--or)}
-    .how-sub{font-size:15px;color:var(--ink2);line-height:1.7}
-    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--brd2);border-radius:var(--r);overflow:hidden}
-    .step-card{background:var(--cream);padding:36px 32px;position:relative}
-    .step-card::after{content:'';position:absolute;right:0;top:50%;width:1px;height:40%;background:var(--brd);transform:translateY(-50%)}
-    .step-card:last-child::after{display:none}
-    .step-num{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--or);margin-bottom:16px}
-    .step-icon{width:44px;height:44px;background:var(--ol);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:20px}
-    .step-card h4{font-size:17px;font-weight:700;margin-bottom:8px}
-    .step-card p{font-size:14px;color:var(--ink2);line-height:1.6}
-    .step-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--or);background:var(--ol);padding:4px 10px;border-radius:100px}
-    .step-model-note{margin-top:14px;font-size:12px;color:var(--ink3);line-height:1.6;padding:10px 12px;background:var(--bg2);border-radius:var(--r3);border-left:2px solid var(--or)}
-    .step-model-note strong{color:var(--ink2)}
-    .how-time-badge{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 16px;border-radius:100px;letter-spacing:-.01em}
+    .how-sub{font-size:16px;color:var(--ink2);line-height:1.7}
+    /* Two-column layout */
+    .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+    /* Left: accordion steps */
+    .hsteps{display:flex;flex-direction:column;gap:8px}
+    .hstep{border-radius:20px;padding:22px 24px;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);border:2px solid transparent;background:transparent;user-select:none}
+    .hstep:hover:not(.active){background:var(--bg2)}
+    .hstep.active{background:var(--cream);border-color:var(--brd)}
+    .hstep-head{display:flex;align-items:center;gap:20px}
+    .hstep-num{font-size:48px;font-weight:900;letter-spacing:-2px;line-height:1;flex-shrink:0;transition:all .3s;color:rgba(239,104,32,.35)}
+    .hstep.active .hstep-num{font-size:72px;color:var(--or)}
+    .hstep-title-wrap{display:flex;flex-direction:column;gap:2px}
+    .hstep-label{font-size:15px;font-weight:700;color:var(--ink2);transition:all .3s}
+    .hstep.active .hstep-label{font-size:18px;color:var(--ink)}
+    .hstep-body{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s ease,margin-top .3s ease;margin-top:0}
+    .hstep.active .hstep-body{max-height:200px;opacity:1;margin-top:14px}
+    .hstep-desc{font-size:14px;color:var(--ink2);line-height:1.7;margin-left:92px}
+    .hstep.active .hstep-desc{margin-left:92px}
+    .hstep-tag{display:inline-block;margin-top:10px;margin-left:92px;font-size:11px;font-weight:700;color:var(--or);background:var(--ol);padding:4px 12px;border-radius:100px;letter-spacing:.02em}
+    /* Right: visual panel */
+    .how-panel{position:sticky;top:100px}
+    .hpanel{display:none;background:var(--cream);border-radius:24px;padding:32px;border:1px solid var(--brd);min-height:360px}
+    .hpanel.active{display:block}
+    /* Panel internals */
+    .panel-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:20px}
+    .panel-url-box{background:#fff;border-radius:14px;padding:20px;border:1px solid var(--brd);margin-bottom:16px}
+    .panel-url-label{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+    .panel-url-input{display:flex;align-items:center;gap:10px;background:var(--bg2);border-radius:10px;padding:10px 14px}
+    .panel-url-text{font-size:13px;color:var(--ink2);flex:1;font-family:monospace}
+    .panel-url-btn{font-size:12px;font-weight:700;color:#fff;background:var(--or);padding:6px 14px;border-radius:8px;white-space:nowrap}
+    .panel-spawn{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+    .panel-spawn-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink2)}
+    .panel-spawn-dot{width:6px;height:6px;border-radius:50%;background:var(--or);flex-shrink:0}
+    .panel-persona-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+    .panel-av{position:relative;width:52px;height:52px;border-radius:50%;overflow:visible}
+    .panel-av img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+    .panel-av-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--or);opacity:0;animation:ppulse 2.5s ease-in-out infinite}
+    @keyframes ppulse{0%,100%{opacity:0;transform:scale(1)}50%{opacity:.5;transform:scale(1.1)}}
+    .panel-progress{margin-bottom:14px}
+    .panel-progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-bottom:8px}
+    .panel-progress-track{height:6px;background:var(--bg2);border-radius:100px;overflow:hidden}
+    .panel-progress-fill{height:100%;width:73%;background:linear-gradient(90deg,var(--or),#fbbf24);border-radius:100px;animation:pfill 2s ease forwards}
+    @keyframes pfill{from{width:0}to{width:73%}}
+    .panel-issue{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#fff;border-radius:12px;margin-bottom:10px;border:1px solid var(--brd)}
+    .panel-issue-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+    .panel-issue-dot.p1{background:#ef4444}
+    .panel-issue-dot.p2{background:#f59e0b}
+    .panel-issue-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+    .panel-issue-count{font-size:11px;color:var(--ink3)}
+    .panel-conv{display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(239,104,32,.06);border-radius:12px;border:1px solid rgba(239,104,32,.15);margin-top:14px}
+    .panel-conv-num{font-size:36px;font-weight:900;color:var(--or);letter-spacing:-1px;line-height:1}
+    .panel-conv-label{font-size:13px;color:var(--ink2);line-height:1.5}
 
     /* ─────────────────────────────────
        ④ EXAMPLE REPORT — Star section
@@ -341,7 +380,7 @@
     @media(max-width:960px){
       nav{padding:0 20px}
       nav ul{display:none}
-      .hero,.how-top{padding:90px 20px 60px}
+      .hero{padding:90px 20px 60px}
       .hero-right{display:none}
       .problem,.how,.cta{padding:64px 20px}
       .prob-grid{grid-template-columns:1fr}
@@ -547,7 +586,6 @@
       <!-- Left: accordion steps -->
       <div class="hsteps">
         <div class="hstep active" onclick="selectStep(0)">
-          <div class="hstep-glow"></div>
           <div class="hstep-head">
             <div class="hstep-num">01</div>
             <div class="hstep-label">Paste your URL</div>
@@ -558,7 +596,6 @@
           </div>
         </div>
         <div class="hstep" onclick="selectStep(1)">
-          <div class="hstep-glow"></div>
           <div class="hstep-head">
             <div class="hstep-num">02</div>
             <div class="hstep-label">5,000 AI personas browse</div>
@@ -569,7 +606,6 @@
           </div>
         </div>
         <div class="hstep" onclick="selectStep(2)">
-          <div class="hstep-glow"></div>
           <div class="hstep-head">
             <div class="hstep-num">03</div>
             <div class="hstep-label">Get your report</div>
