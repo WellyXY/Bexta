@@ -278,7 +278,7 @@
     .issue-agents{font-size:11px;color:rgba(255,255,255,.2);white-space:nowrap}
 
     /* Conversion meter */
-    .conversion{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:20px 24px;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+    .conversion{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
     .conv-left{}
     .conv-label{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:12px}
     .conv-bar{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;width:100%}
@@ -634,16 +634,17 @@
     </div>
   </div>
 
-  <!-- Conversion meter -->
-  <div class="conversion" style="margin-top:2px;border-radius:0 0 var(--r) var(--r)">
-    <div class="conv-left">
-      <div class="conv-label">Conversion — completed signup & created first app</div>
-      <div class="conv-bar"><div class="conv-fill" id="convFill"></div></div>
-      <div class="conv-sub">18 out of 100 sampled agent clients completed the key action · 2 critical blockers identified</div>
-    </div>
-    <div class="conv-right">
-      <div class="conv-num"><em>18</em>/100</div>
-      <div class="conv-num-sub">conversion rate</div>
+  <div class="report-card" style="padding-top:0">
+    <div class="conversion">
+      <div class="conv-left">
+        <div class="conv-label">Conversion — completed signup &amp; created first app</div>
+        <div class="conv-bar"><div class="conv-fill" id="convFill"></div></div>
+        <div class="conv-sub">18 out of 100 sampled agent clients completed the key action · 2 critical blockers identified</div>
+      </div>
+      <div class="conv-right">
+        <div class="conv-num"><em>18</em>/100</div>
+        <div class="conv-num-sub">conversion rate</div>
+      </div>
     </div>
   </div>
 
