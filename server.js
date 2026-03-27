@@ -933,6 +933,9 @@ app.get('/pricing', (req, res) => res.sendFile(path.join(__dirname, 'pricing.htm
 app.get('/impressum', (req, res) => res.sendFile(path.join(__dirname, 'impressum.html')));
 app.get('/privacy', (req, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
 app.get('/terms', (req, res) => res.sendFile(path.join(__dirname, 'terms.html')));
+app.get('/blog', (req, res) => res.sendFile(path.join(__dirname, 'blog', 'index.html')));
+app.get('/blog/:slug', (req, res) => { const f = path.join(__dirname, 'blog', req.params.slug + '.html'); res.sendFile(f); });
+
 
 app.use(express.static(__dirname, {
   maxAge: '7d',
