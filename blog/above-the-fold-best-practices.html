@@ -78,7 +78,7 @@
     <li><a href="/blog">Blog</a></li>
     <li><a href="/about">About</a></li>
   </ul>
-  <a class="btn-nav" href="/" onclick="event.preventDefault();document.querySelector&&document.querySelector('body').dispatchEvent(new CustomEvent('show-modal'))">Try Free →</a>
+  <a class="btn-nav" href="/" onclick="event.preventDefault();gtag('event','cta_click',{button:'Try Free Nav',location:'nav'});document.querySelector&&document.querySelector('body').dispatchEvent(new CustomEvent('show-modal'))">Try Free →</a>
 </nav>
 <main>
 <div class="post-wrap">
@@ -115,7 +115,7 @@
   <div class="cta-box">
     <h2>Stop Guessing Why Users Leave</h2>
     <p>Racoonn runs 5,000 AI persona agents on your landing page and tells you exactly what's broken — in 28 minutes, not 3 weeks.</p>
-    <a class="btn-cta" href="/">Test My Landing Page Free →</a>
+    <a class="btn-cta" href="/" onclick="gtag('event','cta_click',{button:'Test My Landing Page Free',location:'blog_cta_box'})">Test My Landing Page Free →</a>
   </div>
   <div class="faq-section">
     <h2>Frequently Asked Questions</h2>

@@ -56,7 +56,7 @@
     <li><a href="/blog">Blog</a></li>
     <li><a href="/about">About</a></li>
   </ul>
-  <a class="btn-nav" href="/" onclick="event.preventDefault();document.querySelector&&document.querySelector('body').dispatchEvent(new CustomEvent('show-modal'))">Try Free →</a>
+  <a class="btn-nav" href="/" onclick="event.preventDefault();gtag('event','cta_click',{button:'Try Free Nav',location:'nav'});document.querySelector&&document.querySelector('body').dispatchEvent(new CustomEvent('show-modal'))">Try Free →</a>
 </nav>
 <main>
   <div class="hero">
