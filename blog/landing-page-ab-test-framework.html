@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page A/B Testing Framework: Test What Matters Most</title>
+<meta name="description" content="A practical A/B testing framework for landing pages. What to test first, how to prioritize experiments, and how to interpret results correctly.">
+<link rel="canonical" href="https://racoonn.me/blog/landing-page-ab-test-framework">
+<meta property="og:title" content="Landing Page A/B Testing Framework: Test What Matters Most">
+<meta property="og:description" content="A practical A/B testing framework for landing pages. What to test first, how to prioritize experiments, and how to interpret results correctly.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://racoonn.me/blog/landing-page-ab-test-framework">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Landing Page A/B Testing: How to Test What Actually Matters",
+  "description": "A practical A/B testing framework for landing pages. What to test first, how to prioritize experiments, and how to interpret results correctly.",
+  "url": "https://racoonn.me/blog/landing-page-ab-test-framework",
+  "publisher": {"@type": "Organization", "name": "Racoonn"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://racoonn.me/blog/landing-page-ab-test-framework"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What should I A/B test first on my landing page?", "acceptedAnswer": {"@type": "Answer", "text": "Your headline, because it's the element with the most traffic and the most potential impact. A 20% improvement in headline clarity can double your conversion rate more reliably than 20 minor button color tests."}},
+    {"@type": "Question", "name": "How long should an A/B test run?", "acceptedAnswer": {"@type": "Answer", "text": "Until you reach statistical significance — not until you like the result. Calculate sample size needed before starting. At typical SaaS conversion rates, tests often need 2-6 weeks. Never stop early based on directional trends."}},
+    {"@type": "Question", "name": "Can I A/B test without a dedicated tool?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Create two different page URLs and split traffic manually using UTM parameters and traffic source rules. Measure conversions separately in GA4. It's more work but reveals the same information."}}
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZG09N9S3C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HZG09N9S3C');
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;line-height:1.6;background:#fff}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:100}
+  nav a{text-decoration:none;color:#1a1a1a;font-weight:600;font-size:18px}
+  .btn-nav{background:#6c47ff;color:#fff!important;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600}
+  .container{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+  h1{font-size:2rem;font-weight:800;line-height:1.2;margin-bottom:16px;color:#111}
+  .intro{font-size:1.1rem;color:#444;margin-bottom:40px;border-left:4px solid #6c47ff;padding-left:16px}
+  h2{font-size:1.3rem;font-weight:700;margin:36px 0 12px;color:#222}
+  p{margin-bottom:16px;color:#333}
+  .cta-box{background:#f3f0ff;border:2px solid #6c47ff;border-radius:12px;padding:28px;margin:48px 0;text-align:center}
+  .cta-box h3{font-size:1.2rem;margin-bottom:8px;color:#6c47ff}
+  .cta-box p{color:#444;margin-bottom:20px;font-size:0.97rem}
+  .btn-cta{display:inline-block;background:#6c47ff;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:1rem}
+  .faq{margin-top:48px}
+  .faq h2{margin-bottom:20px}
+  .faq-item{border:1px solid #e5e5e5;border-radius:8px;padding:20px;margin-bottom:12px}
+  .faq-item h3{font-size:1rem;font-weight:600;margin-bottom:8px;color:#222}
+  .faq-item p{color:#555;font-size:0.95rem;margin:0}
+  footer{text-align:center;padding:32px;color:#999;font-size:0.85rem;border-top:1px solid #eee}
+  @media(max-width:600px){h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">Racoonn</a>
+  <a class="btn-nav" href="/" onclick="gtag('event','cta_click',{button:'Try Free Nav',location:'nav',transport_type:'beacon'})">Try Free</a>
+</nav>
+<div class="container">
+  <article>
+    <h1>Landing Page A/B Testing: How to Test What Actually Matters</h1>
+    <p class="intro">Most teams run random A/B tests and get random results. A systematic framework helps you test the changes that move the needle most — so you're not spending weeks learning that changing button text from "Submit" to "Get Started" didn't matter.</p>
+    <h2>Test in Order of Expected Impact</h2>
+    <p>Highest impact first: (1) Headline — affects everyone who visits. (2) CTA button text + placement. (3) Hero image or video. (4) Offer (free trial vs. demo vs. freemium). (5) Social proof type and placement. (6) Form fields. (7) Page length. (8) Color scheme. (9) Minor copy changes. Testing in this order means your earliest tests produce the biggest lifts.</p>
+    <h2>How to Know When a Test Has Enough Data</h2>
+    <p>Never stop a test because it's "winning" or "losing" after a few days. Statistical significance at 95% confidence with adequate sample size means results are reliable. Use a free sample size calculator before starting any test. Most landing pages need 1,000-2,000 conversions per variant for reliable results.</p>
+    <div class="cta-box">
+      <h3>See How Your Landing Page Performs</h3>
+      <p>Racoonn shows you real visitor behavior — heatmaps, session recordings, and conversion insights — so you know exactly what to fix.</p>
+      <a class="btn-cta" href="/" onclick="gtag('event','cta_click',{button:'Test My Landing Page Free',location:'blog_cta_box',transport_type:'beacon'})">Test My Landing Page Free →</a>
+    </div>
+    <h2>Learn From Behavior Data Before Testing</h2>
+    <p>The best A/B tests come from qualitative research. Before testing, watch session recordings and heatmaps to form hypotheses. "Users are scrolling past our CTA without clicking" is a better test hypothesis than "let's try a red button." Behavior data before testing → better hypotheses → bigger lifts.</p>
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item"><h3>What should I A/B test first on my landing page?</h3><p>Your headline, because it's the element with the most traffic and the most potential impact. A 20% improvement in headline clarity can double your conversion rate more reliably than 20 minor button color tests.</p></div>
+      <div class="faq-item"><h3>How long should an A/B test run?</h3><p>Until you reach statistical significance — not until you like the result. Calculate sample size needed before starting. At typical SaaS conversion rates, tests often need 2-6 weeks. Never stop early based on directional trends.</p></div>
+      <div class="faq-item"><h3>Can I A/B test without a dedicated tool?</h3><p>Yes. Create two different page URLs and split traffic manually using UTM parameters and traffic source rules. Measure conversions separately in GA4. It's more work but reveals the same information.</p></div>
+    </div>
+  </article>
+</div>
+<footer>© 2026 Racoonn · <a href="/privacy" style="color:#999">Privacy</a> · <a href="/terms" style="color:#999">Terms</a></footer>
+</body>
+</html>

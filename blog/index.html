@@ -1,43 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Racoonn Blog — Landing Page Optimization, UX & Conversion Tips</title>
-  <meta name="description" content="Practical guides on landing page optimization, user testing, conversion rate, and UX for SaaS founders and indie hackers."/>
-  <link rel="canonical" href="https://racoonn.me/blog"/>
-  <meta name="robots" content="index, follow"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#F7F4EF;--bg2:#F0EBE3;--ink:#18140F;--ink2:#5C5650;--ink3:#6E6760;--or:#EF6820;--brd:rgba(24,20,15,.09);--r:16px}
-    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(247,244,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
-    .logo{font-weight:900;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:7px;text-decoration:none}
-    .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--or)}
-    nav ul{list-style:none;display:flex;gap:28px}
-    nav ul a{font-size:15px;font-weight:600;color:var(--ink2);text-decoration:none;transition:color .15s}
-    nav ul a:hover{color:var(--ink)}
-    .btn-nav{background:var(--or);color:#fff;font-size:15px;font-weight:700;padding:12px 24px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
-    .hero{padding:120px 48px 64px;text-align:center}
-    .hero-eye{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or);margin-bottom:16px}
-    .hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-.03em;margin-bottom:16px}
-    .hero p{font-size:18px;color:var(--ink2);max-width:560px;margin:0 auto}
-    .grid{max-width:1100px;margin:0 auto;padding:0 48px 100px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
-    .card{background:#fff;border-radius:var(--r);padding:28px;border:1px solid var(--brd);text-decoration:none;color:var(--ink);transition:box-shadow .2s,transform .15s;display:flex;flex-direction:column;gap:10px}
-    .card:hover{box-shadow:0 8px 40px rgba(0,0,0,.1);transform:translateY(-2px)}
-    .card-kw{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--or)}
-    .card h2{font-size:17px;font-weight:800;line-height:1.3;letter-spacing:-.01em}
-    .card p{font-size:14px;color:var(--ink2);line-height:1.6;flex:1}
-    .read-more{font-size:13px;font-weight:700;color:var(--or)}
-    footer{background:var(--bg2);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--brd)}
-    .footer-logo{font-weight:900;font-size:15px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px}
-    .footer-links{display:flex;gap:24px}
-    .footer-links a{font-size:13px;color:var(--ink3);text-decoration:none}
-    @media(max-width:640px){nav{padding:0 20px}nav ul{display:none}.hero{padding:100px 20px 48px}.grid{padding:0 20px 60px}footer{flex-direction:column;gap:20px;padding:32px 20px;text-align:center}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversion & Landing Page Blog — Racoonn</title>
+<meta name="description" content="Expert guides on landing page optimization, conversion rate optimization, A/B testing, heatmaps, and user behavior analytics. Improve your landing page conversions.">
+<meta property="og:title" content="Conversion & Landing Page Blog — Racoonn">
+<meta property="og:description" content="Expert guides on landing page optimization, conversion rate optimization, A/B testing, heatmaps, and user behavior analytics.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://racoonn.me/blog">
+<link rel="canonical" href="https://racoonn.me/blog">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZG09N9S3C"></script>
 <script>
@@ -46,409 +18,140 @@
   gtag('js', new Date());
   gtag('config', 'G-HZG09N9S3C');
 </script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;line-height:1.6;background:#fafafa}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid #eee;background:#fff;position:sticky;top:0;z-index:100}
+  nav a{text-decoration:none;color:#1a1a1a;font-weight:600;font-size:18px}
+  .btn-nav{background:#6c47ff;color:#fff!important;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600}
+  .hero{background:#fff;padding:60px 24px 40px;text-align:center;border-bottom:1px solid #eee}
+  .hero h1{font-size:2.2rem;font-weight:800;margin-bottom:12px;color:#111}
+  .hero p{color:#555;font-size:1.1rem;max-width:560px;margin:0 auto}
+  .container{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+  .card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px;text-decoration:none;color:#1a1a1a;transition:box-shadow .2s,transform .2s;display:block}
+  .card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1);transform:translateY(-2px)}
+  .card-title{font-weight:700;font-size:0.97rem;line-height:1.4;margin-bottom:8px;color:#111}
+  .card-meta{font-size:0.85rem;color:#666;line-height:1.4}
+  .count{text-align:center;color:#888;font-size:0.9rem;margin-bottom:24px}
+  footer{text-align:center;padding:32px;color:#999;font-size:0.85rem;border-top:1px solid #eee}
+  @media(max-width:600px){.hero h1{font-size:1.5rem}.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-<nav aria-label="Main navigation">
-  <a class="logo" href="/"><span class="logo-dot"></span>Racoonn</a>
-  <ul>
-    <li><a href="/#how">Features</a></li>
-    <li><a href="/pricing">Pricing</a></li>
-    <li><a href="/blog">Blog</a></li>
-    <li><a href="/about">About</a></li>
-  </ul>
-  <a class="btn-nav" href="/" onclick="event.preventDefault();gtag('event','cta_click',{button:'Try Free Nav',location:'nav',transport_type:'beacon'});document.querySelector&&document.querySelector('body').dispatchEvent(new CustomEvent('show-modal'))">Try Free →</a>
+<nav>
+  <a href="/">Racoonn</a>
+  <a class="btn-nav" href="/" onclick="gtag('event','cta_click',{button:'Try Free Nav',location:'nav',transport_type:'beacon'})">Try Free</a>
 </nav>
-<main>
-  <div class="hero">
-    <div class="hero-eye">Racoonn Blog</div>
-    <h1>Landing Page Tips That<br>Actually Improve Conversions</h1>
-    <p>Practical guides on conversion optimization, user testing, and UX for SaaS founders and indie hackers.</p>
-  </div>
+<div class="hero">
+  <h1>Landing Page & Conversion Blog</h1>
+  <p>Expert guides on CRO, A/B testing, heatmaps, and user behavior analytics to help you convert more visitors into customers.</p>
+</div>
+<div class="container">
+  <p class="count">99 articles</p>
   <div class="grid">
-  <a class="card" href="/blog/why-visitors-dont-sign-up-free-trial">
-    <div class="card-kw">why people don't sign up free trial saas</div>
-    <h2>Why Visitors Don't Sign Up to Your Free Trial (And How to Fix It)</h2>
-    <p>Discover the real reasons visitors land on your free trial page but never sign up — and the exact fixes that move them from curious to converted.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/why-users-abandon-checkout">
-    <div class="card-kw">why users abandon checkout page</div>
-    <h2>Why Users Leave Checkout Pages Without Buying</h2>
-    <p>The top reasons visitors abandon checkout — and data-backed fixes to recover lost revenue without redesigning your entire funnel.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/high-bounce-rate-homepage-fix">
-    <div class="card-kw">high bounce rate homepage reasons fix</div>
-    <h2>Why Your Homepage Has a High Bounce Rate (And How to Fix It)</h2>
-    <p>A high homepage bounce rate means visitors aren't finding what they expected. Here's how to diagnose the real cause and fix it systematically.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/pricing-page-high-bounce-rate">
-    <div class="card-kw">pricing page high bounce rate saas</div>
-    <h2>Why Users Leave After Reading Your Pricing Page</h2>
-    <p>Your pricing page gets traffic but visitors keep leaving. Here are the real reasons pricing pages fail to convert — and how to fix each one.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/mobile-bounce-rate-higher-than-desktop">
-    <div class="card-kw">mobile bounce rate higher than desktop reasons</div>
-    <h2>Why Mobile Users Bounce More Than Desktop (And How to Close the Gap)</h2>
-    <p>Mobile users bounce at higher rates than desktop — here's exactly why, and the specific optimizations that close the conversion gap.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/why-visitors-dont-return-website">
-    <div class="card-kw">why visitors don't return to website</div>
-    <h2>Why First-Time Visitors Never Come Back to Your Website</h2>
-    <p>Most websites convert less than 2% of first-time visitors. Here's why they don't return — and how to build a site that earns repeat visits.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/cta-clicks-but-no-conversions">
-    <div class="card-kw">cta clicks but no conversions saas</div>
-    <h2>Why Users Click Your CTA But Don't Convert</h2>
-    <p>When people click your CTA but abandon the next page, the problem isn't the button — it's what comes after. Here's how to fix the post-click experience.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/about-page-conversion-rate">
-    <div class="card-kw">about page low conversion rate website</div>
-    <h2>Why Your About Page Is Killing Conversions (And How to Fix It)</h2>
-    <p>Most About pages are wasted opportunities. Here's how to transform your About page into a trust-building conversion tool that actually moves visitors forward.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/above-the-fold-scroll-depth">
-    <div class="card-kw">above the fold scroll depth bounce</div>
-    <h2>Why Users Don't Scroll Past Your Hero Section</h2>
-    <p>If visitors aren't scrolling past your hero, your most important content is invisible. Here's how to diagnose and fix hero section scroll depth problems.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/demo-request-form-abandonment">
-    <div class="card-kw">demo request form abandonment rate b2b</div>
-    <h2>Why Demo Request Forms Get Abandoned (And How to Fix Them)</h2>
-    <p>High demo request form abandonment is a common B2B problem. Here are the exact reasons visitors bail on demo forms — and how to recover them.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/saas-onboarding-drop-off-reasons">
-    <div class="card-kw">saas onboarding drop off reasons activation</div>
-    <h2>Why Users Drop Off During SaaS Onboarding</h2>
-    <p>SaaS onboarding drop-off kills activation rates. Here are the most common reasons users abandon onboarding flows — and how to fix each one.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/hotjar-alternatives-indie-hackers">
-    <div class="card-kw">hotjar alternatives indie hackers solo founders</div>
-    <h2>Hotjar Alternatives for Indie Hackers: Tools That Don't Break the Budget</h2>
-    <p>Hotjar's pricing doesn't make sense for solo founders and indie hackers. Here are the best Hotjar alternatives that give you real insights without the cost.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/free-hotjar-alternatives-2026">
-    <div class="card-kw">free hotjar alternatives 2026</div>
-    <h2>Best Free Hotjar Alternatives in 2026</h2>
-    <p>A complete comparison of the best free Hotjar alternatives available in 2026 — including session recording, heatmaps, and behavioral analytics tools.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/hotjar-vs-microsoft-clarity">
-    <div class="card-kw">hotjar vs microsoft clarity comparison 2026</div>
-    <h2>Hotjar vs Microsoft Clarity: Which Should You Use in 2026?</h2>
-    <p>A head-to-head comparison of Hotjar and Microsoft Clarity — features, pricing, privacy, and which tool is right for your product.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/fullstory-alternatives-small-teams">
-    <div class="card-kw">fullstory alternatives small teams startups</div>
-    <h2>FullStory Alternatives for Small Teams and Startups</h2>
-    <p>FullStory is powerful but expensive for small teams. Here are the best FullStory alternatives that give you session analytics without enterprise pricing.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/crazy-egg-vs-hotjar">
-    <div class="card-kw">crazy egg vs hotjar comparison</div>
-    <h2>Crazy Egg vs Hotjar: Which Is Better for Your Website?</h2>
-    <p>Crazy Egg and Hotjar both offer heatmaps and session recordings. Here's an honest comparison to help you choose the right tool for your specific needs.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/usertesting-alternatives-cheap">
-    <div class="card-kw">usertesting alternatives cheap affordable</div>
-    <h2>UserTesting.com Alternatives That Don't Cost $30,000 Per Year</h2>
-    <p>UserTesting.com costs $30,000+ per year. Here are the best alternatives for getting user feedback without the enterprise price tag.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/heap-analytics-vs-mixpanel">
-    <div class="card-kw">heap analytics vs mixpanel early stage startup</div>
-    <h2>Heap vs Mixpanel for Early-Stage Startups: Which Should You Use?</h2>
-    <p>Heap and Mixpanel are both powerful product analytics tools. For early-stage startups, here's which one is right for your stage and team.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/best-session-recording-tools-saas">
-    <div class="card-kw">best session recording tools saas 2026</div>
-    <h2>Session Recording Tools for SaaS: The Complete 2026 Ranking</h2>
-    <p>A ranked comparison of the best session recording tools for SaaS products in 2026 — covering features, pricing, and which teams each tool is best for.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/best-heatmap-tool-landing-page">
-    <div class="card-kw">best heatmap tool landing page 2026</div>
-    <h2>Best Heatmap Tools for Landing Pages: A 2026 Comparison</h2>
-    <p>Find the best heatmap tool for your landing pages in 2026. We compare click maps, scroll maps, and move maps across the top tools — free and paid.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/ai-user-testing-tools-2026">
-    <div class="card-kw">ai user testing tools 2026 guide</div>
-    <h2>AI User Testing Tools: The Complete Guide for 2026</h2>
-    <p>AI user testing tools simulate how real users experience your product. This guide covers the best options in 2026, what they do, and when to use them.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/user-research-tools-cheap-bootstrap">
-    <div class="card-kw">cheap user research tools bootstrapped founders</div>
-    <h2>Cheap User Research Tools for Bootstrapped Founders</h2>
-    <p>You don't need a $30K research budget to understand your users. Here are the best cheap and free user research tools for bootstrapped founders.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/google-analytics-vs-hotjar">
-    <div class="card-kw">google analytics vs hotjar difference</div>
-    <h2>Google Analytics vs Hotjar: What's the Difference and Do You Need Both?</h2>
-    <p>Google Analytics and Hotjar answer different questions about your website. Here's what each does, where they overlap, and whether you need both.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/landing-page-conversion-rate-benchmark">
-    <div class="card-kw">landing page conversion rate benchmark industry 2026</div>
-    <h2>Landing Page Conversion Rate Benchmarks by Industry (2026)</h2>
-    <p>What's a good landing page conversion rate? This guide covers conversion rate benchmarks across industries and what factors drive above-average performance.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/landing-page-hero-section-best-practices">
-    <div class="card-kw">landing page hero section best practices writing</div>
-    <h2>How to Write a Landing Page Hero That Converts</h2>
-    <p>Your hero section determines whether visitors stay or leave. Here's how to write a high-converting landing page hero — with real examples and formulas.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/above-the-fold-best-practices">
-    <div class="card-kw">above the fold website best practices</div>
-    <h2>Above the Fold: What Belongs in Your First Screen</h2>
-    <p>The content above the fold determines whether visitors stay. Here's exactly what should be in your first screen — and what should stay below.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/best-saas-landing-pages-examples">
-    <div class="card-kw">best saas landing pages examples 2026</div>
-    <h2>The Best SaaS Landing Pages of 2026 and What Makes Them Work</h2>
-    <p>What separates the best SaaS landing pages from average ones? We break down the patterns behind high-converting SaaS pages — with specific examples.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/landing-page-ab-test-what-to-test">
-    <div class="card-kw">landing page ab test what to test first</div>
-    <h2>Landing Page A/B Testing: What to Test First for Maximum Impact</h2>
-    <p>Not all A/B tests move the needle equally. Here's the prioritized order of what to test on your landing page to maximize conversion rate improvements.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/reduce-landing-page-bounce-rate">
-    <div class="card-kw">reduce landing page bounce rate strategies</div>
-    <h2>How to Reduce Landing Page Bounce Rate: A Step-by-Step Guide</h2>
-    <p>A high landing page bounce rate means visitors aren't finding what they expected. Here's a systematic approach to diagnosing and reducing bounce rate.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/landing-page-copy-mistakes">
-    <div class="card-kw">landing page copy mistakes kill conversions</div>
-    <h2>Landing Page Copy Mistakes That Kill Conversions</h2>
-    <p>Bad copy kills good products. Here are the most common landing page copy mistakes — and how to fix each one to recover lost conversions.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/social-proof-landing-page">
-    <div class="card-kw">social proof landing page what works</div>
-    <h2>Social Proof on Landing Pages: What Actually Works in 2026</h2>
-    <p>Not all social proof converts equally. Here's the evidence on which types of social proof move the needle on landing pages — and which are just noise.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/how-long-should-landing-page-be">
-    <div class="card-kw">how long should a landing page be</div>
-    <h2>How Long Should Your Landing Page Be? The Data-Backed Answer</h2>
-    <p>Short or long landing page? The right answer depends on your offer, traffic, and audience. Here's the data on landing page length and conversion rate.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/mobile-landing-page-optimization">
-    <div class="card-kw">mobile landing page optimization guide</div>
-    <h2>Mobile Landing Page Optimization: A Complete Guide</h2>
-    <p>Mobile converts at 3x lower rates than desktop. This complete guide covers every optimization to close the mobile conversion gap on your landing pages.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/page-speed-effect-on-conversion-rate">
-    <div class="card-kw">page speed effect on conversion rate data</div>
-    <h2>Page Speed and Conversion Rate: The Data Behind the Relationship</h2>
-    <p>How much does page speed actually affect conversion rate? The data is clear — here's what every 100ms improvement is worth, and how to get there.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/saas-pricing-page-best-practices">
-    <div class="card-kw">saas pricing page best practices examples</div>
-    <h2>How to Write a Pricing Page That Converts (With Examples)</h2>
-    <p>Your pricing page is where decisions get made. Here are the proven best practices for SaaS pricing pages that convert visitors into customers.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/b2b-vs-b2c-landing-page-differences">
-    <div class="card-kw">b2b vs b2c landing page key differences</div>
-    <h2>B2B Landing Page vs B2C: Key Differences That Change Everything</h2>
-    <p>B2B and B2C landing pages need fundamentally different approaches. Here's how to design and write for each audience — with key differences explained.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/test-landing-page-without-users">
-    <div class="card-kw">how to test landing page without real users</div>
-    <h2>How to Test Your Landing Page Without Real Users</h2>
-    <p>You don't need a user testing panel to get insights on your landing page. Here are effective methods to test without recruiting real users.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/saas-homepage-vs-landing-page">
-    <div class="card-kw">saas homepage vs dedicated landing page when to use</div>
-    <h2>SaaS Homepage vs Landing Page: Which Do You Need?</h2>
-    <p>Should you send paid traffic to your homepage or a dedicated landing page? Here's how to decide — and when each approach wins.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/best-cta-button-text-examples">
-    <div class="card-kw">best cta button text examples convert</div>
-    <h2>CTA Button Text That Actually Converts: Examples and Formulas</h2>
-    <p>'Get Started' doesn't convert. Here are the CTA button text formulas and real examples that consistently outperform generic alternatives.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/where-to-place-cta-landing-page">
-    <div class="card-kw">where to place cta on landing page</div>
-    <h2>Where to Place Your CTA on a Landing Page for Maximum Conversions</h2>
-    <p>CTA placement affects conversion rate more than most design choices. Here's where to put your calls-to-action based on page length, audience, and intent.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/free-trial-vs-demo-cta-saas">
-    <div class="card-kw">free trial vs demo cta which converts better saas</div>
-    <h2>Free Trial vs Demo CTA: Which Converts Better for SaaS?</h2>
-    <p>Should your primary CTA be 'Start Free Trial' or 'Book a Demo'? The answer depends on your product and audience. Here's the data and the decision framework.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/microcopy-reduce-signup-friction">
-    <div class="card-kw">microcopy reduce signup friction website</div>
-    <h2>How to Write Microcopy That Reduces Sign-Up Friction</h2>
-    <p>Microcopy — the small text around buttons and forms — can significantly reduce friction. Here's how to write microcopy that answers objections and drives conversions.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/exit-intent-popup-conversion-rate">
-    <div class="card-kw">exit intent popup conversion rate effective</div>
-    <h2>Exit Intent Popups: Do They Work in 2026?</h2>
-    <p>Exit intent popups are either your biggest conversion recovery tool or an annoyance that damages brand perception. Here's the data on when they work.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/cta-button-color-conversion">
-    <div class="card-kw">cta button color psychology conversion rate</div>
-    <h2>CTA Color Psychology: Does Button Color Actually Affect Conversions?</h2>
-    <p>Does CTA button color really matter for conversions? Here's what the research actually shows — and what matters far more than color.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/user-research-zero-budget">
-    <div class="card-kw">user research zero budget startup</div>
-    <h2>How to Do User Research on a Zero Budget</h2>
-    <p>You don't need a research budget to understand your users. Here are 6 methods to run effective user research for free — starting today.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/synthetic-users-vs-real-users">
-    <div class="card-kw">synthetic users vs real users testing pros cons</div>
-    <h2>Synthetic Users vs Real Users: Pros, Cons, and When to Use Each</h2>
-    <p>AI synthetic users and real user testing each have clear strengths. Here's when to use each — and how to combine them for the best research outcomes.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/landing-page-audit-checklist">
-    <div class="card-kw">landing page audit checklist 30 minutes</div>
-    <h2>How to Run a Landing Page Audit in 30 Minutes</h2>
-    <p>A systematic landing page audit finds conversion problems you can't see from the inside. Here's a 30-minute checklist covering every critical element.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/how-to-read-heatmap-data">
-    <div class="card-kw">how to read heatmap data landing page insights</div>
-    <h2>How to Interpret Heatmap Data for Landing Pages</h2>
-    <p>Heatmaps are only useful if you know how to interpret them. Here's how to read click maps, scroll maps, and move maps to find actionable landing page insights.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/session-recording-analysis-tips">
-    <div class="card-kw">session recording analysis tips insights</div>
-    <h2>What Session Recordings Tell You (And What They Don't)</h2>
-    <p>Session recordings are powerful but easy to misuse. Here's how to analyze session recordings effectively — and what they can't tell you.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/user-interview-alternatives">
-    <div class="card-kw">user interview alternatives early stage startup</div>
-    <h2>User Interview Alternatives for Early-Stage Startups</h2>
-    <p>User interviews are valuable but hard to schedule. Here are the best alternatives to traditional user interviews for early-stage teams.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/actionable-product-page-feedback">
-    <div class="card-kw">actionable feedback product page how to get</div>
-    <h2>How to Get Actionable Feedback on Your Product Page</h2>
-    <p>Generic feedback doesn't help you improve. Here's how to collect specific, actionable feedback on your product page that leads directly to improvements.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/saas-landing-page-conversion-rate-average">
-    <div class="card-kw">saas landing page conversion rate average benchmark</div>
-    <h2>SaaS Landing Page Conversion Rate: What's Actually Good?</h2>
-    <p>What conversion rate should your SaaS landing page achieve? Here are real benchmarks by traffic source, offer type, and product stage.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/saas-waitlist-landing-page">
-    <div class="card-kw">saas waitlist landing page how to build convert</div>
-    <h2>How to Build a SaaS Waitlist Landing Page That Converts</h2>
-    <p>A well-built waitlist page builds anticipation and collects qualified leads before you launch. Here's how to create a waitlist landing page that converts.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/product-led-growth-landing-page">
-    <div class="card-kw">product led growth landing page strategy</div>
-    <h2>Product-Led Growth: Landing Page Strategies That Convert</h2>
-    <p>PLG companies need landing pages that convert to free trials — not just demos. Here's how to build a product-led growth landing page strategy.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/product-hunt-launch-page-tips">
-    <div class="card-kw">product hunt launch page tips landing page</div>
-    <h2>How to Write a Product Hunt Launch Page That Converts</h2>
-    <p>Your Product Hunt launch page needs to convert PH visitors in seconds. Here's how to write the copy and design the page for launch day traffic.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/indie-hacker-first-100-users">
-    <div class="card-kw">indie hacker first 100 users strategies</div>
-    <h2>How Indie Hackers Get Their First 100 Users</h2>
-    <p>Getting your first 100 users as an indie hacker is the hardest part. Here are the strategies that consistently work — without a marketing budget.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/validate-product-idea-landing-page">
-    <div class="card-kw">validate product idea landing page before building</div>
-    <h2>How to Validate a Product Idea with a Landing Page</h2>
-    <p>Build a landing page before you build the product — it's the fastest way to validate demand. Here's a step-by-step guide to idea validation with a landing page.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/minimum-viable-landing-page">
-    <div class="card-kw">minimum viable landing page what you need</div>
-    <h2>Minimum Viable Landing Page: What You Actually Need</h2>
-    <p>What's the minimum you need on a landing page to start converting visitors? Here's the MVLP — stripped to what actually matters.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/newsletter-landing-page-conversion">
-    <div class="card-kw">newsletter landing page conversion optimization</div>
-    <h2>Newsletter Landing Page: How to Convert Visitors to Subscribers</h2>
-    <p>Your newsletter landing page is the top of your subscriber funnel. Here's how to design and write it to maximize subscriber conversion rate.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/portfolio-site-conversion-rate">
-    <div class="card-kw">portfolio site conversion rate get more inquiries</div>
-    <h2>How to Design a Portfolio Site That Gets Inquiries</h2>
-    <p>Most portfolio sites get views but no inquiries. Here's how to design and optimize a portfolio landing page that converts visitors into clients.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/ecommerce-product-page-optimization">
-    <div class="card-kw">ecommerce product page optimization guide</div>
-    <h2>E-commerce Product Page Optimization: A Complete Guide</h2>
-    <p>Product page optimization is the highest-ROI e-commerce investment. Here's a complete guide to the elements that increase add-to-cart and purchase rates.</p>
-    <span class="read-more">Read article →</span>
-  </a>
-  <a class="card" href="/blog/thank-you-page-optimization">
-    <div class="card-kw">thank you page optimization after conversion</div>
-    <h2>Thank You Page Optimization: Don't Waste the Conversion</h2>
-    <p>Your thank you page is visited by your most engaged users — right after they convert. Here's how to optimize it to increase LTV and referrals.</p>
-    <span class="read-more">Read article →</span>
-  </a>
+<a class="card" href="/blog/about-page-conversion-rate"><div class="card-title">Why Your About Page Is Killing Conversions (And How to Fix It)</div><div class="card-meta">Most About pages are wasted opportunities. Here's how to transform your About page into a trust-buil...</div></a>
+<a class="card" href="/blog/above-the-fold-best-practices"><div class="card-title">Above the Fold: What Belongs in Your First Screen</div><div class="card-meta">The content above the fold determines whether visitors stay. Here's exactly what should be in your f...</div></a>
+<a class="card" href="/blog/above-the-fold-content-strategy"><div class="card-title">Above the Fold: What Actually Belongs in Your Hero Section</div><div class="card-meta">What should appear above the fold on your landing page? A data-backed guide to hero section content,...</div></a>
+<a class="card" href="/blog/above-the-fold-scroll-depth"><div class="card-title">Why Users Don't Scroll Past Your Hero Section</div><div class="card-meta">If visitors aren't scrolling past your hero, your most important content is invisible. Here's how to...</div></a>
+<a class="card" href="/blog/actionable-product-page-feedback"><div class="card-title">How to Get Actionable Feedback on Your Product Page</div><div class="card-meta">Generic feedback doesn't help you improve. Here's how to collect specific, actionable feedback on yo...</div></a>
+<a class="card" href="/blog/ai-user-testing-tools-2026"><div class="card-title">AI User Testing Tools: The Complete Guide for 2026</div><div class="card-meta">AI user testing tools simulate how real users experience your product. This guide covers the best op...</div></a>
+<a class="card" href="/blog/b2b-vs-b2c-landing-page-differences"><div class="card-title">B2B Landing Page vs B2C: Key Differences That Change Everything</div><div class="card-meta">B2B and B2C landing pages need fundamentally different approaches. Here's how to design and write fo...</div></a>
+<a class="card" href="/blog/best-cta-button-text-examples"><div class="card-title">CTA Button Text That Actually Converts: Examples and Formulas</div><div class="card-meta">'Get Started' doesn't convert. Here are the CTA button text formulas and real examples that consiste...</div></a>
+<a class="card" href="/blog/best-heatmap-tool-landing-page"><div class="card-title">Best Heatmap Tools for Landing Pages: A 2026 Comparison</div><div class="card-meta">Find the best heatmap tool for your landing pages in 2026. We compare click maps, scroll maps, and m...</div></a>
+<a class="card" href="/blog/best-saas-landing-pages-examples"><div class="card-title">The Best SaaS Landing Pages of 2026 and What Makes Them Work</div><div class="card-meta">What separates the best SaaS landing pages from average ones? We break down the patterns behind high...</div></a>
+<a class="card" href="/blog/best-session-recording-tools-saas"><div class="card-title">Session Recording Tools for SaaS: The Complete 2026 Ranking</div><div class="card-meta">A ranked comparison of the best session recording tools for SaaS products in 2026 — covering feature...</div></a>
+<a class="card" href="/blog/checkout-page-optimization-tips"><div class="card-title">12 Checkout Page Optimizations That Reduce Cart Abandonment</div><div class="card-meta">Reduce checkout abandonment with these proven optimization techniques. Form design, trust signals, p...</div></a>
+<a class="card" href="/blog/competitor-landing-page-analysis"><div class="card-title">How to Analyze Competitor Landing Pages (And Take What Works)</div><div class="card-meta">How to analyze competitor landing pages to improve your own conversion rate. A step-by-step framewor...</div></a>
+<a class="card" href="/blog/conversion-rate-optimization-beginners"><div class="card-title">Conversion Rate Optimization for Beginners: Where to Start</div><div class="card-meta">A beginner's guide to conversion rate optimization (CRO). What CRO is, how to start, what to measure...</div></a>
+<a class="card" href="/blog/crazy-egg-vs-hotjar"><div class="card-title">Crazy Egg vs Hotjar: Which Is Better for Your Website?</div><div class="card-meta">Crazy Egg and Hotjar both offer heatmaps and session recordings. Here's an honest comparison to help...</div></a>
+<a class="card" href="/blog/cta-button-color-conversion"><div class="card-title">CTA Color Psychology: Does Button Color Actually Affect Conversions?</div><div class="card-meta">Does CTA button color really matter for conversions? Here's what the research actually shows — and w...</div></a>
+<a class="card" href="/blog/cta-clicks-but-no-conversions"><div class="card-title">Why Users Click Your CTA But Don't Convert</div><div class="card-meta">When people click your CTA but abandon the next page, the problem isn't the button — it's what comes...</div></a>
+<a class="card" href="/blog/demo-request-form-abandonment"><div class="card-title">Why Demo Request Forms Get Abandoned (And How to Fix Them)</div><div class="card-meta">High demo request form abandonment is a common B2B problem. Here are the exact reasons visitors bail...</div></a>
+<a class="card" href="/blog/ecommerce-product-page-optimization"><div class="card-title">E-commerce Product Page Optimization: A Complete Guide</div><div class="card-meta">Product page optimization is the highest-ROI e-commerce investment. Here's a complete guide to the e...</div></a>
+<a class="card" href="/blog/email-landing-page-conversion"><div class="card-title">Email Landing Pages: How to Convert More Email Clicks</div><div class="card-meta">How to optimize landing pages for email traffic. Message match, personalization, and conversion best...</div></a>
+<a class="card" href="/blog/exit-intent-popup-conversion-rate"><div class="card-title">Exit Intent Popups: Do They Work in 2026?</div><div class="card-meta">Exit intent popups are either your biggest conversion recovery tool or an annoyance that damages bra...</div></a>
+<a class="card" href="/blog/first-click-test-landing-page"><div class="card-title">First Click Test: Are Visitors Clicking Where You Want?</div><div class="card-meta">A first click test reveals whether visitors click where you want them to. How to run first click tes...</div></a>
+<a class="card" href="/blog/five-second-test-landing-page"><div class="card-title">The 5-Second Test: Is Your Landing Page Clear Enough?</div><div class="card-meta">A 5-second test reveals whether your landing page communicates its value instantly. Learn how to run...</div></a>
+<a class="card" href="/blog/free-hotjar-alternatives-2026"><div class="card-title">Best Free Hotjar Alternatives in 2026</div><div class="card-meta">A complete comparison of the best free Hotjar alternatives available in 2026 — including session rec...</div></a>
+<a class="card" href="/blog/free-tools-for-conversion-optimization"><div class="card-title">17 Free Conversion Optimization Tools for Landing Pages</div><div class="card-meta">The best free tools for optimizing landing page conversions in 2026. Analytics, heatmaps, A/B testin...</div></a>
+<a class="card" href="/blog/free-trial-vs-demo-cta-saas"><div class="card-title">Free Trial vs Demo CTA: Which Converts Better for SaaS?</div><div class="card-meta">Should your primary CTA be 'Start Free Trial' or 'Book a Demo'? The answer depends on your product a...</div></a>
+<a class="card" href="/blog/fullstory-alternatives-small-teams"><div class="card-title">FullStory Alternatives for Small Teams and Startups</div><div class="card-meta">FullStory is powerful but expensive for small teams. Here are the best FullStory alternatives that g...</div></a>
+<a class="card" href="/blog/google-analytics-vs-hotjar"><div class="card-title">Google Analytics vs Hotjar: What's the Difference and Do You Need Both?</div><div class="card-meta">Google Analytics and Hotjar answer different questions about your website. Here's what each does, wh...</div></a>
+<a class="card" href="/blog/heap-analytics-vs-mixpanel"><div class="card-title">Heap vs Mixpanel for Early-Stage Startups: Which Should You Use?</div><div class="card-meta">Heap and Mixpanel are both powerful product analytics tools. For early-stage startups, here's which ...</div></a>
+<a class="card" href="/blog/high-bounce-rate-homepage-fix"><div class="card-title">Why Your Homepage Has a High Bounce Rate (And How to Fix It)</div><div class="card-meta">A high homepage bounce rate means visitors aren't finding what they expected. Here's how to diagnose...</div></a>
+<a class="card" href="/blog/hotjar-alternatives-indie-hackers"><div class="card-title">Hotjar Alternatives for Indie Hackers: Tools That Don't Break the Budget</div><div class="card-meta">Hotjar's pricing doesn't make sense for solo founders and indie hackers. Here are the best Hotjar al...</div></a>
+<a class="card" href="/blog/hotjar-vs-microsoft-clarity"><div class="card-title">Hotjar vs Microsoft Clarity: Which Should You Use in 2026?</div><div class="card-meta">A head-to-head comparison of Hotjar and Microsoft Clarity — features, pricing, privacy, and which to...</div></a>
+<a class="card" href="/blog/how-long-should-landing-page-be"><div class="card-title">How Long Should Your Landing Page Be? The Data-Backed Answer</div><div class="card-meta">Short or long landing page? The right answer depends on your offer, traffic, and audience. Here's th...</div></a>
+<a class="card" href="/blog/how-to-read-heatmap-data"><div class="card-title">How to Interpret Heatmap Data for Landing Pages</div><div class="card-meta">Heatmaps are only useful if you know how to interpret them. Here's how to read click maps, scroll ma...</div></a>
+<a class="card" href="/blog/how-to-test-pricing-page"><div class="card-title">How to Test Your Pricing Page Without Confusing Customers</div><div class="card-meta">Pricing page testing strategies that improve conversion without confusing customers. A/B tests, pric...</div></a>
+<a class="card" href="/blog/how-to-write-homepage-copy"><div class="card-title">How to Write Homepage Copy That Converts</div><div class="card-meta">Step-by-step guide to writing homepage copy that converts visitors into users. Learn the framework u...</div></a>
+<a class="card" href="/blog/indie-hacker-first-100-users"><div class="card-title">How Indie Hackers Get Their First 100 Users</div><div class="card-meta">Getting your first 100 users as an indie hacker is the hardest part. Here are the strategies that co...</div></a>
+<a class="card" href="/blog/interactive-landing-page-elements"><div class="card-title">Interactive Landing Page Elements That Boost Conversion</div><div class="card-meta">Interactive elements on landing pages boost engagement and conversion. ROI calculators, product demo...</div></a>
+<a class="card" href="/blog/landing-page-ab-test-framework"><div class="card-title">Landing Page A/B Testing: How to Test What Actually Matters</div><div class="card-meta">A practical A/B testing framework for landing pages. What to test first, how to prioritize experimen...</div></a>
+<a class="card" href="/blog/landing-page-ab-test-what-to-test"><div class="card-title">Landing Page A/B Testing: What to Test First for Maximum Impact</div><div class="card-meta">Not all A/B tests move the needle equally. Here's the prioritized order of what to test on your land...</div></a>
+<a class="card" href="/blog/landing-page-analytics-setup"><div class="card-title">How to Set Up Landing Page Analytics (And What to Actually Track)</div><div class="card-meta">A complete guide to setting up landing page analytics. What metrics to track, which tools to use, an...</div></a>
+<a class="card" href="/blog/landing-page-audit-checklist"><div class="card-title">How to Run a Landing Page Audit in 30 Minutes</div><div class="card-meta">A systematic landing page audit finds conversion problems you can't see from the inside. Here's a 30...</div></a>
+<a class="card" href="/blog/landing-page-color-psychology"><div class="card-title">Color Psychology for Landing Pages: What Actually Affects Conversion</div><div class="card-meta">How color choices affect landing page conversion rates. CTA button colors, background choices, and t...</div></a>
+<a class="card" href="/blog/landing-page-conversion-rate-benchmark"><div class="card-title">Landing Page Conversion Rate Benchmarks by Industry (2026)</div><div class="card-meta">What's a good landing page conversion rate? This guide covers conversion rate benchmarks across indu...</div></a>
+<a class="card" href="/blog/landing-page-copy-mistakes"><div class="card-title">Landing Page Copy Mistakes That Kill Conversions</div><div class="card-meta">Bad copy kills good products. Here are the most common landing page copy mistakes — and how to fix e...</div></a>
+<a class="card" href="/blog/landing-page-footer-optimization"><div class="card-title">Landing Page Footer: Help or Hurt for Conversion?</div><div class="card-meta">Does a landing page footer help or hurt conversion? The data on navigation links, footer CTAs, and w...</div></a>
+<a class="card" href="/blog/landing-page-for-b2b-saas"><div class="card-title">B2B SaaS Landing Pages: What's Different (And What Converts)</div><div class="card-meta">B2B SaaS landing pages are different from B2C. Learn the specific elements, copy strategies, and soc...</div></a>
+<a class="card" href="/blog/landing-page-for-mobile-apps"><div class="card-title">How to Build a Landing Page That Drives Mobile App Downloads</div><div class="card-meta">How to build a landing page that drives mobile app downloads. App store optimization, social proof s...</div></a>
+<a class="card" href="/blog/landing-page-headline-examples"><div class="card-title">50 Landing Page Headline Examples You Can Steal</div><div class="card-meta">Real landing page headline examples that convert. 50 proven formulas and swipe-file headlines for Sa...</div></a>
+<a class="card" href="/blog/landing-page-hero-section-best-practices"><div class="card-title">How to Write a Landing Page Hero That Converts</div><div class="card-meta">Your hero section determines whether visitors stay or leave. Here's how to write a high-converting l...</div></a>
+<a class="card" href="/blog/landing-page-loading-speed-test"><div class="card-title">Landing Page Speed Test: Find and Fix What's Slowing You Down</div><div class="card-meta">How to test and improve landing page loading speed. Core Web Vitals, tools for speed testing, and th...</div></a>
+<a class="card" href="/blog/landing-page-personalization"><div class="card-title">Landing Page Personalization: Show Every Visitor the Right Message</div><div class="card-meta">Landing page personalization increases conversion by showing visitors content relevant to them. Here...</div></a>
+<a class="card" href="/blog/landing-page-seo-tips"><div class="card-title">Landing Page SEO: Rank Higher Without Sacrificing Conversion</div><div class="card-meta">Landing pages can rank in Google AND convert visitors. Learn how to optimize landing pages for both ...</div></a>
+<a class="card" href="/blog/landing-page-testimonial-best-practices"><div class="card-title">Landing Page Testimonials: How to Use Them Right</div><div class="card-meta">Best practices for testimonials on landing pages. How to collect, format, and place testimonials to ...</div></a>
+<a class="card" href="/blog/landing-page-trust-signals"><div class="card-title">14 Trust Signals That Boost Landing Page Conversions</div><div class="card-meta">Trust signals reduce conversion friction. Here are 14 proven trust elements for landing pages — with...</div></a>
+<a class="card" href="/blog/lead-magnet-landing-page-conversion"><div class="card-title">Lead Magnet Landing Pages: How to Get More Opt-Ins</div><div class="card-meta">How to build lead magnet landing pages that convert. Best practices for opt-in pages, what offers co...</div></a>
+<a class="card" href="/blog/microcopy-reduce-signup-friction"><div class="card-title">How to Write Microcopy That Reduces Sign-Up Friction</div><div class="card-meta">Microcopy — the small text around buttons and forms — can significantly reduce friction. Here's how ...</div></a>
+<a class="card" href="/blog/minimum-viable-landing-page"><div class="card-title">Minimum Viable Landing Page: What You Actually Need</div><div class="card-meta">What's the minimum you need on a landing page to start converting visitors? Here's the MVLP — stripp...</div></a>
+<a class="card" href="/blog/mobile-bounce-rate-higher-than-desktop"><div class="card-title">Why Mobile Users Bounce More Than Desktop (And How to Close the Gap)</div><div class="card-meta">Mobile users bounce at higher rates than desktop — here's exactly why, and the specific optimization...</div></a>
+<a class="card" href="/blog/mobile-landing-page-optimization"><div class="card-title">Mobile Landing Page Optimization: A Complete Guide</div><div class="card-meta">Mobile converts at 3x lower rates than desktop. This complete guide covers every optimization to clo...</div></a>
+<a class="card" href="/blog/multivariate-testing-vs-ab-testing"><div class="card-title">Multivariate Testing vs A/B Testing: The Right Choice for Landing Pages</div><div class="card-meta">When to use multivariate testing vs A/B testing for landing page optimization. The differences, traf...</div></a>
+<a class="card" href="/blog/newsletter-landing-page-conversion"><div class="card-title">Newsletter Landing Page: How to Convert Visitors to Subscribers</div><div class="card-meta">Your newsletter landing page is the top of your subscriber funnel. Here's how to design and write it...</div></a>
+<a class="card" href="/blog/page-speed-effect-on-conversion-rate"><div class="card-title">Page Speed and Conversion Rate: The Data Behind the Relationship</div><div class="card-meta">How much does page speed actually affect conversion rate? The data is clear — here's what every 100m...</div></a>
+<a class="card" href="/blog/portfolio-site-conversion-rate"><div class="card-title">How to Design a Portfolio Site That Gets Inquiries</div><div class="card-meta">Most portfolio sites get views but no inquiries. Here's how to design and optimize a portfolio landi...</div></a>
+<a class="card" href="/blog/pricing-page-high-bounce-rate"><div class="card-title">Why Users Leave After Reading Your Pricing Page</div><div class="card-meta">Your pricing page gets traffic but visitors keep leaving. Here are the real reasons pricing pages fa...</div></a>
+<a class="card" href="/blog/product-hunt-launch-page-tips"><div class="card-title">How to Write a Product Hunt Launch Page That Converts</div><div class="card-meta">Your Product Hunt launch page needs to convert PH visitors in seconds. Here's how to write the copy ...</div></a>
+<a class="card" href="/blog/product-led-growth-landing-page"><div class="card-title">Product-Led Growth: Landing Page Strategies That Convert</div><div class="card-meta">PLG companies need landing pages that convert to free trials — not just demos. Here's how to build a...</div></a>
+<a class="card" href="/blog/product-market-fit-landing-page"><div class="card-title">Test Product-Market Fit With a Landing Page Before You Build</div><div class="card-meta">How to validate product-market fit with a landing page before writing code. The smoke test method, w...</div></a>
+<a class="card" href="/blog/product-page-optimization-ecommerce"><div class="card-title">E-Commerce Product Page Optimization: 10 Changes That Increase Sales</div><div class="card-meta">10 proven product page optimizations for e-commerce that increase add-to-cart rate and sales. Image ...</div></a>
+<a class="card" href="/blog/reduce-landing-page-bounce-rate"><div class="card-title">How to Reduce Landing Page Bounce Rate: A Step-by-Step Guide</div><div class="card-meta">A high landing page bounce rate means visitors aren't finding what they expected. Here's a systemati...</div></a>
+<a class="card" href="/blog/reduce-landing-page-form-abandonment"><div class="card-title">Why Visitors Abandon Your Form (And How to Fix It)</div><div class="card-meta">Why visitors start filling forms but don't submit, and how to fix it. Proven tactics to reduce form ...</div></a>
+<a class="card" href="/blog/saas-demo-page-best-practices"><div class="card-title">SaaS Demo Page Best Practices That Get More Demo Requests</div><div class="card-meta">How to optimize your SaaS demo request page to convert more visitors into qualified demos. Form desi...</div></a>
+<a class="card" href="/blog/saas-homepage-conversion-audit"><div class="card-title">SaaS Homepage Conversion Audit: 20 Points to Check</div><div class="card-meta">A complete 20-point SaaS homepage conversion audit checklist. Identify and fix the issues preventing...</div></a>
+<a class="card" href="/blog/saas-homepage-vs-landing-page"><div class="card-title">SaaS Homepage vs Landing Page: Which Do You Need?</div><div class="card-meta">Should you send paid traffic to your homepage or a dedicated landing page? Here's how to decide — an...</div></a>
+<a class="card" href="/blog/saas-landing-page-conversion-rate-average"><div class="card-title">SaaS Landing Page Conversion Rate: What's Actually Good?</div><div class="card-meta">What conversion rate should your SaaS landing page achieve? Here are real benchmarks by traffic sour...</div></a>
+<a class="card" href="/blog/saas-onboarding-drop-off-reasons"><div class="card-title">Why Users Drop Off During SaaS Onboarding</div><div class="card-meta">SaaS onboarding drop-off kills activation rates. Here are the most common reasons users abandon onbo...</div></a>
+<a class="card" href="/blog/saas-pricing-page-best-practices"><div class="card-title">How to Write a Pricing Page That Converts (With Examples)</div><div class="card-meta">Your pricing page is where decisions get made. Here are the proven best practices for SaaS pricing p...</div></a>
+<a class="card" href="/blog/saas-trial-to-paid-conversion"><div class="card-title">SaaS Trial-to-Paid Conversion: What's Good and How to Improve It</div><div class="card-meta">What's a good trial-to-paid conversion rate? Industry benchmarks, common drop-off points, and tactic...</div></a>
+<a class="card" href="/blog/saas-waitlist-landing-page"><div class="card-title">How to Build a SaaS Waitlist Landing Page That Converts</div><div class="card-meta">A well-built waitlist page builds anticipation and collects qualified leads before you launch. Here'...</div></a>
+<a class="card" href="/blog/session-recording-analysis-tips"><div class="card-title">What Session Recordings Tell You (And What They Don't)</div><div class="card-meta">Session recordings are powerful but easy to misuse. Here's how to analyze session recordings effecti...</div></a>
+<a class="card" href="/blog/social-proof-landing-page"><div class="card-title">Social Proof on Landing Pages: What Actually Works in 2026</div><div class="card-meta">Not all social proof converts equally. Here's the evidence on which types of social proof move the n...</div></a>
+<a class="card" href="/blog/startup-landing-page-mistakes"><div class="card-title">10 Startup Landing Page Mistakes That Kill Conversions</div><div class="card-meta">The most common startup landing page mistakes and how to fix them. From vague headlines to missing s...</div></a>
+<a class="card" href="/blog/synthetic-users-vs-real-users"><div class="card-title">Synthetic Users vs Real Users: Pros, Cons, and When to Use Each</div><div class="card-meta">AI synthetic users and real user testing each have clear strengths. Here's when to use each — and ho...</div></a>
+<a class="card" href="/blog/test-landing-page-without-users"><div class="card-title">How to Test Your Landing Page Without Real Users</div><div class="card-meta">You don't need a user testing panel to get insights on your landing page. Here are effective methods...</div></a>
+<a class="card" href="/blog/thank-you-page-optimization"><div class="card-title">Thank You Page Optimization: Don't Waste the Conversion</div><div class="card-meta">Your thank you page is visited by your most engaged users — right after they convert. Here's how to ...</div></a>
+<a class="card" href="/blog/user-behavior-analytics-tools"><div class="card-title">User Behavior Analytics Tools: Compared for 2026</div><div class="card-meta">Compare the top user behavior analytics tools: Hotjar, Clarity, FullStory, Heap, Mixpanel, and more....</div></a>
+<a class="card" href="/blog/user-interview-alternatives"><div class="card-title">User Interview Alternatives for Early-Stage Startups</div><div class="card-meta">User interviews are valuable but hard to schedule. Here are the best alternatives to traditional use...</div></a>
+<a class="card" href="/blog/user-research-tools-cheap-bootstrap"><div class="card-title">Cheap User Research Tools for Bootstrapped Founders</div><div class="card-meta">You don't need a $30K research budget to understand your users. Here are the best cheap and free use...</div></a>
+<a class="card" href="/blog/user-research-zero-budget"><div class="card-title">How to Do User Research on a Zero Budget</div><div class="card-meta">You don't need a research budget to understand your users. Here are 6 methods to run effective user ...</div></a>
+<a class="card" href="/blog/usertesting-alternatives-cheap"><div class="card-title">UserTesting.com Alternatives That Don't Cost $30,000 Per Year</div><div class="card-meta">UserTesting.com costs $30,000+ per year. Here are the best alternatives for getting user feedback wi...</div></a>
+<a class="card" href="/blog/validate-product-idea-landing-page"><div class="card-title">How to Validate a Product Idea with a Landing Page</div><div class="card-meta">Build a landing page before you build the product — it's the fastest way to validate demand. Here's ...</div></a>
+<a class="card" href="/blog/video-on-landing-page-conversion"><div class="card-title">Landing Page Video: When It Helps Conversion (and When It Doesn't)</div><div class="card-meta">Do landing page videos actually improve conversion rates? The research, best practices, and when vid...</div></a>
+<a class="card" href="/blog/webinar-registration-landing-page"><div class="card-title">How to Build a Webinar Registration Page That Fills Seats</div><div class="card-meta">How to build a webinar registration page that fills seats. Includes structure, copy tips, and conver...</div></a>
+<a class="card" href="/blog/what-is-conversion-rate-optimization"><div class="card-title">What Is Conversion Rate Optimization? (Simply Explained)</div><div class="card-meta">A clear, simple explanation of what Conversion Rate Optimization (CRO) is, how it works, and why it ...</div></a>
+<a class="card" href="/blog/where-to-place-cta-landing-page"><div class="card-title">Where to Place Your CTA on a Landing Page for Maximum Conversions</div><div class="card-meta">CTA placement affects conversion rate more than most design choices. Here's where to put your calls-...</div></a>
+<a class="card" href="/blog/why-users-abandon-checkout"><div class="card-title">Why Users Leave Checkout Pages Without Buying</div><div class="card-meta">The top reasons visitors abandon checkout — and data-backed fixes to recover lost revenue without re...</div></a>
+<a class="card" href="/blog/why-users-leave-your-landing-page"><div class="card-title">Why Users Leave Your Landing Page in 30 Seconds (And What To Do About It) — Raco...</div><div class="card-meta">Most visitors leave your landing page before reading anything meaningful. We analyzed 500+ products ...</div></a>
+<a class="card" href="/blog/why-visitors-dont-return-website"><div class="card-title">Why First-Time Visitors Never Come Back to Your Website</div><div class="card-meta">Most websites convert less than 2% of first-time visitors. Here's why they don't return — and how to...</div></a>
+<a class="card" href="/blog/why-visitors-dont-sign-up-free-trial"><div class="card-title">Why Visitors Don't Sign Up to Your Free Trial (And How to Fix It)</div><div class="card-meta">Discover the real reasons visitors land on your free trial page but never sign up — and the exact fi...</div></a>
+
   </div>
-</main>
-<footer>
-  <a class="footer-logo" href="/"><span class="logo-dot"></span>Racoonn</a>
-  <div class="footer-links">
-    <a href="/blog">Blog</a>
-    <a href="/about">About</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/privacy">Privacy</a>
-    <a href="/terms">Terms</a>
-  </div>
-  <span style="font-size:12px;color:var(--ink3)">© 2026 Betax GmbH</span>
-</footer>
+</div>
+<footer>© 2026 Racoonn · <a href="/privacy" style="color:#999">Privacy</a> · <a href="/terms" style="color:#999">Terms</a></footer>
 </body>
 </html>

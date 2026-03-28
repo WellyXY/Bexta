@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page Speed Test: How to Find and Fix Performance Issues (2026)</title>
+<meta name="description" content="How to test and improve landing page loading speed. Core Web Vitals, tools for speed testing, and the most impactful fixes for slow landing pages.">
+<link rel="canonical" href="https://racoonn.me/blog/landing-page-loading-speed-test">
+<meta property="og:title" content="Landing Page Speed Test: How to Find and Fix Performance Issues (2026)">
+<meta property="og:description" content="How to test and improve landing page loading speed. Core Web Vitals, tools for speed testing, and the most impactful fixes for slow landing pages.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://racoonn.me/blog/landing-page-loading-speed-test">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Landing Page Speed Test: Find and Fix What's Slowing You Down",
+  "description": "How to test and improve landing page loading speed. Core Web Vitals, tools for speed testing, and the most impactful fixes for slow landing pages.",
+  "url": "https://racoonn.me/blog/landing-page-loading-speed-test",
+  "publisher": {"@type": "Organization", "name": "Racoonn"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://racoonn.me/blog/landing-page-loading-speed-test"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is a good landing page load time?", "acceptedAnswer": {"@type": "Answer", "text": "Under 2.5 seconds for LCP (Largest Contentful Paint) is Google's threshold for "good." For conversion, under 2 seconds is better. Every 1-second delay reduces conversions approximately 7%."}},
+    {"@type": "Question", "name": "How do I check my landing page Core Web Vitals?", "acceptedAnswer": {"@type": "Answer", "text": "Google PageSpeed Insights (pagespeed.web.dev) shows real-world CWV data from Chrome User Experience Report data. Google Search Console also shows Core Web Vitals for all pages on your site."}},
+    {"@type": "Question", "name": "What causes slow landing pages?", "acceptedAnswer": {"@type": "Answer", "text": "Unoptimized images (biggest cause), too many third-party scripts, no CDN, render-blocking JavaScript, and large CSS files. Use PageSpeed Insights to identify your specific bottlenecks."}}
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZG09N9S3C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HZG09N9S3C');
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;line-height:1.6;background:#fff}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:100}
+  nav a{text-decoration:none;color:#1a1a1a;font-weight:600;font-size:18px}
+  .btn-nav{background:#6c47ff;color:#fff!important;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600}
+  .container{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+  h1{font-size:2rem;font-weight:800;line-height:1.2;margin-bottom:16px;color:#111}
+  .intro{font-size:1.1rem;color:#444;margin-bottom:40px;border-left:4px solid #6c47ff;padding-left:16px}
+  h2{font-size:1.3rem;font-weight:700;margin:36px 0 12px;color:#222}
+  p{margin-bottom:16px;color:#333}
+  .cta-box{background:#f3f0ff;border:2px solid #6c47ff;border-radius:12px;padding:28px;margin:48px 0;text-align:center}
+  .cta-box h3{font-size:1.2rem;margin-bottom:8px;color:#6c47ff}
+  .cta-box p{color:#444;margin-bottom:20px;font-size:0.97rem}
+  .btn-cta{display:inline-block;background:#6c47ff;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:1rem}
+  .faq{margin-top:48px}
+  .faq h2{margin-bottom:20px}
+  .faq-item{border:1px solid #e5e5e5;border-radius:8px;padding:20px;margin-bottom:12px}
+  .faq-item h3{font-size:1rem;font-weight:600;margin-bottom:8px;color:#222}
+  .faq-item p{color:#555;font-size:0.95rem;margin:0}
+  footer{text-align:center;padding:32px;color:#999;font-size:0.85rem;border-top:1px solid #eee}
+  @media(max-width:600px){h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">Racoonn</a>
+  <a class="btn-nav" href="/" onclick="gtag('event','cta_click',{button:'Try Free Nav',location:'nav',transport_type:'beacon'})">Try Free</a>
+</nav>
+<div class="container">
+  <article>
+    <h1>Landing Page Speed Test: Find and Fix What's Slowing You Down</h1>
+    <p class="intro">Page speed directly affects your conversion rate. Amazon found each 100ms delay cost 1% in sales. Google uses Core Web Vitals as a ranking signal. If your page is slow, you're losing traffic and conversions.</p>
+    <h2>How to Test Landing Page Speed</h2>
+    <p>Google PageSpeed Insights: free, shows real-world Core Web Vitals data for your URL. GTmetrix: shows waterfall diagram of every resource loading. Chrome DevTools Lighthouse: run a local audit without needing to submit to an external tool. WebPageTest: advanced testing from different locations and devices.</p>
+    <h2>The Highest-Impact Speed Fixes</h2>
+    <p>In order of impact: (1) Image optimization — compress and convert to WebP. (2) Remove unused JavaScript — scripts are the biggest culprit for slow TTI. (3) Enable CDN for static assets. (4) Defer non-critical scripts (analytics, chat widgets). (5) Use system fonts instead of loading custom fonts. These 5 fixes resolve 80% of landing page speed issues.</p>
+    <div class="cta-box">
+      <h3>See How Your Landing Page Performs</h3>
+      <p>Racoonn shows you real visitor behavior — heatmaps, session recordings, and conversion insights — so you know exactly what to fix.</p>
+      <a class="btn-cta" href="/" onclick="gtag('event','cta_click',{button:'Test My Landing Page Free',location:'blog_cta_box',transport_type:'beacon'})">Test My Landing Page Free →</a>
+    </div>
+    <h2>Speed Affects Behavior, Not Just Rankings</h2>
+    <p>Fast pages also change how users behave. Users on faster pages scroll more, engage more, and convert more. After improving page speed, verify the behavioral improvement — not just the PageSpeed score — with session recording tools.</p>
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item"><h3>What is a good landing page load time?</h3><p>Under 2.5 seconds for LCP (Largest Contentful Paint) is Google's threshold for "good." For conversion, under 2 seconds is better. Every 1-second delay reduces conversions approximately 7%.</p></div>
+      <div class="faq-item"><h3>How do I check my landing page Core Web Vitals?</h3><p>Google PageSpeed Insights (pagespeed.web.dev) shows real-world CWV data from Chrome User Experience Report data. Google Search Console also shows Core Web Vitals for all pages on your site.</p></div>
+      <div class="faq-item"><h3>What causes slow landing pages?</h3><p>Unoptimized images (biggest cause), too many third-party scripts, no CDN, render-blocking JavaScript, and large CSS files. Use PageSpeed Insights to identify your specific bottlenecks.</p></div>
+    </div>
+  </article>
+</div>
+<footer>© 2026 Racoonn · <a href="/privacy" style="color:#999">Privacy</a> · <a href="/terms" style="color:#999">Terms</a></footer>
+</body>
+</html>

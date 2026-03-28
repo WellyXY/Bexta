@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page Analytics Setup: What to Track and How (Complete Guide)</title>
+<meta name="description" content="A complete guide to setting up landing page analytics. What metrics to track, which tools to use, and how to read the data to improve conversions.">
+<link rel="canonical" href="https://racoonn.me/blog/landing-page-analytics-setup">
+<meta property="og:title" content="Landing Page Analytics Setup: What to Track and How (Complete Guide)">
+<meta property="og:description" content="A complete guide to setting up landing page analytics. What metrics to track, which tools to use, and how to read the data to improve conversions.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://racoonn.me/blog/landing-page-analytics-setup">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Set Up Landing Page Analytics (And What to Actually Track)",
+  "description": "A complete guide to setting up landing page analytics. What metrics to track, which tools to use, and how to read the data to improve conversions.",
+  "url": "https://racoonn.me/blog/landing-page-analytics-setup",
+  "publisher": {"@type": "Organization", "name": "Racoonn"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://racoonn.me/blog/landing-page-analytics-setup"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What analytics should I put on my landing page?", "acceptedAnswer": {"@type": "Answer", "text": "At minimum: Google Analytics 4 for traffic data, plus a behavior analytics tool (heatmaps + session recordings) to understand user actions on the page."}},
+    {"@type": "Question", "name": "How do I track CTA button clicks in Google Analytics?", "acceptedAnswer": {"@type": "Answer", "text": "Use gtag event tracking: gtag('event', 'click', {event_category: 'CTA', event_label: 'Hero Button'}). Or set up GA4 Enhanced Measurement which tracks some clicks automatically."}},
+    {"@type": "Question", "name": "What is a good landing page bounce rate?", "acceptedAnswer": {"@type": "Answer", "text": "For paid traffic landing pages, 60-75% is typical. Below 60% is great. Above 80% suggests a mismatch between ad and page content, or slow page load."}}
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZG09N9S3C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HZG09N9S3C');
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;line-height:1.6;background:#fff}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:100}
+  nav a{text-decoration:none;color:#1a1a1a;font-weight:600;font-size:18px}
+  .btn-nav{background:#6c47ff;color:#fff!important;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600}
+  .container{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+  h1{font-size:2rem;font-weight:800;line-height:1.2;margin-bottom:16px;color:#111}
+  .intro{font-size:1.1rem;color:#444;margin-bottom:40px;border-left:4px solid #6c47ff;padding-left:16px}
+  h2{font-size:1.3rem;font-weight:700;margin:36px 0 12px;color:#222}
+  p{margin-bottom:16px;color:#333}
+  .cta-box{background:#f3f0ff;border:2px solid #6c47ff;border-radius:12px;padding:28px;margin:48px 0;text-align:center}
+  .cta-box h3{font-size:1.2rem;margin-bottom:8px;color:#6c47ff}
+  .cta-box p{color:#444;margin-bottom:20px;font-size:0.97rem}
+  .btn-cta{display:inline-block;background:#6c47ff;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:1rem}
+  .faq{margin-top:48px}
+  .faq h2{margin-bottom:20px}
+  .faq-item{border:1px solid #e5e5e5;border-radius:8px;padding:20px;margin-bottom:12px}
+  .faq-item h3{font-size:1rem;font-weight:600;margin-bottom:8px;color:#222}
+  .faq-item p{color:#555;font-size:0.95rem;margin:0}
+  footer{text-align:center;padding:32px;color:#999;font-size:0.85rem;border-top:1px solid #eee}
+  @media(max-width:600px){h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">Racoonn</a>
+  <a class="btn-nav" href="/" onclick="gtag('event','cta_click',{button:'Try Free Nav',location:'nav',transport_type:'beacon'})">Try Free</a>
+</nav>
+<div class="container">
+  <article>
+    <h1>How to Set Up Landing Page Analytics (And What to Actually Track)</h1>
+    <p class="intro">Most teams add Google Analytics to their landing page and call it done. But pageviews alone won't tell you why visitors aren't converting. Here's how to set up analytics that actually improve your page.</p>
+    <h2>The 5 Metrics That Actually Matter</h2>
+    <p>(1) Conversion rate: what % of visitors complete the goal action. (2) Scroll depth: how far do they read? (3) CTA click rate: what % click your main button. (4) Time on page: are they engaging or bouncing immediately. (5) Traffic source conversion rate: which channels send buyers vs. browsers.</p>
+    <h2>Layer Qualitative Analytics on Top</h2>
+    <p>Numbers tell you what is happening. Recordings and heatmaps tell you why. Set up: session recordings to watch real user behavior, heatmaps to see where attention goes, and click maps to see what elements users try to interact with (including things that aren't clickable).</p>
+    <div class="cta-box">
+      <h3>See How Your Landing Page Performs</h3>
+      <p>Racoonn shows you real visitor behavior — heatmaps, session recordings, and conversion insights — so you know exactly what to fix.</p>
+      <a class="btn-cta" href="/" onclick="gtag('event','cta_click',{button:'Test My Landing Page Free',location:'blog_cta_box',transport_type:'beacon'})">Test My Landing Page Free →</a>
+    </div>
+    <h2>Use Behavior Analytics to Find Conversion Leaks</h2>
+    <p>Tools like Racoonn let you see exactly where visitors drop off — not just that they left, but what they were doing when they left. This is how you find the specific friction points to fix.</p>
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item"><h3>What analytics should I put on my landing page?</h3><p>At minimum: Google Analytics 4 for traffic data, plus a behavior analytics tool (heatmaps + session recordings) to understand user actions on the page.</p></div>
+      <div class="faq-item"><h3>How do I track CTA button clicks in Google Analytics?</h3><p>Use gtag event tracking: gtag('event', 'click', {event_category: 'CTA', event_label: 'Hero Button'}). Or set up GA4 Enhanced Measurement which tracks some clicks automatically.</p></div>
+      <div class="faq-item"><h3>What is a good landing page bounce rate?</h3><p>For paid traffic landing pages, 60-75% is typical. Below 60% is great. Above 80% suggests a mismatch between ad and page content, or slow page load.</p></div>
+    </div>
+  </article>
+</div>
+<footer>© 2026 Racoonn · <a href="/privacy" style="color:#999">Privacy</a> · <a href="/terms" style="color:#999">Terms</a></footer>
+</body>
+</html>
