@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Above the Fold: What Belongs in Your First Screen | Racoonn Blog</title>
+  <meta name="description" content="The content above the fold determines whether visitors stay. Here's exactly what should be in your first screen — and what should stay below."/>
+  <link rel="canonical" href="https://racoonn.me/blog/above-the-fold-best-practices"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:title" content="Above the Fold: What Belongs in Your First Screen"/>
+  <meta property="og:description" content="The content above the fold determines whether visitors stay. Here's exactly what should be in your first screen — and what should stay below."/>
+  <meta property="og:url" content="https://racoonn.me/blog/above-the-fold-best-practices"/>
+  <meta property="og:image" content="https://racoonn.me/og-image.png"/>
+  <meta name="theme-color" content="#18140F"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Above the Fold: What Belongs in Your First Screen", "description": "The content above the fold determines whether visitors stay. Here's exactly what should be in your first screen \u2014 and what should stay below.", "datePublished": "2026-03-27", "author": {"@type": "Organization", "name": "Racoonn"}, "publisher": {"@type": "Organization", "name": "Racoonn", "url": "https://racoonn.me"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is above the fold still important for SEO?", "acceptedAnswer": {"@type": "Answer", "text": "Indirectly, yes. Content above the fold affects time-on-page and bounce rate, which are user experience signals Google considers. More directly, fast-loading above-fold content is part of Core Web Vitals (LCP), which is a direct ranking signal."}}, {"@type": "Question", "name": "How do I test what visitors see above the fold on different devices?", "acceptedAnswer": {"@type": "Answer", "text": "Use Chrome DevTools to simulate different viewport sizes (toggle device toolbar, select iPhone SE or Galaxy S20). Also check your actual Analytics data for top device types and test the most common ones."}}, {"@type": "Question", "name": "Should the navigation be above the fold?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 navigation provides orientation and trust. A page with no navigation can feel like a dead end. The navigation should be minimal (logo + 3\u20134 links + CTA) and never distract from the primary hero content."}}, {"@type": "Question", "name": "What's the ideal hero section height?", "acceptedAnswer": {"@type": "Answer", "text": "For a desktop-primary design: 80\u2013100vh (full viewport). For mobile-first: 90\u201395vh so there's a slight hint of content below encouraging scroll. Never make heroes taller than 100vh as it signals to users that there might be nothing to scroll to."}}]}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F7F4EF;--bg2:#F0EBE3;--ink:#18140F;--ink2:#5C5650;--ink3:#6E6760;--or:#EF6820;--brd:rgba(24,20,15,.09);--dark:#0F0D0B;--r:16px}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.6}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(247,244,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+    .logo{font-weight:900;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:7px;text-decoration:none}
+    .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--or)}
+    nav ul{list-style:none;display:flex;gap:28px}
+    nav ul a{font-size:15px;font-weight:600;color:var(--ink2);text-decoration:none;transition:color .15s}
+    nav ul a:hover{color:var(--ink)}
+    .btn-nav{background:var(--or);color:#fff;font-size:15px;font-weight:700;padding:12px 24px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
+    .post-wrap{max-width:740px;margin:0 auto;padding:100px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--ink3);margin-bottom:24px}
+    .breadcrumb a{color:var(--ink3);text-decoration:none}
+    .breadcrumb a:hover{color:var(--or)}
+    .post-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or);margin-bottom:16px}
+    h1{font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1.15;letter-spacing:-.03em;margin-bottom:20px}
+    .post-meta{font-size:13px;color:var(--ink3);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--brd)}
+    .post-body h2{font-size:22px;font-weight:800;margin:40px 0 14px;letter-spacing:-.02em}
+    .post-body p{margin-bottom:18px;color:var(--ink2);line-height:1.75}
+    .post-body ul{margin:0 0 18px 20px;color:var(--ink2)}
+    .post-body li{margin-bottom:8px;line-height:1.7}
+    .cta-box{background:var(--dark);color:#fff;border-radius:20px;padding:40px;margin:56px 0;text-align:center}
+    .cta-box h2{color:#fff;font-size:24px;font-weight:800;margin-bottom:12px}
+    .cta-box p{color:rgba(255,255,255,.7);margin-bottom:24px}
+    .btn-cta{background:var(--or);color:#fff;font-size:16px;font-weight:700;padding:14px 32px;border-radius:100px;text-decoration:none;display:inline-block}
+    .faq-section{margin-top:56px}
+    .faq-section h2{font-size:22px;font-weight:800;margin-bottom:24px;letter-spacing:-.02em}
+    .faq-item{border-bottom:1px solid var(--brd);padding:4px 0}
+    .faq-q{width:100%;background:none;border:none;text-align:left;font-size:16px;font-weight:600;color:var(--ink);padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .faq-icon{font-size:20px;color:var(--or);transition:transform .2s;flex-shrink:0}
+    .faq-item.open .faq-icon{transform:rotate(45deg)}
+    .faq-a{display:none;padding-bottom:16px;color:var(--ink2);line-height:1.7}
+    .faq-item.open .faq-a{display:block}
+    footer{background:var(--bg2);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--brd)}
+    .footer-logo{font-weight:900;font-size:15px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px}
+    .footer-links{display:flex;gap:24px}
+    .footer-links a{font-size:13px;color:var(--ink3);text-decoration:none}
+    .footer-links a:hover{color:var(--ink)}
+    .footer-copy{font-size:12px;color:var(--ink3)}
+    @media(max-width:640px){nav{padding:0 20px}nav ul{display:none}.post-wrap{padding:90px 20px 60px}footer{flex-direction:column;gap:20px;padding:32px 20px;text-align:center}}
+  </style>
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a class="logo" href="/"><span class="logo-dot"></span>Racoonn</a>
+  <ul>
+    <li><a href="/#how">Features</a></li>
+    <li><a href="/pricing">Pricing</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <a class="btn-nav" href="/" onclick="event.preventDefault();document.querySelector&&document.querySelector('body').dispatchEvent(new CustomEvent('show-modal'))">Try Free →</a>
+</nav>
+<main>
+<div class="post-wrap">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> › <a href="/blog">Blog</a> › Above the Fold: What Belongs in Your First Screen
+  </nav>
+  <div class="post-eyebrow">Racoonn Blog</div>
+  <h1>Above the Fold: What Belongs in Your First Screen</h1>
+  <div class="post-meta">By Racoonn Team · 2026-03-27 · 6 min read</div>
+  <div class="post-body">
+<h2>What 'Above the Fold' Means in 2026</h2>
+<p>'Above the fold' originally referred to newspaper content visible before unfolding. For websites, it means the content visible in the browser viewport without scrolling. But with infinite screen sizes and viewport heights ranging from 500px (small phones) to 1200px+ (large monitors), 'above the fold' isn't a fixed location — it's a range.</p>
+<p>Design for the smallest common viewport: 667px height (iPhone SE in landscape / typical mid-range phone). Content that fits in this viewport is 'above the fold' for the most constrained users. If your CTA isn't visible at 667px height, a significant portion of your mobile visitors never see it without scrolling.</p>
+<h2>The Six Elements That Belong Above the Fold</h2>
+<p>Navigation: Trust signal that shows you're a real product with multiple pages. Logo + top nav + CTA button. Keep it minimal — no more than 4 nav links.</p>
+<p>Headline: The most important copy element. Must communicate your core value immediately.</p>
+<p>Sub-headline: One sentence expanding on the headline. Mechanism or target audience.</p>
+<p>Hero visual: Product screenshot, outcome visualization, or key illustration.</p>
+<p>Primary CTA: The single action you want visitors to take. One button, specific label.</p>
+<p>Trust indicator: One credibility element — customer count, notable client logo, press mention, or key stat. Just one.</p>
+<h2>What Doesn't Belong Above the Fold</h2>
+<p>Feature lists: Save these for below the fold. Feature lists require context (why does this feature matter?) that belongs after you've earned the visitor's interest.</p>
+<p>Long testimonials: Full testimonials are below-fold content. A customer name + 10-word quote can work above the fold as a compact trust signal.</p>
+<p>Video players (unless autoplayed silently): A video player that requires a click to start competes with your primary CTA. If you include video in the hero, autoplay it silently with captions.</p>
+<p>Prices: Unless your product is low-cost or free. Showing price before establishing value creates sticker shock for higher-priced products.</p>
+<h2>How Fold Position Affects Conversion</h2>
+<p>CTA above fold vs below fold: Consistently, CTAs above the fold outperform CTAs that require scrolling to reach, especially for cold traffic. Even if you have a better secondary CTA at the bottom of the page, the above-fold CTA should always exist.</p>
+<p>Reducing above-fold content to essentials typically increases scroll depth — a counterintuitive finding that has been replicated in multiple A/B tests. When the hero is tighter and more intriguing, visitors scroll to learn more.</p>
+<h2>Testing Your Above-the-Fold Design</h2>
+<p>Run a five-second test with 5 people. Show them your page for 5 seconds, cover it, and ask: what does the product do, who is it for, and what would you do next? If fewer than 4 of 5 can answer all three correctly, your above-fold content needs work.</p>
+<p>Use Racoonn to simulate how 5,000 different visitor types experience your hero section. AI persona reports typically identify whether the hero messaging is landing across different audience segments or only resonating with a narrow type of visitor.</p>
+
+  </div>
+  <div class="cta-box">
+    <h2>Stop Guessing Why Users Leave</h2>
+    <p>Racoonn runs 5,000 AI persona agents on your landing page and tells you exactly what's broken — in 28 minutes, not 3 weeks.</p>
+    <a class="btn-cta" href="/">Test My Landing Page Free →</a>
+  </div>
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+  <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is above the fold still important for SEO?<span class="faq-icon">+</span></button>
+  <div class="faq-a"><p>Indirectly, yes. Content above the fold affects time-on-page and bounce rate, which are user experience signals Google considers. More directly, fast-loading above-fold content is part of Core Web Vitals (LCP), which is a direct ranking signal.</p></div>
+</div>
+<div class="faq-item">
+  <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do I test what visitors see above the fold on different devices?<span class="faq-icon">+</span></button>
+  <div class="faq-a"><p>Use Chrome DevTools to simulate different viewport sizes (toggle device toolbar, select iPhone SE or Galaxy S20). Also check your actual Analytics data for top device types and test the most common ones.</p></div>
+</div>
+<div class="faq-item">
+  <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Should the navigation be above the fold?<span class="faq-icon">+</span></button>
+  <div class="faq-a"><p>Yes — navigation provides orientation and trust. A page with no navigation can feel like a dead end. The navigation should be minimal (logo + 3–4 links + CTA) and never distract from the primary hero content.</p></div>
+</div>
+<div class="faq-item">
+  <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What's the ideal hero section height?<span class="faq-icon">+</span></button>
+  <div class="faq-a"><p>For a desktop-primary design: 80–100vh (full viewport). For mobile-first: 90–95vh so there's a slight hint of content below encouraging scroll. Never make heroes taller than 100vh as it signals to users that there might be nothing to scroll to.</p></div>
+</div>
+
+  </div>
+</div>
+</main>
+<footer>
+  <a class="footer-logo" href="/"><span class="logo-dot"></span>Racoonn</a>
+  <div class="footer-links">
+    <a href="/blog">Blog</a>
+    <a href="/about">About</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+  </div>
+  <span class="footer-copy">© 2026 Betax GmbH</span>
+</footer>
+</body>
+</html>
