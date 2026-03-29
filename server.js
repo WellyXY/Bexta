@@ -890,6 +890,67 @@ app.get('/api/admin/ph-report', requireAdmin, (req, res) => {
   res.json(FRESH_PH_REPORT);
 });
 
+
+app.get('/api/admin/pending-reports', requireAdmin, async (req, res) => {
+  try {
+    // Return waitlist items that don't have a corresponding report yet
+    const { rows } = await pool.query(`
+      SELECT w.id, w.url, w.email, w.created_at
+      FROM waitlist w
+      WHERE w.url IS NOT NULL AND w.url != ''
+        AND NOT EXISTS (
+          SELECT 1 FROM reports r WHERE r.url = w.url
+        )
+      ORDER BY w.created_at DESC
+      LIMIT 10
+    `);
+    return res.json(rows);
+  } catch(err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/admin/save-report', requireAdmin, async (req, res) => {
+  try {
+    const { meta, executive_summary, summary, stage_dropoff, top_issues, personas } = req.body;
+    if (!meta?.url) return res.status(400).json({ error: 'Missing meta.url' });
+
+    const { rows: [rep] } = await pool.query(
+      `INSERT INTO reports (url, run_date, model, summary, stage_dropoff, top_issues, executive_summary)
+       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
+      [meta.url, meta.run_date || new Date().toISOString().split('T')[0],
+       meta.model || 'claude-sonnet-4-6',
+       JSON.stringify(summary), JSON.stringify(stage_dropoff),
+       JSON.stringify(top_issues), executive_summary || '']
+    );
+
+    if (personas && personas.length > 0) {
+      const batchSize = 10;
+      for (let i = 0; i < personas.length; i += batchSize) {
+        const batch = personas.slice(i, i + batchSize);
+        const vals = batch.map((_, j) => `($1, $${j+2})`).join(',');
+        await pool.query(
+          `INSERT INTO report_personas (report_id, data) VALUES ${vals}`,
+          [rep.id, ...batch.map(p => JSON.stringify(p))]
+        );
+      }
+    }
+
+    // Email user if email exists in waitlist for this URL
+    try {
+      const { rows: [wl] } = await pool.query('SELECT email FROM waitlist WHERE url=$1 AND email IS NOT NULL AND email != \'\' ORDER BY created_at DESC LIMIT 1', [meta.url]);
+      if (wl?.email) {
+        const reportUrl = `https://racoonn.me/report/${rep.id}`;
+        await sendReportEmail(wl.email, meta.url, reportUrl);
+      }
+    } catch(e) { console.log('[save-report] email lookup failed:', e.message); }
+
+    return res.json({ ok: true, id: rep.id, url: `https://racoonn.me/report/${rep.id}` });
+  } catch(err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // ── Report viewer + public API ────────────────────────────
 app.get('/report/:id', (req, res) => res.sendFile(path.join(__dirname, 'report.html')));
 
