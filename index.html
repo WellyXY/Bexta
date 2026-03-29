@@ -1330,7 +1330,7 @@ async function handleSubmit(e) {
   if (!url || !email) return;
 
   const btn = e.target.querySelector('button');
-  btn.textContent = 'Joining waitlist…';
+  btn.textContent = 'Analyzing…';
   btn.disabled = true;
 
   try {
@@ -1402,15 +1402,18 @@ async function handleModalSubmit(e) {
   btn.textContent = 'Joining…';
   btn.disabled = true;
   try {
-    await fetch('/api/waitlist', {
+    const res = await fetch('/api/waitlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url, email })
     });
+    const data = await res.json();
+    const demoUrl = data.demoUrl || `/report/demo?url=${encodeURIComponent(url)}`;
+    // Show brief success then redirect
     document.getElementById('ea-success-email').textContent = email;
     document.getElementById('ea-form-wrap').style.display = 'none';
     document.getElementById('ea-success').style.display = 'block';
-    setTimeout(hideModal, 3500);
+    setTimeout(() => { window.location.href = demoUrl; }, 1200);
   } catch(err) {
     btn.textContent = 'Join Waitlist →';
     btn.disabled = false;
@@ -1439,8 +1442,8 @@ async function handleModalSubmit(e) {
     </div>
     <div class="ea-success" id="ea-success" style="display:none">
       <div class="ea-success-icon">🦝</div>
-      <div class="ea-success-title">You're on the list!</div>
-      <div class="ea-success-sub">We'll email <strong id="ea-success-email"></strong> when it's your turn.</div>
+      <div class="ea-success-title">Preparing your report…</div>
+      <div class="ea-success-sub">Sending 5,000 personas to <strong id="ea-success-email"></strong>. Redirecting now.</div>
     </div>
   </div>
 </div>

@@ -128,6 +128,7 @@ async function initDB() {
 
   // Add email column if not exists (migration)
   await pool.query(`ALTER TABLE waitlist ADD COLUMN IF NOT EXISTS email TEXT`).catch(() => {});
+  await pool.query(`ALTER TABLE reports ADD COLUMN IF NOT EXISTS executive_summary TEXT`).catch(() => {});
   console.log('[DB] tables ready');
 }
 
@@ -889,6 +890,196 @@ app.get('/api/admin/ph-report', requireAdmin, (req, res) => {
   res.json(FRESH_PH_REPORT);
 });
 
+// ── Report viewer + public API ────────────────────────────
+app.get('/report/:id', (req, res) => res.sendFile(path.join(__dirname, 'report.html')));
+
+app.get('/api/report/:id', async (req, res) => {
+  const { id } = req.params;
+  if (id === 'demo') {
+    const url = req.query.url || 'https://yourproduct.com';
+    return res.json({ ...REPORT_SEED, meta: { ...REPORT_SEED.meta, url, run_date: new Date().toISOString().split('T')[0] } });
+  }
+  try {
+    const { rows: [report] } = await pool.query('SELECT * FROM reports WHERE id=$1', [req.params.id]);
+    if (!report) return res.status(404).json({ error: 'Not found' });
+    const { rows: pRows } = await pool.query('SELECT data FROM report_personas WHERE report_id=$1 ORDER BY id LIMIT 20', [id]);
+    return res.json({
+      meta: { url: report.url, run_date: report.run_date, model: report.model, total_personas: report.summary?.total_personas || 10 },
+      executive_summary: report.executive_summary || '',
+      summary: report.summary,
+      stage_dropoff: report.stage_dropoff,
+      top_issues: report.top_issues,
+      personas: pRows.map(r => r.data)
+    });
+  } catch(err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// ── Analysis pipeline (Browserless + Claude) ───────────────
+async function runAnalysis(url, email) {
+  const BROWSERLESS_URL = process.env.BROWSERLESS_URL;
+  const BROWSERLESS_TOKEN = process.env.BROWSERLESS_TOKEN;
+  const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+  if (!ANTHROPIC_KEY) { console.log('[analysis] No ANTHROPIC_API_KEY, skipping'); return null; }
+
+  try {
+    console.log('[analysis] Starting for:', url);
+
+    // 1. Fetch rendered page content via Browserless (or plain fetch fallback)
+    let pageContent = '';
+    try {
+      if (BROWSERLESS_URL && BROWSERLESS_TOKEN) {
+        const blRes = await fetch(`${BROWSERLESS_URL}/content?token=${BROWSERLESS_TOKEN}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, waitForTimeout: 4000, rejectResourceTypes: ['image','font','media'] }),
+          signal: AbortSignal.timeout(20000)
+        });
+        pageContent = await blRes.text();
+      } else {
+        const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Racoonn/1.0)' }, signal: AbortSignal.timeout(10000) });
+        pageContent = await r.text();
+      }
+    } catch(e) { console.log('[analysis] Page fetch failed:', e.message); }
+
+    // Strip scripts/styles, keep text + structure (max 12k chars)
+    const cleanContent = pageContent
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 12000);
+
+    // 2. Call Claude API
+    const prompt = `You are a senior UX and conversion rate optimization expert. Analyze this landing page for the URL: ${url}
+
+Page content (rendered text):
+${cleanContent}
+
+Simulate 10 diverse user personas visiting this specific page. Create realistic, specific assessments based on what you actually see on this page — not generic advice.
+
+Return ONLY valid JSON (no markdown, no explanation) with this exact structure:
+{
+  "executive_summary": "2-3 sentences summarizing the main conversion problems and opportunities specific to this page",
+  "summary": { "converted": N, "dropped": N, "undecided": N, "conversion_rate": N, "avg_score": N, "total_personas": 10 },
+  "stage_dropoff": [
+    { "stage": "Hero / First Impression", "section": "s1", "entered": 10, "dropped": N, "drop_pct": N, "main_reason": "specific reason based on this page" },
+    { "stage": "Value Proposition", "section": "s2", "entered": N, "dropped": N, "drop_pct": N, "main_reason": "..." },
+    { "stage": "Social Proof", "section": "s3", "entered": N, "dropped": N, "drop_pct": N, "main_reason": "..." },
+    { "stage": "Pricing / CTA", "section": "s4", "entered": N, "dropped": N, "drop_pct": N, "main_reason": "..." }
+  ],
+  "top_issues": [
+    { "priority": "P1", "title": "...", "affected": N, "segments": ["..."], "description": "specific to this page" },
+    { "priority": "P2", "title": "...", "affected": N, "segments": ["..."], "description": "..." },
+    { "priority": "P3", "title": "...", "affected": N, "segments": ["..."], "description": "..." }
+  ],
+  "personas": [
+    {
+      "id": 1, "name": "...", "age": N, "location": "...", "role": "...", "tech": N,
+      "channel": "...", "use_case": "...",
+      "outcome": "converted"|"dropped"|"undecided",
+      "score": N,
+      "pre_expectation": "what they expected before visiting",
+      "key_moment": "the specific moment that made or broke their decision",
+      "biggest_gap": "the one thing missing that would have converted them",
+      "thoughts": [
+        { "type": "norm", "quote": "positive observation about this specific page" },
+        { "type": "warn", "quote": "concern about this specific page" },
+        { "type": "fail", "quote": "dealbreaker or major issue" }
+      ]
+    }
+  ]
+}
+
+Make personas diverse: different countries, ages, tech levels, roles (indie maker, SMB owner, enterprise PM, designer, developer, student, etc). Be specific and honest about what works and what doesn't on THIS particular page.`;
+
+    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 8192,
+        messages: [{ role: 'user', content: prompt }]
+      }),
+      signal: AbortSignal.timeout(120000)
+    });
+
+    const claudeData = await claudeRes.json();
+    if (!claudeData.content?.[0]?.text) throw new Error('No Claude response');
+
+    let reportData;
+    try {
+      const text = claudeData.content[0].text.trim();
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      reportData = JSON.parse(jsonMatch ? jsonMatch[0] : text);
+    } catch(e) { throw new Error('JSON parse failed: ' + e.message); }
+
+    // 3. Save to DB
+    const { rows: [rep] } = await pool.query(
+      `INSERT INTO reports (url, run_date, model, summary, stage_dropoff, top_issues, executive_summary)
+       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
+      [url, new Date().toISOString().split('T')[0], 'claude-sonnet-4-6',
+       JSON.stringify(reportData.summary),
+       JSON.stringify(reportData.stage_dropoff),
+       JSON.stringify(reportData.top_issues),
+       reportData.executive_summary || '']
+    );
+
+    const personas = reportData.personas || [];
+    if (personas.length > 0) {
+      const vals = personas.map((_, i) => `($1, $${i+2})`).join(',');
+      await pool.query(
+        `INSERT INTO report_personas (report_id, data) VALUES ${vals}`,
+        [rep.id, ...personas.map(p => JSON.stringify(p))]
+      );
+    }
+
+    // 4. Email user the real report link
+    if (email) {
+      const reportUrl = `https://racoonn.me/report/${rep.id}`;
+      await sendReportEmail(email, url, reportUrl);
+    }
+
+    console.log('[analysis] Report', rep.id, 'done for', url);
+    return rep.id;
+  } catch(err) {
+    console.error('[analysis] Failed for', url, ':', err.message);
+    return null;
+  }
+}
+
+async function sendReportEmail(email, url, reportUrl) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || !email) return;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: 'Racoonn <admin@racoonn.me>',
+        to: email,
+        subject: `Your analysis report for ${url} is ready 🦝`,
+        html: `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;font-family:-apple-system,sans-serif;background:#faf9f7;color:#1a1714">
+          <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:16px;padding:40px;box-shadow:0 2px 16px rgba(0,0,0,.06)">
+            <div style="font-size:48px;text-align:center;margin-bottom:24px">🦝</div>
+            <h1 style="font-size:24px;font-weight:900;margin:0 0 8px">Your report is ready.</h1>
+            <p style="font-size:15px;color:#6b6560;line-height:1.6;margin:0 0 24px">We analyzed <strong>${url}</strong> with 10 AI personas. Here's what we found.</p>
+            <a href="${reportUrl}" style="display:block;background:#ef6820;color:#fff;text-align:center;padding:14px 24px;border-radius:100px;font-weight:700;text-decoration:none;font-size:15px;margin-bottom:24px">View Full Report →</a>
+            <p style="font-size:12px;color:#9a9490;margin:0">Built with 🦝 by the Racoonn team · <a href="https://racoonn.me" style="color:#ef6820;text-decoration:none">racoonn.me</a></p>
+          </div>
+        </body></html>`
+      }),
+    });
+    console.log('[email] Report sent to', email);
+  } catch(err) { console.error('[email] Report email failed:', err.message); }
+}
+
 // ── Static + API ───────────────────────────────────────────
 app.use(express.static(path.join(__dirname)));
 
@@ -913,11 +1104,15 @@ app.post('/api/waitlist', async (req, res) => {
     );
     const { rows: [{ count }] } = await pool.query('SELECT COUNT(*) FROM waitlist');
     sendWelcomeEmail(entry.email, entry.url); // async, don't await
-    return res.json({ ok: true, count: parseInt(count) });
+    runAnalysis(entry.url, entry.email).catch(console.error); // async analysis
+    const demoUrl = `/report/demo?url=${encodeURIComponent(entry.url)}`;
+    return res.json({ ok: true, count: parseInt(count), demoUrl });
   }
   memoryList.push(entry);
   sendWelcomeEmail(entry.email, entry.url); // async, don't await
-  return res.json({ ok: true, count: memoryList.length });
+  runAnalysis(entry.url, entry.email).catch(console.error); // async analysis
+  const demoUrl = `/report/demo?url=${encodeURIComponent(entry.url)}`;
+  return res.json({ ok: true, count: memoryList.length, demoUrl });
 });
 
 app.get('/api/waitlist/count', async (req, res) => {
